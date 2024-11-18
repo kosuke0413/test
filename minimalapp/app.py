@@ -9,7 +9,7 @@ def createapp():
     app = Flask(__name__)
     app.config.from_mapping(
         SECRET_KEY="ASMss3p5QPbcY2hBsJ",
-        SQLALCEMY_DATABACE_URI='postgresql//postgres:pass@localhost/user',
+        SQLALCEMY_DATABACE_URI='postgresql//postgres:pass@localhost/portal_db',
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         SQLALCHEMY_ECHO=True,
         WTF_CSRF_SECRET_KEY="AuwzyszU5sugKN7KZs6f"
