@@ -1,9 +1,10 @@
 from pathlib import Path
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate  import Migrate
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+
 
 def createapp():
     app = Flask(__name__)
@@ -12,7 +13,7 @@ def createapp():
         SQLALCEMY_DATABACE_URI = 'postgresql//postgres:pass@localhost/user',
         SQLALCHEMY_TRACK_MODIFICATIONS = False,
         SQLALCHEMY_ECHO = True,
-        WTF_CSRF_SECRET_KEY = "AuwzyszU5sugKN7KZs6f"
+        WTF_CSRF_SECRET_KEY="AuwzyszU5sugKN7KZs6f"
     )
 
     db.init_app(app)
@@ -21,6 +22,3 @@ def createapp():
     return app
 
 
-@app.route("/")
-def index():
-    return "Hello"
