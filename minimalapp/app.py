@@ -1,4 +1,3 @@
-from pathlib import Path
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -9,16 +8,14 @@ db = SQLAlchemy()
 def createapp():
     app = Flask(__name__)
     app.config.from_mapping(
-        SECRET_KEY = "ASMss3p5QPbcY2hBsJ",
-        SQLALCEMY_DATABACE_URI = 'postgresql//postgres:pass@localhost/user',
-        SQLALCHEMY_TRACK_MODIFICATIONS = False,
-        SQLALCHEMY_ECHO = True,
+        SECRET_KEY="ASMss3p5QPbcY2hBsJ",
+        SQLALCEMY_DATABACE_URI='postgresql//postgres:pass@localhost/user',
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        SQLALCHEMY_ECHO=True,
         WTF_CSRF_SECRET_KEY="AuwzyszU5sugKN7KZs6f"
     )
 
     db.init_app(app)
 
-    Migrate(app,db)
+    Migrate(app, db)
     return app
-
-
