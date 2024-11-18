@@ -1,1 +1,1 @@
-import minimalapp.notice.models
+import notice.models
