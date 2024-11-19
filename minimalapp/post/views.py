@@ -10,4 +10,4 @@ post = Blueprint(
 
 @post.route("/")
 def index():
-    return "Hello Post"
+    return "Hello Posts"
