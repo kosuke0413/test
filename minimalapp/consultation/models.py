@@ -11,8 +11,8 @@ class Post(db.Model):
     # id
     consult_id = db.Column(db.Integer, primary_key=True,)
     # title
-    title = db.Column(db.string(30),)
+    title = db.Column(db.String(30),)
     # 本文
-    content = db.Column(db.text(200),)
+    content = db.Column(db.Text,)
     # メールアドレス
-    mailadores = db.Column(db.varchar(50),)
+    mailadores = db.Column(db.String(50),) 
