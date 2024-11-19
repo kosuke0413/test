@@ -12,7 +12,7 @@ class Notice(db.Model):
 
 # お知らせ返信テーブル
 class NoticeReply(db.Model):
-    __tablename__ = "reply"
+    __tablename__ = "notice_reply"
     notice_id = db.Column(db.Integer, nullable=False) 
     reply_id = db.Column(db.Integer, primary_key=True)    
     name = db.Column(db.String(10), nullable=False)       

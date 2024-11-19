@@ -8,6 +8,9 @@ notice = Blueprint(
     static_folder="../static"
 )
 
-@notice.route("/")
-def index():
-    return "Hello Notice"
+notice_reply = Blueprint(
+    "notice_reply",
+    __name__,
+    template_folder="templates",
+    static_folder="../static"
+)
