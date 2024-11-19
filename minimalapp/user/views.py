@@ -4,17 +4,17 @@ from flask_login import login_user, logout_user
 from apps.app import db
 from apps.auth.forms import LoginForm, SignUpForm
 
-auth = Blueprint(
-    "auth",
+user = Blueprint(
+    "user",
     __name__,
     template_folder="templates",
     static_folder="../static",
 )
 
 
-@auth.route("/")
+@user.route("/")
 def index():
- pass 
+    return "Hello User"
 
 # @auth.route("/signup", methods=["GET","POST"])
 # def signup():
