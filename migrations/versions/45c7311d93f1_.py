@@ -28,13 +28,11 @@ def upgrade():
     with op.batch_alter_table('local', schema=None) as batch_op:
         batch_op.alter_column('local_id',
                existing_type=sa.INTEGER(),
-               nullable=True,
                autoincrement=True)
 
     with op.batch_alter_table('tags', schema=None) as batch_op:
         batch_op.alter_column('tag_id',
                existing_type=sa.INTEGER(),
-               nullable=True,
                autoincrement=True)
 
     # ### end Alembic commands ###
