@@ -1,7 +1,7 @@
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField
+from wtforms import StringField,TextAreaField
 from wtforms.validators import DataRequired,length
 
 class PostUploadForm(FlaskForm):
@@ -14,7 +14,7 @@ class PostUploadForm(FlaskForm):
         ]
     )
 
-    text = StringField(
+    text = TextAreaField(
         "本文",
         validators=[
             DataRequired(message="本文は必須です。"),
@@ -25,7 +25,6 @@ class PostUploadForm(FlaskForm):
     image = FileField(
         "画像",
         validators=[
-            FileAllowed("画像ファイルを指定してください"),
             FileAllowed(["png","jpg","jpeg"],
                         "サポートされていない画像形式です")
         ]
