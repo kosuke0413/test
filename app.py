@@ -19,10 +19,10 @@ def createapp():
     Migrate(app,db)
 
     #noticeアプリの登録とURLプレフィックス指定
-    from notice import views as notice_views
+    from minimalapp.notice import views as notice_views
     app.register_blueprint(notice_views.notice, url_prefix="/notice")
 
     #postアプリの登録とURLプレフィックス指定
-    from post import views as post_views
+    from minimalapp.post import views as post_views
     app.register_blueprint(post_views.post, url_prefix="/post")
     return app
