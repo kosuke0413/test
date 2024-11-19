@@ -1,0 +1,1 @@
+import minimalapp.post.models 
