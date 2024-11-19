@@ -1,1 +1,1 @@
-from minimalapp.calendar.models
+import minimalapp.calendar.models
