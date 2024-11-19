@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate  import Migrate
 
+
 db = SQLAlchemy()
 
 def createapp():
@@ -25,4 +26,9 @@ def createapp():
     #postアプリの登録とURLプレフィックス指定
     from minimalapp.post import views as post_views
     app.register_blueprint(post_views.post, url_prefix="/post")
+
+    #tagsアプリの登録とURLプレフィックス指定
+    from minimalapp.tags import views as tags_views
+    app.register_blueprint(tags_views.tags, url_prefix="/tags")
+
     return app
