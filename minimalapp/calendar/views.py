@@ -8,3 +8,6 @@ calendar = Blueprint(
     static_folder="../static"
 )
 
+@calendar.route("/")
+def index():
+    return render_template("index.html")
