@@ -31,4 +31,12 @@ def createapp():
     from minimalapp.tags import views as tags_views
     app.register_blueprint(tags_views.tags, url_prefix="/tags")
 
+    #calendarアプリの登録とURLプレフィックス指定
+    from minimalapp.calendar import views as calendar_views
+    app.register_blueprint(calendar_views.calendar, url_prefix="/calendar")
+
+    #相談窓口アプリの登録とURLプレフィックス指定
+    from minimalapp.consultation import views as consultation_views
+    app.register_blueprint(consultation_views.consultation, url_prefix="/consultaiton")
+
     return app
