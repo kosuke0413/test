@@ -3,51 +3,37 @@
     <head>
         <meta charset="UTF-8" />
         <title>問い合わせフォーム</title>
-        <!-- <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css' ) }}"
-        /> -->
     </head>
 
     <body>
-        <h2>お問い合わせフォーム</h2>
+        <h2>相談窓口</h2>
         <form
             action="{{ url_for('consultation.send') }}"
             method="POST"
             novalidate="novalidate"
         >
-            <table>
-                <tr>
-                  <td>ユーザー名</td>
-                  <td>
-                    <input
-                      type="text"
-                      name="username"
-                      value="{{username}}"
-                      placeholder="ユーザー名"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                    <td>メールアドレス</td>
-                    <td>
-                        <input
-                        type="text"
-                        name="email"
-                        value="{{ email }}"
-                        placeholder="メールアドレス"
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td>お問い合わせ内容</td>
-                    <td>
-                        <textarea name="description" placeholder="お問い合わせ内容">
-                            {{ description }}</textarea>
-                    </td>
-                </tr>
-            </table>
-            <input type="submit" value="問い合わせ"/>
+                {{ form.csrf_token }}
+                    <p>
+                        {{ form.title.label }}
+                        {{ form.title }}
+                    </p>
+                    {% for error in form.title.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+
+                    <p>
+                        {{ form.content.label }}
+                    </p>
+                    <p>
+                        {{ form.content }}
+                    </p>
+                    {% for error in form.content.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+
+
+            {{ form.submit() }}
+            <!-- 戻るボタンをつける -->
         </form>
     </body>
 </html>

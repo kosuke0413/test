@@ -3,7 +3,7 @@ from app import db
 # db.Modelを継承したPostクラスを作成する
 
 
-class Post(db.Model):
+class Consultation(db.Model):
     # テーブル名を指定
     __tablename__ = "consultation"
 
