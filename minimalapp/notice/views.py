@@ -21,6 +21,7 @@ def create_notice():
         print("テスト")
         # ファイルデータをバイナリで取得
         image_data = None
+        image_extension = None
         if form.image.data:
             image_file = form.image.data
             image_data = image_file.read()  # バイナリデータに変換
@@ -34,7 +35,6 @@ def create_notice():
             image = image_data,
             image_extension = image_extension,#拡張子を保存
             #tag = "テストタグ",
-            name = "テスト",
         )
 
         #お知らせ投稿を追加してコミットする
