@@ -46,6 +46,24 @@ def nextindex(year, month):
 
     return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
 
+#先月のカレンダーを作成
+@Calen.route('/before/<int:year>/<int:month>')
+def beforeindex(year, month):
+    print("aaaaaaaaaaaaa")
+    #12月の次を1月にして、年に1を足す
+    if month == 1:
+        year = year - 1
+        month = 12
+    else:
+        year = year
+        month = month - 1
+
+    # カレンダーを作成
+    cal = calendar.Calendar(firstweekday=6)
+    month_days = cal.monthdayscalendar(year, month)
+
+    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+
 
 #カレンダー登録のエンドポイント
 @Calen.route('/register', methods=["GET", "POST"])
