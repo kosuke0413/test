@@ -1,0 +1,27 @@
+{% extends "notice/base.html" %}
+{% block title%}新規登録{% endblock %}
+{% block content %}
+<div class="mx-auto dt-user-main">
+    <div class="card dt-user-signup">
+        <header>新規登録</header>
+        <section>
+            <form method="post" action="{{ url_for('user.signup', next=request.args.get('next')) }}"
+                class="form-signin">
+                {{ form.csrf_token }}
+                {% for message in get_flashed_messages() %}
+                <div class="dt-user-flash">{{ message }}</div>
+                {% endfor %}
+
+                {{ form.name(size=10, class="form-control dt-user-input", placeholder="名前") }}
+                {{ form.mailaddress(size=50,class="form-control dt-user-input",placeholder="メールアドレス") }}
+                {{ form.password(size=50,class="form-control dt-user-input",placeholder="パスワード") }}
+                {{ form.submit(class="btn btn-md btn-primary btn-block dt-user-btn") }}
+            </form>
+
+        </section>
+    </div>
+
+    <a href="{{ url_for('user.login') }}">戻る</a>
+
+</div>
+{% endblock %}

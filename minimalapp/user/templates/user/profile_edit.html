@@ -1,0 +1,28 @@
+{% extends "notice/base.html" %}
+{% block title%}マイページ{% endblock %}
+{% block content %}
+<H2>マイページ</H2>
+<form action="{{ url_for('user.profile_edit_user', user_id=user.id) }}" method="POST" novalidate="novalidate">
+    {{ form.csrf_token }}
+    <p>
+        {{ form.name.label }}{{ form.name(placeholder="名前",value=user.name) }}
+    </p>
+    {% for error in form.name.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+    <p>
+        {{ form.mailaddress.label }}{{ form.mailaddress(placeholder="メールアドレス",value=user.mailaddress) }}
+    </p>
+    {% for error in form.mailaddress.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+    <p>
+        {{ form.password.label }}{{ form.password(placeholder="パスワード") }}
+    </p>
+    {% for error in form.password.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+    <p><input type="submit" value="変更" /></p>
+</form>
+<a href="{{ url_for('notice.top') }}">戻る</a>
+{% endblock %}
