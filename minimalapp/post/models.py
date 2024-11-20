@@ -9,6 +9,7 @@ class Post(db.Model):
     post_title = db.Column(db.String(30),)
     post_text = db.Column(db.String(200),)
     image = db.Column(db.LargeBinary)
+    image_extension = db.Column(db.String(10))  # 画像の拡張子を保存するフィールド
     tag = db.Column(db.String(50),)
     name = db.Column(db.String(10), nullable=True)
 
