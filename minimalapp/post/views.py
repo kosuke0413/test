@@ -74,8 +74,18 @@ def get_image(post_id):
     return Response(post.image, mimetype=mime_type)
 
 
-#投稿一覧表示のテンプレート
+#投稿一覧表示のエンドポイント
 @post.route("/list")
 def get_postlist():
     posts = Post.query.all()
     return render_template("post/list.html",posts=posts)
+
+#投稿詳細表示のエンドポイント
+@post.route("/detail")
+def get_postdetail():
+    pass
+
+#投稿編集のエンドポイント
+@post.route("/update_delete")
+def update_delete_post():
+    pass

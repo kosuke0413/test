@@ -6,14 +6,24 @@
     </head>
 
     <body>
-        <h2>住民投稿</h2>
+        <h1>住民投稿</h1>
 
         <!-- 住民投稿の一覧表示 -->
-        {% for post in posts %}
-        <p>
-            {{ post.post_title }}
-        </p>
-        {% endfor %}
+        <ul>
+            {% if posts %}
+            {% for post in posts %}
+            <li>
+                <a>
+                    {{ post.post_title }}
+                </a>
+                
+            </li>
+            {% endfor %}
+            {% else %}
+            <p>現在表示する投稿はありません</p>
+            {% endif %}
+        </ul>
+
 
     </body>
     
