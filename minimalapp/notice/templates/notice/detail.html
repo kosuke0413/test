@@ -10,7 +10,8 @@
     <h1>{{ notice.notice_title }}</h1>
     <p>{{ notice.notice_text }}</p>
     {% if notice.image %}
-    <img src="{{ url_for('notice.get_image', notice_id=notice.id) }}" alt="お知らせ画像">
+    <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像">
+
     {% endif %}
     <br>
     <a href="{{ url_for('notice.top') }}">トップページに戻る</a>
