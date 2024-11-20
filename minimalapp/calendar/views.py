@@ -29,7 +29,7 @@ def index():
 
 
 #次の月のカレンダーを作成
-@Calen.route('/<int:year>/<int:month>')
+@Calen.route('/next<int:year>/<int:month>')
 def nextindex(year, month):
     
     #12月の次を1月にして、年に1を足す
@@ -49,8 +49,7 @@ def nextindex(year, month):
 #先月のカレンダーを作成
 @Calen.route('/before/<int:year>/<int:month>')
 def beforeindex(year, month):
-    print("aaaaaaaaaaaaa")
-    #12月の次を1月にして、年に1を足す
+    #12月の次を1月にして、年に1を引く
     if month == 1:
         year = year - 1
         month = 12
