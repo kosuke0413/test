@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>編集: {{ notice.notice_title }}</title>
+</head>
+
+<body>
+    <h1>{{ notice.notice_title }} の編集</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div>
+            <label for="title">タイトル</label>
+            <input type="text" name="title" id="title" value="{{ form.title.data }}" required>
+        </div>
+
+        <div>
+            <label for="text">本文</label>
+            <textarea name="text" id="text" required>{{ form.text.data }}</textarea>
+        </div>
+
+        <div>
+            <label for="image">画像</label>
+            <input type="file" name="image" id="image">
+        </div>
+
+        <button type="submit">編集完了</button>
+    </form>
+
+    <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}">戻る</a>
+</body>
+
+</html>

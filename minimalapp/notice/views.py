@@ -63,7 +63,35 @@ def get_image(notice_id):
     #mime_type = mime_type or "application/octet-stream"  # デフォルトのMIMEタイプ
     return Response(notice.image, mimetype=mime_type)
 
+# お知らせ詳細
 @notice.route("/detail/<int:notice_id>")
 def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     return render_template("notice/detail.html", notice=notice)
+
+# お知らせ編集
+@notice.route("/edit/<int:notice_id>", methods=["GET", "POST"])
+def edit_notice(notice_id):
+    notice = Notice.query.get_or_404(notice_id)
+    form = NoticeUploadForm()
+
+    if form.validate_on_submit():
+        notice.notice_title = form.title.data
+        notice.notice_text = form.text.data
+
+        # 画像の更新処理
+        if form.image.data:
+            image_file = form.image.data
+            notice.image = image_file.read()  # バイナリデータに変換
+            notice.image_extension = image_file.filename.rsplit('.', 1)[-1].lower()  # 拡張子を取得
+
+        db.session.commit()  # 変更をコミット
+        return redirect(url_for('notice.detail', notice_id=notice.notice_id))  # 更新後に詳細ページに遷移
+
+    # フォームの初期値に投稿データをセット
+    form.title.data = notice.notice_title
+    form.text.data = notice.notice_text
+
+    return render_template("notice/edit.html", form=form, notice=notice)
+
+#@notice.route("/<int:notice_id>")
