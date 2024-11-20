@@ -6,14 +6,14 @@ from minimalapp.calendar.models import Calendar
 from app import db
 
 #Blueprintでcalendarアプリを生成する
-Calendar = Blueprint(
+Calen = Blueprint(
     "calendar",
     __name__,
     template_folder="templates",
     static_folder="../static"
 )
 
-@Calendar.route('/')
+@Calen.route('/')
 def index():
     # 現在の年と月を取得
     now = datetime.now()
@@ -27,7 +27,7 @@ def index():
     return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
 
 #カレンダー登録のエンドポイント
-@Calendar.route('/register', methods=["GET","POST"])
+@Calen.route('/register', methods=["GET","POST"])
 def setEvent():
     #カレンダーフォームをインスタンス化
     form = CalendarregistForm()
