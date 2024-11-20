@@ -12,8 +12,9 @@ notice = Blueprint(
 )
 
 @notice.route("/")
-def index():
-    return "Hello"
+def top():
+    notices = Notice.query.all()
+    return render_template("notice/top.html", notices=notices)
 #住民投稿のエンドポイント
 @notice.route("/create", methods=["GET","POST"])
 def create_notice():
@@ -61,3 +62,4 @@ def get_image(notice_id):
     mime_type, _ = guess_type(f"image.{notice.image_extension}")
     #mime_type = mime_type or "application/octet-stream"  # デフォルトのMIMEタイプ
     return Response(notice.image, mimetype=mime_type)
+

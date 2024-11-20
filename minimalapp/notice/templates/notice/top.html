@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>トップページ</title>
+</head>
+
+<body>
+    <h2>お知らせ投稿</h2>
+
+    <!-- お知らせ投稿の一覧表示 -->
+    {% for notice in notices %}
+    <p>
+        {{ notice.notice_title }}
+    </p>
+    {% endfor %}
+
+</body>
+
+</html>
