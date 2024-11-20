@@ -13,10 +13,9 @@
             {% if posts %}
             {% for post in posts %}
             <li>
-                <a>
+                <a href = "{{ url_for('post.post_detail',post_id=post.post_id) }}">
                     {{ post.post_title }}
                 </a>
-                
             </li>
             {% endfor %}
             {% else %}

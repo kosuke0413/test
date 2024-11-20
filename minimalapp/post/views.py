@@ -81,9 +81,11 @@ def get_postlist():
     return render_template("post/list.html",posts=posts)
 
 #投稿詳細表示のエンドポイント
-@post.route("/detail")
-def get_postdetail():
-    pass
+@post.route("/detail/<int:post_id>")
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template("post/detail.html", post=post)
+
 
 #投稿編集のエンドポイント
 @post.route("/update_delete")
