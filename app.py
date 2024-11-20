@@ -17,25 +17,25 @@ def createapp():
 
     db.init_app(app)
 
-    Migrate(app,db)
+    Migrate(app, db)
 
-    #noticeアプリの登録とURLプレフィックス指定
+    # noticeアプリの登録とURLプレフィックス指定
     from minimalapp.notice import views as notice_views
     app.register_blueprint(notice_views.notice)
 
-    #postアプリの登録とURLプレフィックス指定
+    # postアプリの登録とURLプレフィックス指定
     from minimalapp.post import views as post_views
     app.register_blueprint(post_views.post, url_prefix="/post")
 
-    #tagsアプリの登録とURLプレフィックス指定
+    # tagsアプリの登録とURLプレフィックス指定
     from minimalapp.tags import views as tags_views
     app.register_blueprint(tags_views.tags, url_prefix="/tags")
 
-    #calendarアプリの登録とURLプレフィックス指定
+    # calendarアプリの登録とURLプレフィックス指定
     from minimalapp.calendar import views as calendar_views
     app.register_blueprint(calendar_views.Calendar, url_prefix="/calendar")
 
-    #相談窓口アプリの登録とURLプレフィックス指定
+    # 相談窓口アプリの登録とURLプレフィックス指定
     from minimalapp.consultation import views as consultation_views
     app.register_blueprint(consultation_views.consultation, url_prefix="/consultaiton")
 

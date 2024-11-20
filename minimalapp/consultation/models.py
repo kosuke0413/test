@@ -15,4 +15,4 @@ class Post(db.Model):
     # 本文
     content = db.Column(db.Text,)
     # メールアドレス
-    mailadores = db.Column(db.String(50),) 
+    mailadores = db.Column(db.String(50),)
