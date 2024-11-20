@@ -11,6 +11,9 @@ notice = Blueprint(
     static_folder="../static"
 )
 
+@notice.route("/")
+def index():
+    return "Hello"
 #住民投稿のエンドポイント
 @notice.route("/create", methods=["GET","POST"])
 def create_notice():

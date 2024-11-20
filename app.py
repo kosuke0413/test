@@ -21,7 +21,7 @@ def createapp():
 
     #noticeアプリの登録とURLプレフィックス指定
     from minimalapp.notice import views as notice_views
-    app.register_blueprint(notice_views.notice, url_prefix="/notice")
+    app.register_blueprint(notice_views.notice)
 
     #postアプリの登録とURLプレフィックス指定
     from minimalapp.post import views as post_views
