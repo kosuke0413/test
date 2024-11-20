@@ -62,3 +62,8 @@ def get_image(post_id):
     mime_type, _ = guess_type(f"image.{post.image_extension or 'jpeg'}")
     mime_type = mime_type or "application/octet-stream"  # デフォルトのMIMEタイプ
     return Response(post.image, mimetype=mime_type)
+
+#画像一覧表示のテンプレート
+@post.route("/list")
+def get_postlist():
+    pass

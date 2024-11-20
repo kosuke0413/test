@@ -19,7 +19,10 @@
             
             <!-- 本文の入力フィールドとエラーメッセージ -->
             <p>
-                {{ form.text.label }} {{ form.text() }}
+                {{ form.text.label }} 
+            </p>
+            <p>
+                {{ form.text() }}
             </p>
             {% for error in form.text.errors %}
             <span style="color: red;">{{ error }}</span>
