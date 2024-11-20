@@ -57,6 +57,7 @@ def create_post():
     
     return render_template("post/create.html", form=form)
 
+
 #画像表示確認のエンドポイント
 @post.route("/image/<int:post_id>")
 def get_image(post_id):
@@ -72,7 +73,9 @@ def get_image(post_id):
     mime_type = mime_type or "application/octet-stream"  # デフォルトのMIMEタイプ
     return Response(post.image, mimetype=mime_type)
 
-#画像一覧表示のテンプレート
+
+#投稿一覧表示のテンプレート
 @post.route("/list")
 def get_postlist():
-    pass
+    posts = Post.query.all()
+    return render_template("post/list.html",posts=posts)

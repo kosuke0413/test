@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>住民投稿一覧</title>
+    </head>
+
+    <body>
+        <h2>住民投稿</h2>
+
+        <!-- 住民投稿の一覧表示 -->
+        {% for post in posts %}
+        <p>
+            {{ post.post_title }}
+        </p>
+        {% endfor %}
+
+    </body>
+    
+</html>
