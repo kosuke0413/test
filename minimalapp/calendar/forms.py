@@ -14,7 +14,7 @@ class CalendarregistForm(FlaskForm):
         ]
     )
 
-     text = TextAreaField(
+    text = TextAreaField(
         "本文",
         validators=[
             DataRequired(message="本文は必須です。"),

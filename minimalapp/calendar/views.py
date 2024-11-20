@@ -34,14 +34,13 @@ def setEvent():
 
     if form.validate_on_submit():
         calen = Calendar(
-            event_title = form.title.data,
-            content = form.text.data,
-            day = form.date.data
+            event_title=form.title.data,
+            content=form.text.data,
+            day=form.date.data
         )
 
-    db.session.add(calen)
-    db.session.commit()
-    return "登録完了"
+        db.session.add(calen)
+        db.session.commit()
+        return "登録完了"
 
-return render_template("calendar/register.html")
-
+    return render_template("calendar/register.html", form=form)
