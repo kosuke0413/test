@@ -3,19 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>トップページ</title>
+    <title>お知らせ一覧</title>
 </head>
 
 <body>
-    <h2>お知らせ投稿</h2>
+    <h1>お知らせ一覧</h1>
+    <ul>
+        {% if notices %}
+        {% for notice in notices %}
+        <li>
+            <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}">
+                {{ notice.notice_title }}
+            </a>
 
-    <!-- お知らせ投稿の一覧表示 -->
-    {% for notice in notices %}
-    <p>
-        {{ notice.notice_title }}
-    </p>
-    {% endfor %}
-
+            </a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>現在表示するお知らせがありません</p>
+        {% endif %}
+    </ul>
 </body>
 
 </html>

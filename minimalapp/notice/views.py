@@ -63,3 +63,7 @@ def get_image(notice_id):
     #mime_type = mime_type or "application/octet-stream"  # デフォルトのMIMEタイプ
     return Response(notice.image, mimetype=mime_type)
 
+@notice.route("/detail/<int:notice_id>")
+def detail(notice_id):
+    notice = Notice.query.get_or_404(notice_id)
+    return render_template("notice/detail.html", notice=notice)
