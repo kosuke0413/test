@@ -31,15 +31,24 @@ def create_post():
             # ファイルの拡張子を取得
             image_extension = image_file.filename.rsplit('.', 1)[-1].lower()  # 拡張子を取得
 
-        #投稿を作成する 後でログインユーザーに直す
-        post = Post(
-            post_title = form.title.data,
-            post_text = form.text.data,
-            image = image_data,
-            image_extension = image_extension,#拡張子を保存
-            tag = "テストタグ",
-            name = "テスト",
-        )
+            #投稿を作成する 後でログインユーザーに直す
+            post = Post(
+                post_title = form.title.data,
+                post_text = form.text.data,
+                image = image_data,
+                image_extension = image_extension,#拡張子を保存
+                tag = "テストタグ",
+                name = "テスト",
+            )
+
+        else:
+            #投稿を作成する 後でログインユーザーに直す
+            post = Post(
+                post_title = form.title.data,
+                post_text = form.text.data,
+                tag = "テストタグ",
+                name = "テスト",
+            )
 
         #住民投稿を追加してコミットする
         db.session.add(post)
