@@ -33,7 +33,7 @@ def createapp():
 
     # calendarアプリの登録とURLプレフィックス指定
     from minimalapp.calendar import views as calendar_views
-    app.register_blueprint(calendar_views.Calendar, url_prefix="/calendar")
+    app.register_blueprint(calendar_views.Calen, url_prefix="/calendar")
 
     # 相談窓口アプリの登録とURLプレフィックス指定
     from minimalapp.consultation import views as consultation_views
