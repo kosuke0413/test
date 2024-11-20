@@ -13,6 +13,7 @@ Calen = Blueprint(
     static_folder="../static"
 )
 
+#現在の年月のカレンダーを作成
 @Calen.route('/')
 def index():
     # 現在の年と月を取得
@@ -26,8 +27,28 @@ def index():
 
     return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
 
+
+#次の月のカレンダーを作成
+@Calen.route('/<int:year>/<int:month>')
+def nextindex(year, month):
+    
+    #12月の次を1月にして、年に1を足す
+    if month == 12:
+        year = year + 1
+        month = 1
+    else:
+        year = year
+        month = month + 1
+
+    # カレンダーを作成
+    cal = calendar.Calendar(firstweekday=6)
+    month_days = cal.monthdayscalendar(year, month)
+
+    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+
+
 #カレンダー登録のエンドポイント
-@Calen.route('/register', methods=["GET","POST"])
+@Calen.route('/register', methods=["GET", "POST"])
 def setEvent():
     #カレンダーフォームをインスタンス化
     form = CalendarregistForm()
