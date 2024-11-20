@@ -7,6 +7,7 @@ class Notice(db.Model):
     title = db.Column(db.String(30), nullable=False)
     content = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary, nullable=True)
+    image_extension = db.Column(db.String(10))  # 画像の拡張子を保存するフィールド
     tag = db.Column(db.String(50), nullable=True)
 
 

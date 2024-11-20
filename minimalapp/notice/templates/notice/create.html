@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>お知らせ投稿</title>
+</head>
+
+<body>
+    <h2>お知らせ投稿</h2>
+    <form action="{{ url_for('notice.create_notice') }}" method="post" novalidate="novalidate"
+        enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <!-- タイトルの入力フィールドとエラーメッセージ -->
+        <p>
+            {{ form.title.label }} {{ form.title() }}
+        </p>
+        {% for error in form.title.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <!-- 本文の入力フィールドとエラーメッセージ -->
+        <p>
+            {{ form.text.label }}
+        </p>
+        <p>
+            {{ form.text() }}
+        </p>
+        {% for error in form.text.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <!-- 画像の入力フィールドとエラーメッセージ -->
+        <p>
+            {{ form.image.label }} {{ form.image() }}
+        </p>
+        {% for error in form.image.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <!-- 送信ボタン -->
+        {{ form.submit() }}
+    </form>
+    </form>
+</body>
+
+</html>
