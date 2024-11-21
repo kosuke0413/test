@@ -18,10 +18,10 @@ class User(db.Model, UserMixin):
     
     @password.setter
     def pasword(self, password):
-        self.pasword = generate_password(password)
+        self.password = generate_password(password)
 
     def verify_pasword(self, password):
-        return check_password(self.pasword, password)
+        return check_password(self.password, password)
 
-    def is_duplicate_mailadores(self):
-        return User.query.filter_by(mailaddoress=self.mailaddoress).first() is not None
+    def is_duplicate_mailaddress(self):
+        return User.query.filter_by(mailaddress=self.mailaddress).first() is not None
