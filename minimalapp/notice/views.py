@@ -91,7 +91,15 @@ def edit_notice(notice_id):
     # フォームの初期値に投稿データをセット
     form.title.data = notice.notice_title
     form.text.data = notice.notice_text
+    form.image.data = notice.image
+    form.image_extension = notice.image_extension
 
     return render_template("notice/edit.html", form=form, notice=notice)
 
-#@notice.route("/<int:notice_id>")
+# お知らせ削除
+# @notice.route("/<int:notice_id>/delete", methods=["POST"])
+# def delete_notice(notice_id):
+#     notice = Notice.query.filter_by(id=notice_id).first()
+#     db.session.delete(notice)
+#     db.session.commit()
+#     return redirect
