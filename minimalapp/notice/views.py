@@ -69,7 +69,8 @@ def get_image(notice_id):
 @notice.route("/detail/<int:notice_id>")
 def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
-    tags = Tags.query.get_or_404(notice.tag)
+    tag = Tags.query.get_or_404(notice.tag)
+    tags = [tag]  # 単一のタグをリストに変換
     return render_template("notice/detail.html", notice=notice, tags=tags)
 
 # お知らせ編集
