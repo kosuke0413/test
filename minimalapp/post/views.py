@@ -37,8 +37,9 @@ def create_post():
                 post_text = form.text.data,
                 image = image_data,
                 image_extension = image_extension,#拡張子を保存
-                tag = "テストタグ",
+                tag = form.tag.data,
                 name = "テスト",
+                local_id = "a01"
             )
 
         else:
@@ -46,8 +47,9 @@ def create_post():
             post = Post(
                 post_title = form.title.data,
                 post_text = form.text.data,
-                tag = "テストタグ",
+                tag = form.tag.data,
                 name = "テスト",
+                local_id = "a01"
             )
 
         #住民投稿を追加してコミットする
@@ -76,7 +78,7 @@ def get_image(post_id):
 
 #投稿一覧表示のエンドポイント
 @post.route("/list")
-def get_postlist():
+def post_list():
     posts = Post.query.all()
     return render_template("post/list.html",posts=posts)
 
@@ -124,4 +126,4 @@ def delete(post_id):
         db.session.delete(post)
         db.session.commit()
     flash('お知らせを削除しました')
-    return redirect(url_for('post.top'))  # 削除が完了するとtopページに遷移
+    return redirect(url_for('post.post_list'))  # 削除が完了するとtopページに遷移

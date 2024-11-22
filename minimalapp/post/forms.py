@@ -1,7 +1,7 @@
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField,TextAreaField
+from wtforms import StringField,TextAreaField,RadioField
 from wtforms.validators import DataRequired,length
 
 class PostUploadForm(FlaskForm):
@@ -28,6 +28,19 @@ class PostUploadForm(FlaskForm):
             FileAllowed(["png","jpg","jpeg"],
                         "サポートされていない画像形式です")
         ]
+    )
+
+        # tagフィールド
+    tag = RadioField(
+        "タグ",
+        choices=[
+            ("1", "イベント・行事"),
+            ("2", "子育て・教育"),
+            ("3", "医療・健康"),
+            ("4", "福祉・介護"),
+            ("5", "ボランティア"),
+            ("6", "注意喚起"),
+        ],
     )
 
     submit = SubmitField("アップロード")

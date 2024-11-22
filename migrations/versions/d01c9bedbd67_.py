@@ -23,14 +23,12 @@ def upgrade():
         batch_op.alter_column('tag',
                existing_type=sa.VARCHAR(length=50),
                type_=sa.Integer(),
-               existing_nullable=True,
                postgresql_using="tag::integer")
 
     with op.batch_alter_table('post', schema=None) as batch_op:
         batch_op.alter_column('tag',
                existing_type=sa.VARCHAR(length=50),
                type_=sa.Integer(),
-               existing_nullable=True,
                postgresql_using="tag::integer")
 
     # ### end Alembic commands ###
