@@ -23,4 +23,4 @@ class User(db.Model, UserMixin):
     #     return check_password(self.password, password)
  
     def is_duplicate_mailadores(self):
-        return User.query.filter_by(mailaddoress=self.mailaddoress).first() is not None
+        return User.query.filter_by(mailaddoress=self.mailaddress).first() is not None
