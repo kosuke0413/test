@@ -16,4 +16,5 @@ class Consultation(db.Model):
     content = db.Column(db.Text,)
     # メールアドレス
     mailadores = db.Column(db.String(50),)
-
+    # 地域ID
+    local_id = db.Column(db.String(3), nullable=True)

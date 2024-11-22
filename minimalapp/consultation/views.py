@@ -24,7 +24,7 @@ def list():
     return render_template("consultation/list.html", forms=form)
 
 
-@consultation.route("/reply")
+@consultation.route("/reply", methods=["GET"])
 def reply():
     return render_template("consultation/reply.html")
 
