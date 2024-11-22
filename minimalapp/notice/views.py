@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, Response, flash
 from app import db
 from minimalapp.notice.forms import NoticeUploadForm
 from minimalapp.notice.models import Notice
+from minimalapp.tags.models import Tags
 from mimetypes import guess_type
 #Bulueprintでnoticeアプリを生成する
 notice = Blueprint(
@@ -38,7 +39,7 @@ def create_notice():
             notice_text = form.text.data,
             image = image_data,
             image_extension = image_extension,#拡張子を保存
-            #tag = "テストタグ",
+            tag = form.tag.data
         )
 
         #お知らせ投稿を追加してコミットする
@@ -67,7 +68,8 @@ def get_image(notice_id):
 @notice.route("/detail/<int:notice_id>")
 def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
-    return render_template("notice/detail.html", notice=notice)
+    tags = Tags.query.get_or_404(notice.tag)
+    return render_template("notice/detail.html", notice=notice, tags=tags)
 
 # お知らせ編集
 @notice.route("/edit/<int:notice_id>", methods=["GET", "POST"])

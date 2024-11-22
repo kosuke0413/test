@@ -13,6 +13,12 @@
     <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像">
 
     {% endif %}
+    <ul>
+        {% for tag in notice.tags %}
+        <li>{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+
     <br>
     <a href="{{ url_for('notice.top') }}">トップページに戻る</a>
 </body>
