@@ -6,3 +6,4 @@ class Calendar(db.Model):
     event_title = db.Column(db.String(30), nullable=False)
     content = db.Column(db.Text, nullable=False)
     day = db.Column(db.Date, nullable=True)
+    local_id = db.Column(db.String(3), nullable=False)

@@ -75,6 +75,7 @@ def setEvent():
             event_title=form.title.data,
             content=form.text.data,
             day=form.date.data
+            local_id="abc"
         )
 
         db.session.add(calen)
@@ -82,3 +83,8 @@ def setEvent():
         return "登録完了"
 
     return render_template("calendar/register.html", form=form)
+
+@Calen.route("/eventdetail/<int:calendar_id>")
+def eventdetail(calendar_id):
+    event = Calendar.query.get_or_404(calendar_id)
+    return render_template("calendar/eventdetail.html", event=event)
