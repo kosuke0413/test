@@ -39,7 +39,8 @@ def create_notice():
             notice_text = form.text.data,
             image = image_data,
             image_extension = image_extension,#拡張子を保存
-            tag = form.tag.data
+            tag = form.tag.data,
+            local_id = "a10"
         )
 
         #お知らせ投稿を追加してコミットする
