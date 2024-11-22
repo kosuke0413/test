@@ -23,7 +23,7 @@ def index():
 #              local_id=form.lacal_id.date,
 #              username=form.username.data,
 #              mailadores=form.mailadores.data,
-#              pasword=form.pasword.data,
+#              password=form.password.data,
 #          )
 
 #          if user.is_duplicate_mailadores():
@@ -49,7 +49,7 @@ def index():
 #      if form.validate_on_submit():
 #          user = User.query.filter_by(mailadores=form.mailadores.data).first()
 
-#          if user is not None and user.verify_pasword(form.pasword.data):
+#          if user is not None and user.verify_password(form.password.data):
 #              login_user(user)
 #              return redirect(url_for("detector.index"))
 

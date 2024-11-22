@@ -4,6 +4,14 @@ from wtforms.validators import DataRequired, Email, Length
 
 
 class SignUpForm(FlaskForm):
+    local_id =StringField(
+        "地域ID",
+        validators=[
+            DataRequired(message="地域IDは必須です。"),
+            Length(min=3,max=3, message="3文字で入力してください。")
+        ]
+    )
+
     name = StringField(
         "名前",
         validators=[
@@ -38,7 +46,7 @@ class LoginForm(FlaskForm):
         validators=[
             DataRequired("メールアドレスは必須です。"),
             Length(1,50, message="50文字以内で入力してください。"),
-            mailaddress("メールアドレスの形式で入力してください。"),
+            Email("メールアドレスの形式で入力してください。"),
         ],
     )
 
