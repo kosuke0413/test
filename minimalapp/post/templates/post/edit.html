@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>投稿編集: {{ post.post_title }}</title>
+</head>
+
+<body>
+    <h1>{{ post.post_title }} の編集</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div>
+            <label for="title">タイトル</label>
+            <input type="text" name="title" id="title" value="{{ form.title.data }}" required>
+        </div>
+
+        <div>
+            <label for="text">本文</label>
+            <p><textarea name="text" id="text" required>{{ form.text.data }}</textarea></p>
+        </div>
+
+        <div>
+            <label for="image">画像</label>
+            <p><img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像"></p>
+            <p><input type="file" name="image" id="image"></p>
+        </div>
+
+        <button type="submit" style="color: blue;">編集完了</button>
+    </form>
+
+    <form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
+        onsubmit="return confirm('本当に削除しますか？');">
+        <button type="submit" style="color: red;">削除</button>
+    </form>
+
+    <a href="{{ url_for('post.post_detail', post_id=post.post_id) }}">戻る</a>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,redirect,url_for,Response
+from flask import Blueprint,render_template,redirect,url_for,Response,flash
 from app import db
 from minimalapp.post.forms import PostUploadForm
 from minimalapp.post.models import Post
@@ -88,6 +88,40 @@ def post_detail(post_id):
 
 
 #投稿編集のエンドポイント
-@post.route("/update_delete")
-def update_delete_post():
-    pass
+@post.route("/edit/<int:post_id>", methods=["GET", "POST"])
+def edit_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = PostUploadForm()
+
+    if form.validate_on_submit():
+        post.post_title = form.title.data
+        post.post_text = form.text.data
+
+        # 画像の更新処理
+        if form.image.data:
+            image_file = form.image.data
+            post.image = image_file.read()  # バイナリデータに変換
+            post.image_extension = image_file.filename.rsplit('.', 1)[-1].lower()  # 拡張子を取得
+
+        db.session.commit()  # 変更をコミット
+        return redirect(url_for('post.edit_post', post_id=post.post_id))  # 更新後、編集ページを再読み込み
+
+    # フォームの初期値に投稿データをセット
+    form.title.data = post.post_title
+    form.text.data = post.post_text
+    # form.image.data = notice.image
+    # form.image_extension = notice.image_extension
+
+    return render_template("post/edit.html", form=form, post=post)
+
+
+#投稿削除のエンドポイント
+@post.route('/<int:post_id>/delete', methods=['POST'])
+def delete(post_id):
+    # 削除処理
+    post = Post.query.get(post_id)
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+    flash('お知らせを削除しました')
+    return redirect(url_for('post.top'))  # 削除が完了するとtopページに遷移

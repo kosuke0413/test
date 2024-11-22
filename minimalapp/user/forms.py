@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
-from wtforms.validators import DataRequired, mailaddress, Length
+from wtforms.validators import DataRequired, Email, Length
 
 
 class SignUpForm(FlaskForm):
@@ -17,7 +17,7 @@ class SignUpForm(FlaskForm):
         validators=[
             DataRequired(message="メールアドレスは必須です。"),
             Length(1,50, message="50文字以内で入力してください。"),
-            mailaddress(message="メールアドレスの形式で入力してください。"),
+            Email(message="メールアドレスの形式で入力してください。"),
         ],
     )
 
