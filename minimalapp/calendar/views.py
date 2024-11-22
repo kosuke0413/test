@@ -74,7 +74,7 @@ def setEvent():
         calen = Calendar(
             event_title=form.title.data,
             content=form.text.data,
-            day=form.date.data
+            day=form.date.data,
             local_id="abc"
         )
 
