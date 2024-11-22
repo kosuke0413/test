@@ -1,8 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <meta charset="UTF-8" />
+        <title>ユーザーの一覧</title>
     </head>
 
     <body>
-        <h2>相談窓口</h2>
+        <h2>相談内容一覧</h2>
+        <form
+            action="{{ url_for('consultation.list') }}"
+            method="GET"
+            novalidate="novalidate"
+        >
+
+        <!-- forms で情報を貰うので注意 -->
+        {{ forms.csrf_token }}
+
+        {% if forms %}
+            <!-- forms でもらったものを form として動かす -->
+            {% for form in forms %}
+                <h2>
+                    <!-- DBのデータ内の title 要素を出力 -->
+                    {{ form.title }}
+                </h2>
+                <p>
+                    {{ form.content }}
+                    <!-- DBのデータ内の title 要素を出力 -->
+
+                    <!-- <a>の中に<button>を入れると上手く動かないので注意 -->
+                    <a href="{{ url_for('consultation.reply') }}" style="text-decoration: none;">
+                        <button type="button">このボタンをクリックすると相談内容の詳細へ飛ぶぜ</button>
+                    </a>
+                </p>
+            {% endfor %}
+        <!-- 相談内容が無かったときの対処 -->
+        {% else %}
+            <p>現在表示する相談内容はありません</p>
+        {% endif %}
     </body>

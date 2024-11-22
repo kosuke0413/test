@@ -16,3 +16,4 @@ class Consultation(db.Model):
     content = db.Column(db.Text,)
     # メールアドレス
     mailadores = db.Column(db.String(50),)
+

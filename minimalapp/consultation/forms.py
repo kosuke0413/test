@@ -1,8 +1,8 @@
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField,TextAreaField
-from wtforms.validators import DataRequired,length
+from wtforms import StringField, TextAreaField
+from wtforms.validators import DataRequired, length
 
 
 class ConsultationForm(FlaskForm):

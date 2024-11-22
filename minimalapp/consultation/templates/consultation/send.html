@@ -12,28 +12,34 @@
             method="POST"
             novalidate="novalidate"
         >
+                <!-- form で情報を貰っている -->
                 {{ form.csrf_token }}
                     <p>
+                        <!-- タイトル持ってくるよん -->
                         {{ form.title.label }}
+                        <!-- タイトルを入れるんだよぉ -->
                         {{ form.title }}
                     </p>
+
+                    <!-- エラーの対処 -->
                     {% for error in form.title.errors %}
                     <span style="color: red;">{{ error }}</span>
                     {% endfor %}
 
-                    <p>
+                    <p><!-- 内容持ってくるよん -->
                         {{ form.content.label }}
                     </p>
-                    <p>
+                    <p><!-- 内容書き込むんだおよぉ -->
                         {{ form.content }}
                     </p>
+
+                    <!-- エラーの対処 -->
                     {% for error in form.content.errors %}
                     <span style="color: red;">{{ error }}</span>
                     {% endfor %}
 
-
-            {{ form.submit() }}
-            <!-- 戻るボタンをつける -->
+                    <!-- 戻るボタンをつける -->
+                    {{ form.submit() }}
         </form>
     </body>
 </html>
