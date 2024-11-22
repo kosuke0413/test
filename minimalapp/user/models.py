@@ -1,5 +1,4 @@
 from flask_login import UserMixin
-from werkzeug.security import generate_password
  
 from app import db
  
@@ -16,9 +15,9 @@ class User(db.Model, UserMixin):
     def password(self):
         raise AttributeError("読み取り不可")
    
-    @password.setter
-    def password(self, password):
-        self.password = generate_password(password)
+    # @password.setter
+    # def password(self, password):
+    #     self.password = generate_password(password)
  
     # def verify_password(self, password):
     #     return check_password(self.password, password)
