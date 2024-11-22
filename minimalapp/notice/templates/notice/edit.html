@@ -19,16 +19,21 @@
 
         <div>
             <label for="text">本文</label>
-            <textarea name="text" id="text" required>{{ form.text.data }}</textarea>
+            <p><textarea name="text" id="text" required>{{ form.text.data }}</textarea></p>
         </div>
 
         <div>
             <label for="image">画像</label>
-
-            <input type="file" name="image" id="image">
+            <p><img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像"></p>
+            <p><input type="file" name="image" id="image"></p>
         </div>
 
-        <button type="submit">編集完了</button>
+        <button type="submit" style="color: blue;">編集完了</button>
+    </form>
+
+    <form method="POST" action="{{ url_for('notice.delete', notice_id=notice.notice_id) }}"
+        onsubmit="return confirm('本当に削除しますか？');">
+        <button type="submit" style="color: red;">削除</button>
     </form>
 
     <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}">戻る</a>

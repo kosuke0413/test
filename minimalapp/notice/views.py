@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,redirect,url_for,Response
+from flask import Blueprint, render_template, redirect, url_for, Response, flash
 from app import db
 from minimalapp.notice.forms import NoticeUploadForm
 from minimalapp.notice.models import Notice
@@ -86,20 +86,23 @@ def edit_notice(notice_id):
             notice.image_extension = image_file.filename.rsplit('.', 1)[-1].lower()  # 拡張子を取得
 
         db.session.commit()  # 変更をコミット
-        return redirect(url_for('notice.detail', notice_id=notice.notice_id))  # 更新後に詳細ページに遷移
+        return redirect(url_for('notice.edit_notice', notice_id=notice.notice_id))  # 更新後、編集ページを再読み込み
 
     # フォームの初期値に投稿データをセット
     form.title.data = notice.notice_title
     form.text.data = notice.notice_text
-    form.image.data = notice.image
-    form.image_extension = notice.image_extension
+    # form.image.data = notice.image
+    # form.image_extension = notice.image_extension
 
     return render_template("notice/edit.html", form=form, notice=notice)
 
 # お知らせ削除
-# @notice.route("/<int:notice_id>/delete", methods=["POST"])
-# def delete_notice(notice_id):
-#     notice = Notice.query.filter_by(id=notice_id).first()
-#     db.session.delete(notice)
-#     db.session.commit()
-#     return redirect
+@notice.route('/<int:notice_id>/delete', methods=['POST'])
+def delete(notice_id):
+    # 削除処理
+    notice = Notice.query.get(notice_id)
+    if notice:
+        db.session.delete(notice)
+        db.session.commit()
+    flash('お知らせを削除しました')
+    return redirect(url_for('notice.top'))  # 削除が完了するとtopページに遷移
