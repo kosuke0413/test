@@ -28,9 +28,9 @@
                     <!-- DBのデータ内の title 要素を出力 -->
 
                     <!-- <a>の中に<button>を入れると上手く動かないので注意 -->
-                    <a href="{{ url_for('consultation.reply') }}" style="text-decoration: none;">
-                        <button type="button">このボタンをクリックすると相談内容の詳細へ飛ぶぜ</button>
-                    </a>
+                        <a href="{{ url_for('consultation.reply', title=form.title, content=form.content) }}" style="text-decoration: none;">
+                            <button type="button">相談内容の詳細へ移動</button>
+                        </a>
                 </p>
             {% endfor %}
         <!-- 相談内容が無かったときの対処 -->

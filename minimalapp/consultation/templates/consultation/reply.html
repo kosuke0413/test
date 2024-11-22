@@ -7,37 +7,26 @@
 
     <body>
         <h2>相談内容詳細</h2>
+
         <form
-        action="{{ url_for('consultation.reply') }}"
-        method="GET,POST"
-        novalidate="novalidate"
-    >
-
-
-            <label>相談者:</label>
-            <div>hoge</div>
-
-
-
-            <label>相談者メールアドレス:</label>
-            <div>hoge@gmail.com</div>
-
-
+            action="{{ url_for('consultation.reply') }}"
+            method="POST"
+            novalidate="novalidate"
+        >
+            <label>相談のタイトル:</label>
+            <div>{{ title }}</div>
 
             <label>相談内容:</label>
-            <div>パスワード忘れたんですがどうすればいいですか？</div>
-
-
+            <div>{{ content }}</div>
 
             <label for="reply">返信本文:</label>
             <div>
                 <textarea id="reply" name="reply"></textarea>
             </div>
 
-
-        <div class="submit-button">
-            <button type="submit">送信</button>
-        </div>
-
+            <div class="submit-button">
+                <button type="submit">送信</button>
+            </div>
+        </form>
     </body>
-    </html>
+</html>

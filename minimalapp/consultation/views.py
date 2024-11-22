@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, Response
+from flask import Blueprint, render_template, redirect, url_for, request, Response
 from app import db
 from minimalapp.consultation.forms import ConsultationForm
 from minimalapp.consultation.models import Consultation
@@ -24,9 +24,12 @@ def list():
     return render_template("consultation/list.html", forms=form)
 
 
-@consultation.route("/reply", methods=["GET"])
+@consultation.route("/reply", methods=['GET', 'POST'])
 def reply():
-    return render_template("consultation/reply.html")
+    title = request.args.get('title', '相談のタイトル')  # GETパラメータから取得
+    content = request.args.get('content', '相談内容の詳細')  # GETパラメータから取得
+    return render_template('consultation/reply.html', title=title,
+                           content=content)
 
 
 # ゲットとポスト必須
