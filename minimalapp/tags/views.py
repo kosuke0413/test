@@ -1,6 +1,6 @@
-from flask import Blueprint,render_template
+from flask import Blueprint, render_template
 
-#Bulueprintでnoticeアプリを生成する
+# Bulueprintでnoticeアプリを生成する
 tags = Blueprint(
     "tags",
     __name__,

@@ -16,10 +16,10 @@
             {% for error in form.title.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
-            
+
             <!-- 本文の入力フィールドとエラーメッセージ -->
             <p>
-                {{ form.text.label }} 
+                {{ form.text.label }}
             </p>
             <p>
                 {{ form.text() }}

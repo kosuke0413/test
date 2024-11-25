@@ -1,5 +1,6 @@
 from app import db
 
+
 # お知らせテーブル
 class Notice(db.Model):
     __tablename__ = "notice"
@@ -15,7 +16,7 @@ class Notice(db.Model):
 # お知らせ返信テーブル
 class NoticeReply(db.Model):
     __tablename__ = "notice_reply"
-    notice_id = db.Column(db.Integer, nullable=False) 
-    reply_id = db.Column(db.Integer, primary_key=True)    
-    name = db.Column(db.String(10), nullable=False)       
+    notice_id = db.Column(db.Integer, nullable=False)
+    reply_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(10), nullable=False)
     reply_text = db.Column(db.Text, nullable=False)
