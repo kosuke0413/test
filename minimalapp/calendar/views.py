@@ -89,7 +89,7 @@ def eventdetail(calendar_id):
     event = Calendar.query.get_or_404(calendar_id)
     return render_template("calendar/eventdetail.html", event=event)
 
-@Calen.route("/event_list/<int:calendar_id>")
-def eventdetail(calendar_id):
-    event = Calendar.query.get_or_404(calendar_id)
-    return render_template("calendar/eventdetail.html", event=event)
+# @Calen.route("/event_list/<int:calendar_id>")
+# def eventdetail(calendar_id):
+#     event = Calendar.query.get_or_404(calendar_id)
+#     return render_template("calendar/eventdetail.html", event=event)
