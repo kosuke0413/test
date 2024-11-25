@@ -26,8 +26,11 @@ def list():
 
 @consultation.route("/reply", methods=['GET', 'POST'])
 def reply():
-    title = request.args.get('title', '相談のタイトル')  # GETパラメータから取得
-    content = request.args.get('content', '相談内容の詳細')  # GETパラメータから取得
+    # GETパラメータから取得
+    title = request.args.get('title', '相談のタイトル')
+    # GETパラメータから取得
+    content = request.args.get('content', '相談内容の詳細')
+    # title と content で情報を渡す
     return render_template('consultation/reply.html', title=title,
                            content=content)
 
