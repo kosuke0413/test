@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template
+from flask import Blueprint,render_template,redirect,url_for
 from datetime import datetime
 import calendar
 from minimalapp.calendar.forms import CalendarregistForm
@@ -80,16 +80,36 @@ def setEvent():
 
         db.session.add(calen)
         db.session.commit()
-        return "登録完了"
+        return redirect(url_for("calendar/calendar"))
 
     return render_template("calendar/register.html", form=form)
 
-@Calen.route("/eventdetail/<int:calendar_id>")
-def eventdetail(calendar_id):
-    event = Calendar.query.get_or_404(calendar_id)
-    return render_template("calendar/eventdetail.html", event=event)
+# @Calen.route("/event_edit/<calendar_id>", methods=["GET", "POST"])
+# def edit_event(calendar_id):
+#     form = CalendarregistForm():
 
-# @Calen.route("/event_list/<int:calendar_id>")
-# def eventdetail(calendar_id):
-#     event = Calendar.query.get_or_404(calendar_id)
-#     return render_template("calendar/eventdetail.html", event=event)
+#     event = Calendar.query.filter_by(id=calendar_id).first()
+
+#     if form.validate_on_submit():
+#         calen = Calendar(
+#             event.event_title=form.title.data,
+#             content=form.text.data,
+#             day=form.date.data,
+#             local_id="abc"
+#         )
+
+#         db.session.add(calen)
+#         db.session.commit()
+#         return "登録完了"
+
+#     return render_template("calendar/calendar.html", form=form)
+
+
+
+#選択された日のイベント一覧
+# @app.route('/events/<date>')
+# def events(date):
+#     from datetime import datetime
+#     selected_date = datetime.strptime(date, "%Y-%m-%d").date()
+#     events = Event.query.filter_by(date=selected_date).all()
+#     return render_template('events.html', date=selected_date, events=events)
