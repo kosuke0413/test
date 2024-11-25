@@ -3,11 +3,19 @@
 
 <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="stylesheet" href="{{ url_for('user.static', filename='style.css') }}" /> -->
+    <link rel="stylesheet" href="{{ url_for('user.static', filename='style.css') }}" />
     <title>{% block title %}{% endblock%}</title>
 </head>
 
 <body>
+    <div>
+        {% if current_user.is_userenticated %}
+        <p>
+            <span>{{ current_user.name }}</span>
+            <span><a href="{{ url_for('user.logout') }}">ログアウト</a></span>
+        </p>
+        {% endif %}
+    </div>
     {% block content %}{% endblock %}
 </body>
 
