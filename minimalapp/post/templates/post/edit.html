@@ -10,7 +10,6 @@
     <h1>{{ post.post_title }} の編集</h1>
 
     <form method="POST" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
 
         <div>
             <label for="title">タイトル</label>
@@ -27,6 +26,8 @@
             <p><img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像"></p>
             <p><input type="file" name="image" id="image"></p>
         </div>
+
+        {{ form.tag }}
 
         <button type="submit" style="color: blue;">編集完了</button>
     </form>

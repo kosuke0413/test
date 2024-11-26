@@ -2,6 +2,7 @@ from flask import Blueprint,render_template,redirect,url_for,Response,flash
 from app import db
 from minimalapp.post.forms import PostUploadForm
 from minimalapp.post.models import Post
+from minimalapp.tags.models import Tags
 from mimetypes import guess_type
 
 #Bulueprintでpostアプリを生成する
@@ -68,7 +69,7 @@ def get_image(post_id):
     if not post.image:
         return "画像がありません", 404
     
-    print(f"画像データのサイズ: {len(post.image)} bytes")
+    # print(f"画像データのサイズ: {len(post.image)} bytes")
 
     #画像の拡張子を取得
     mime_type, _ = guess_type(f"image.{post.image_extension or 'jpeg'}")
@@ -79,14 +80,17 @@ def get_image(post_id):
 #投稿一覧表示のエンドポイント
 @post.route("/list")
 def post_list():
+    #投稿の一覧を取得、後で地域IDを指定するように変更
     posts = Post.query.all()
     return render_template("post/list.html",posts=posts)
 
 #投稿詳細表示のエンドポイント
 @post.route("/detail/<int:post_id>")
 def post_detail(post_id):
+    #投稿と投稿に対応するタグを取得
     post = Post.query.get_or_404(post_id)
-    return render_template("post/detail.html", post=post)
+    tags = Tags.query.get_or_404(post.tag)
+    return render_template("post/detail.html", post=post,tag=tags)
 
 
 #投稿編集のエンドポイント
@@ -111,6 +115,9 @@ def edit_post(post_id):
     # フォームの初期値に投稿データをセット
     form.title.data = post.post_title
     form.text.data = post.post_text
+    #タグが設定されている場合は初期値をセット
+    if post.tag == None:
+        form.tag.data = str(post.tag)
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
 
