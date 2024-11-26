@@ -10,7 +10,7 @@
     <h1>{{ post.post_title }} の編集</h1>
 
     <form method="POST" enctype="multipart/form-data">
-
+    {{ form.csrf_token }}
         <div>
             <label for="title">タイトル</label>
             <input type="text" name="title" id="title" value="{{ form.title.data }}" required>
