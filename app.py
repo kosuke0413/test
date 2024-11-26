@@ -1,18 +1,22 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate  import Migrate
+from flask_migrate import Migrate
+import os
+from flask_mial import Mail
 
 
 db = SQLAlchemy()
 
+
 def createapp():
     app = Flask(__name__)
     app.config.from_mapping(
-        SECRET_KEY = "ASMss3p5QPbcY2hBsJ",
-        SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:pass@localhost/portal_db',
-        SQLALCHEMY_TRACK_MODIFICATIONS = False,
-        SQLALCHEMY_ECHO = True,
-        WTF_CSRF_SECRET_KEY = "AuwzyszU5sugKN7KZs6f"
+        SECRET_KEY="ASMss3p5QPbcY2hBsJ",
+        SQLALCHEMY_DATABASE_URI=(
+            'postgresql://postgres:pass@localhost/portal_db'),
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        SQLALCHEMY_ECHO=True,
+        WTF_CSRF_SECRET_KEY="AuwzyszU5sugKN7KZs6f"
     )
 
     db.init_app(app)
@@ -37,11 +41,22 @@ def createapp():
 
     # 相談窓口アプリの登録とURLプレフィックス指定
     from minimalapp.consultation import views as consultation_views
-    app.register_blueprint(consultation_views.consultation, url_prefix="/consultaiton")
-
+    app.register_blueprint(consultation_views.consultation,
+                           url_prefix="/consultaiton")
 
     # ユーザーアプリの登録とURLプレフィックス指定
     from minimalapp.user import views as user_views
     app.register_blueprint(user_views.user, url_prefix="/user")
+
+    # Mailクラスのコンフィグを追加する
+    app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER")
+    app.config["MAIL_POST"] = os.environ.get("MAIL_POST")
+    app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS")
+    app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+    app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+    app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
+
+    # flask-mail拡張を登録する
+    mail = Mail(app)
 
     return app
