@@ -75,13 +75,8 @@ def get_image(post_id):
     post = Post.query.get_or_404(post_id)
     if not post.image:
         return "画像がありません", 404
-<<<<<<< HEAD
     
     # print(f"画像データのサイズ: {len(post.image)} bytes")
-=======
-
-    print(f"画像データのサイズ: {len(post.image)} bytes")
->>>>>>> b51e00831dbc037e8dd589148186ed276acca73a
 
     # 画像の拡張子を取得
     mime_type, _ = guess_type(f"image.{post.image_extension or 'jpeg'}")

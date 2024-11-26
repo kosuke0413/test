@@ -1,14 +1,8 @@
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-<<<<<<< HEAD
 from wtforms import StringField,TextAreaField,RadioField
 from wtforms.validators import DataRequired,length,Optional
-=======
-from wtforms import StringField, TextAreaField, RadioField
-from wtforms.validators import DataRequired, length
-
->>>>>>> b51e00831dbc037e8dd589148186ed276acca73a
 
 class PostUploadForm(FlaskForm):
     # タイトルフィールドのバリデーションを設定
