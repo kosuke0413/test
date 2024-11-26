@@ -13,9 +13,11 @@
     <img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像">
 
     {% endif %}
+    {% if tag.tag_name %}
     <ul>
         <li>{{ tag.tag_name }}</li>
     </ul>
+    {% endif %}
 
     <br>
     <a href="{{ url_for('post.post_list') }}">戻る</a>

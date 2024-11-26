@@ -87,7 +87,7 @@ def get_image(post_id):
 # 投稿一覧表示のエンドポイント
 @post.route("/list")
 def post_list():
-    #投稿の一覧を取得、後で地域IDを指定するように変更
+    # 投稿の一覧を取得、後で地域IDを指定するように変更
     posts = Post.query.all()
     return render_template("post/list.html", posts=posts)
 
@@ -97,7 +97,9 @@ def post_list():
 def post_detail(post_id):
     #投稿と投稿に対応するタグを取得
     post = Post.query.get_or_404(post_id)
-    tags = Tags.query.get_or_404(post.tag)
+    tags = None
+    if not post.tag == None:
+        tags = Tags.query.get_or_404(post.tag)
     return render_template("post/detail.html", post=post,tag=tags)
 
 
@@ -125,8 +127,8 @@ def edit_post(post_id):
     # フォームの初期値に投稿データをセット
     form.title.data = post.post_title
     form.text.data = post.post_text
-    #タグが設定されている場合は初期値をセット
-    if post.tag == None:
+    # タグが設定されている場合は初期値をセット
+    if not post.tag == None:
         form.tag.data = str(post.tag)
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
