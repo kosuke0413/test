@@ -129,8 +129,8 @@ def delete(calendar_id):
 def events(date):
     from datetime import datetime
     selected_date = datetime.strptime(date, "%Y-%m-%d").date()
-    events = Calendar.query.filter_by(date=selected_date).all()
-    return render_template('event_list.html', date=selected_date,
+    events = Calendar.query.filter_by(day=selected_date).all()
+    return render_template('calendar/event_list.html', date=selected_date,
                            events=events)
 
 
@@ -146,3 +146,4 @@ def selectindex(year, month):
 
     return render_template('calendar/calendar.html', year=year, month=month,
                            month_days=month_days)
+
