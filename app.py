@@ -1,15 +1,24 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 import os
-from flask_mial import Mail
+from flask_mail import Mail
 
-
+# SQLAlchemyをインスタンス化
 db = SQLAlchemy()
 
+# LoginManagerをインスタンス化
+login_manager = LoginManager()
+# 未ログイン時にリダイレクトするエンドポイントを指定
+login_manager.login_view = "user.signup"
+# ログイン後に表示するメッセージを表示
+login_manager.login_message = "ログイン成功"
 
+# アプリを生成
 def createapp():
     app = Flask(__name__)
+    # データベース設定
     app.config.from_mapping(
         SECRET_KEY="ASMss3p5QPbcY2hBsJ",
         SQLALCHEMY_DATABASE_URI=(
@@ -18,9 +27,12 @@ def createapp():
         SQLALCHEMY_ECHO=True,
         WTF_CSRF_SECRET_KEY="AuwzyszU5sugKN7KZs6f"
     )
-
+    
+    #login_managerをアプリと連携
+    login_manager.init_app(app)
+    # SQLAlchemyをアプリと連携
     db.init_app(app)
-
+    # flask_migrateをアプリと連携
     Migrate(app, db)
 
     # noticeアプリの登録とURLプレフィックス指定
