@@ -1,29 +1,21 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>住民投稿一覧</title>
-    </head>
+{% extends "base.html" %}
+{% block title %} 住民投稿一覧 {% endblock %}
 
-    <body>
-        <h1>住民投稿</h1>
+{% block content %}
+    <h1>住民投稿</h1>
 
-        <!-- 住民投稿の一覧表示 -->
-        <ul>
-            {% if posts %}
-            {% for post in posts %}
-            <li>
-                <a href = "{{ url_for('post.post_detail',post_id=post.post_id) }}">
-                    {{ post.post_title }}
-                </a>
-            </li>
-            {% endfor %}
-            {% else %}
-            <p>現在表示する投稿はありません</p>
-            {% endif %}
-        </ul>
-
-
-    </body>
-
-</html>
+    <!-- 住民投稿の一覧表示 -->
+    <ul>
+        {% if posts %}
+        {% for post in posts %}
+        <li>
+            <a href = "{{ url_for('post.post_detail',post_id=post.post_id) }}">
+                {{ post.post_title }}
+            </a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>現在表示する投稿はありません</p>
+        {% endif %}
+    </ul>
+{% endblock %}

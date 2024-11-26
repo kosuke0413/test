@@ -8,11 +8,11 @@ class SignUpForm(FlaskForm):
         "地域ID",
         validators=[
             DataRequired(message="地域IDは必須です。"),
-            Length(min=3,max=3, message="3文字で入力してください。")
+            Length(min=3,max=3, message="3文字で入力してください。"),
         ]
     )
 
-    name = StringField(
+    username = StringField(
         "名前",
         validators=[
             DataRequired(message="名前は必須です。"),
@@ -37,7 +37,7 @@ class SignUpForm(FlaskForm):
         ]
     )
 
-    submit = SubmitField("OK")
+    submit = SubmitField("登録  ")
 
 
 class LoginForm(FlaskForm):
@@ -58,6 +58,4 @@ class LoginForm(FlaskForm):
         ]
     )
 
-    submit = SubmitField("OK")
-
-
+    submit = SubmitField("ログイン")
