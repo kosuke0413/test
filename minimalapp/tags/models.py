@@ -9,5 +9,5 @@ class Tags(db.Model):
 
 class Local(db.Model):
     __tablename__ = "local"
-    local_id = db.Column(db.Integer, primary_key=True,)
+    local_id = db.Column(db.String(3), primary_key=True,)
     local_name = db.Column(db.String(20))
