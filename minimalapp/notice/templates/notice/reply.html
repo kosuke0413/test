@@ -4,9 +4,9 @@
 <h1>{{ notice.notice_title }} への返信</h1>
 
 <form method="POST">
-
+    {{ form.csrf_token }}
     <div class="form-group">
-        {{ form.text.label }}
+        <p>{{ form.text.label }}</p>
         {{ form.text(class="form-control") }}
         {% for error in form.text.errors %}
         <span class="text-danger">{{ error }}</span>

@@ -10,7 +10,7 @@
     <h1>{{ notice.notice_title }} の編集</h1>
 
     <form method="POST" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
 
         <div>
             <label for="title">タイトル</label>

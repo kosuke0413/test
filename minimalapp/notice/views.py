@@ -19,7 +19,7 @@ def top():
     return render_template("notice/top.html", notices=notices)
 
 
-# 住民投稿のエンドポイント
+# お知らせ投稿のエンドポイント
 @notice.route("/create", methods=["GET", "POST"])
 def create_notice():
     # 投稿フォームをインスタンス化
@@ -71,11 +71,12 @@ def get_image(notice_id):
 def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     tags = None
+    form = NoticeReplyForm()
     if not notice.tag == None:
         tags = Tags.query.get_or_404(notice.tag)
     replies = NoticeReply.query.filter_by(notice_id=notice_id).all()
     return render_template("notice/detail.html", notice=notice, tag=tags,
-                           replies=replies)
+                           replies=replies, form=form)
 
 
 # お知らせ編集
@@ -111,7 +112,7 @@ def edit_notice(notice_id):
 
 
 # お知らせ削除
-@notice.route('/<int:notice_id>/delete', methods=['POST'])
+@notice.route("/<int:notice_id>/delete", methods=['POST'])
 def delete(notice_id):
     # 削除処理
     notice = Notice.query.get(notice_id)
@@ -123,7 +124,7 @@ def delete(notice_id):
 
 
 # お知らせ返信
-@notice.route("/reply/<int:notice_id>", methods=["GET", "POST"])
+@notice.route("/reply/<int:notice_id>/delete", methods=["GET", "POST"])
 def reply(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     form = NoticeReplyForm()
@@ -140,3 +141,18 @@ def reply(notice_id):
         db.session.commit()
         return redirect(url_for('notice.detail', notice_id=notice_id))
     return render_template("notice/reply.html", form=form, notice=notice)
+
+
+# 返信削除処理
+@notice.route("/<int:reply_id>/delete", methods=["POST"])
+def reply_delete(reply_id):
+    reply = NoticeReply.query.get_or_404(reply_id)
+    notice_id = reply.notice_id
+
+    # 返信削除
+    db.session.delete(reply)
+    db.session.commit()
+
+    flash('返信を削除しました')
+    return redirect(url_for('notice.detail', notice_id=notice_id))
+
