@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}サイト名{% endblock %}</title>
+    <link rel="stylesheet" href="#">
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- サイドバー -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <h1><a href="{{ url_for('notice.top') }}">〇〇町</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="#">{{ user.username }}</a></li>
+                    {% else %}
+                        <li><a href="#">ログイン</a></li>
+                    {% endif %}
+                    <li><a href="#">メニューページ</a></li>
+                    <li><a href="#">言語選択</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="#">ログアウト</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main class="content">
+            {% block content %}
+            <!-- ページごとのコンテンツをここに挿入 -->
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>
