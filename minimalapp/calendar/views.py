@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,redirect,url_for,flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 from datetime import datetime
 import calendar
 from minimalapp.calendar.forms import CalendarregistForm
@@ -26,13 +26,14 @@ def index():
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html',
+                           year=year, month=month, month_days=month_days)
 
 
 # 次の月のカレンダーを作成
 @Calen.route('/next<int:year>/<int:month>')
 def nextindex(year, month):
-    
+
     # 12月の次を1月にして、年に1を足す
     if month == 12:
         year = year + 1
@@ -45,7 +46,8 @@ def nextindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html', year=year, month=month,
+                           month_days=month_days)
 
 
 # 先月のカレンダーを作成
@@ -63,7 +65,8 @@ def beforeindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html', year=year, month=month,
+                           month_days=month_days)
 
 
 # カレンダー登録のエンドポイント
@@ -100,13 +103,13 @@ def edit_event(calendar_id):
 
         db.session.commit()
         return redirect(url_for("calendar.index"))
-    
+
     # フォームの初期値に投稿データをセット
     form.title.data = event.event_title
     form.text.data = event.content
     form.date.data = event.day
 
-    return render_template("calendar/event_edit.html", form=form,event=event)
+    return render_template("calendar/event_edit.html", form=form, event=event)
 
 
 # カレンダーイベント削除のエンドポイント
@@ -127,8 +130,8 @@ def events(date):
     from datetime import datetime
     selected_date = datetime.strptime(date, "%Y-%m-%d").date()
     events = Calendar.query.filter_by(date=selected_date).all()
-    return render_template('event_list.html', 
-                           date=selected_date, events=events)
+    return render_template('event_list.html', date=selected_date,
+                           events=events)
 
 
 # 選択された年月のカレンダーを表示
@@ -141,4 +144,5 @@ def selectindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html', year=year, month=month,
+                           month_days=month_days)
