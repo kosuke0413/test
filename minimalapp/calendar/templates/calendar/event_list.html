@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ date }}のイベント一覧</title>
+</head>
+<body>
+    <h1>{{ date }}のイベント一覧</h1>
+    
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li>
+                    <h2>{{ event.event_title }}</h2>
+                    <p>{{ event.content}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>この日にイベントはありません。</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('calendar.selectindex', year=date.year, month=date.month) }}">カレンダーに戻る</a>
+</body>
+</html>

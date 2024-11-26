@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ユーザー新規作成</title>
+    </head>
+
+    <body>
+        <h2>カレンダー編集</h2>
+        <form
+          action="{{ url_for('calendar.edit_event', calendar_id=event.calendar_id) }}"
+          method="POST"
+          novalidate="novalidate"
+        >
+        {{ form.csrf_token }}
+        <p>
+            {{ form.title.label }} {{ form.title(placeholder="タイトル") }}
+        </p>
+        {% for error in form.title.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+        <p>
+            {{ form.date.label }} {{ form.date(placeholder="日付") }}
+        </p>
+        {% for error in form.date.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+        <p>
+            {{ form.text.label }} {{ form.text(placeholder="本文") }}
+        </p>
+        {% for error in form.text.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <form method="POST" action="{{ url_for('calendar.delete', calendar_id=event.calendar_id) }}"
+        onsubmit="return confirm('本当に削除しますか？');">
+        <button type="submit" style="color: red;">削除</button>
+    </form>
+
+    </body>
+</html>
