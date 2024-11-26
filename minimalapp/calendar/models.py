@@ -1,5 +1,6 @@
 from app import db
 
+
 class Calendar(db.Model):
     __tablename__ = "calendar"
     calendar_id = db.Column(db.Integer, primary_key=True)

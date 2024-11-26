@@ -1,11 +1,11 @@
-from flask import Blueprint,render_template,redirect,url_for
+from flask import Blueprint, render_template, redirect, url_for
 from datetime import datetime
 import calendar
 from minimalapp.calendar.forms import CalendarregistForm
 from minimalapp.calendar.models import Calendar
 from app import db
 
-#Blueprintでcalendarアプリを生成する
+# Blueprintでcalendarアプリを生成する
 Calen = Blueprint(
     "calendar",
     __name__,
@@ -13,7 +13,8 @@ Calen = Blueprint(
     static_folder="../static"
 )
 
-#現在の年月のカレンダーを作成
+
+# 現在の年月のカレンダーを作成
 @Calen.route('/')
 def index():
     # 現在の年と月を取得
@@ -25,14 +26,15 @@ def index():
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html', year=year, month=month,
+                           month_days=month_days)
 
 
-#次の月のカレンダーを作成
+# 次の月のカレンダーを作成
 @Calen.route('/next<int:year>/<int:month>')
 def nextindex(year, month):
-    
-    #12月の次を1月にして、年に1を足す
+
+    # 12月の次を1月にして、年に1を足す
     if month == 12:
         year = year + 1
         month = 1
@@ -44,12 +46,14 @@ def nextindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html', year=year, month=month,
+                           month_days=month_days)
 
-#先月のカレンダーを作成
+
+# 先月のカレンダーを作成
 @Calen.route('/before/<int:year>/<int:month>')
 def beforeindex(year, month):
-    #12月の次を1月にして、年に1を引く
+    # 12月の次を1月にして、年に1を引く
     if month == 1:
         year = year - 1
         month = 12
@@ -61,13 +65,14 @@ def beforeindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    return render_template('calendar/calendar.html', year=year, month=month, month_days=month_days)
+    return render_template('calendar/calendar.html', year=year, month=month,
+                           month_days=month_days)
 
 
-#カレンダー登録のエンドポイント
+# カレンダー登録のエンドポイント
 @Calen.route('/register', methods=["GET", "POST"])
 def setEvent():
-    #カレンダーフォームをインスタンス化
+    # カレンダーフォームをインスタンス化
     form = CalendarregistForm()
 
     if form.validate_on_submit():
@@ -105,8 +110,7 @@ def setEvent():
 #     return render_template("calendar/calendar.html", form=form)
 
 
-
-#選択された日のイベント一覧
+# 選択された日のイベント一覧
 # @app.route('/events/<date>')
 # def events(date):
 #     from datetime import datetime

@@ -1,8 +1,9 @@
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField,TextAreaField,DateField
-from wtforms.validators import DataRequired,length
+from wtforms import StringField, TextAreaField, DateField
+from wtforms.validators import DataRequired, length
+
 
 class CalendarregistForm(FlaskForm):
 
@@ -10,7 +11,7 @@ class CalendarregistForm(FlaskForm):
         "タイトル",
         validators=[
             DataRequired(message="タイトルは必須です。"),
-            length(max=30,message="30文字以内で入力してください。"),
+            length(max=30, message="30文字以内で入力してください。"),
         ]
     )
 
@@ -18,10 +19,9 @@ class CalendarregistForm(FlaskForm):
         "本文",
         validators=[
             DataRequired(message="本文は必須です。"),
-            length(max=200,message="200文字以内で入力してください。"),
-        ]     
+            length(max=200, message="200文字以内で入力してください。"),
+        ]
     )
-
 
     date = DateField(
        "日付",
