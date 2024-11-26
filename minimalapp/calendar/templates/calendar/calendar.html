@@ -17,6 +17,19 @@
         th {
             background-color: #f2f2f2;
         }
+        button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -47,8 +60,15 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('calendar.beforeindex',year=year,month=month)}}">前へ</a>
-    <a href="{{ url_for('calendar.nextindex',year=year,month=month)}}">次へ</a>
+    <div>
+        <a href="{{ url_for('calendar.beforeindex',year=year,month=month)}}">前へ</a>
+        <a href="{{ url_for('calendar.nextindex',year=year,month=month)}}">次へ</a>
+    </div>
+
+     <!-- 登録ボタン -->
+     <form action="{{url_for('calendar.setEvent')}}" method="get">
+        <button type="submit">登録</button>
+    </form>
 
 </body>
 </html>

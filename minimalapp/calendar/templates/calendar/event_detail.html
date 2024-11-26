@@ -14,7 +14,7 @@
     <p>{{ event.content }}</p>
 
     <br>
-    <a href="{{ url_for('calendar.calendar') }}">トップページに戻る</a>
+    <a href="{{ url_for('calendar.events', date=date) }}">戻る</a>
 </body>
 
 </html>

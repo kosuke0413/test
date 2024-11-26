@@ -147,3 +147,12 @@ def selectindex(year, month):
     return render_template('calendar/calendar.html', year=year, month=month,
                            month_days=month_days)
 
+
+# カレンダー詳細のエンドポイント
+@Calen.route("/event_detail/<calendar_id>", methods=["GET"])
+def event_detail(calendar_id):
+    event = Calendar.query.get_or_404(calendar_id)
+    date = event.day
+
+    return render_template("calendar/event_detail.html",
+                           event=event, date=date)

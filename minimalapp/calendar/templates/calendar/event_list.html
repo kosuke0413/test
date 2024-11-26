@@ -11,7 +11,7 @@
         <ul>
             {% for event in events %}
                 <li>
-                    <a href="{{ url_for('calendar.edit_event', calendar_id=event.calendar_id) }}">{{event.event_title}}</a>
+                    <a href="{{ url_for('calendar.event_detail', calendar_id=event.calendar_id) }}">{{event.event_title}}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -20,6 +20,6 @@
     {% endif %}
 
     <br>
-    <a href="{{ url_for('calendar.selectindex', year=date.year, month=date.month) }}">カレンダーに戻る</a>
+    <a href="{{ url_for('calendar.selectindex', year=date.year, month=date.month) }}">戻る</a>
 </body>
 </html>
