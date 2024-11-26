@@ -2,7 +2,7 @@ from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
 from wtforms import StringField, TextAreaField, RadioField
-from wtforms.validators import DataRequired, length
+from wtforms.validators import DataRequired, length, Optional
 
 
 class NoticeUploadForm(FlaskForm):
@@ -42,6 +42,19 @@ class NoticeUploadForm(FlaskForm):
             ("5", "ボランティア"),
             ("6", "注意喚起"),
         ],
+        validators=[Optional()]
     )
 
     submit = SubmitField("アップロード")
+
+
+class NoticeReplyForm(FlaskForm):
+    text = TextAreaField(
+        "本文",
+        validators=[
+            DataRequired(message="本文は必須です。"),
+            length(max=200, message="200文字以内で入力してください。"),
+        ]     
+    )
+
+    submit = SubmitField("送信する")

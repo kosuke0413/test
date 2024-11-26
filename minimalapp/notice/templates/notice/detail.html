@@ -9,15 +9,32 @@
 <body>
     <h1>{{ notice.notice_title }}</h1>
     <p>{{ notice.notice_text }}</p>
+
     {% if notice.image %}
     <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像">
-
     {% endif %}
+
+    {% if tag.tag_name %}
     <ul>
-        {% for tag in tags %}
         <li>{{ tag.tag_name }}</li>
+    </ul>
+    {% endif %}
+
+
+    <!-- 返信一覧を表示 -->
+    <ul>
+        {% for reply in replies %}
+        <li>
+            {{ reply.name }}: {{ reply.reply_text }}
+        </li>
         {% endfor %}
     </ul>
+
+    <!-- 返信フォームへのリンク -->
+    <br>
+    <form action="{{ url_for('notice.reply', notice_id=notice.notice_id) }}" method="get" style="display:inline;">
+        <button type="submit" class="btn btn-primary">返信する</button>
+    </form>
 
     <br>
     <a href="{{ url_for('notice.top') }}">トップページに戻る</a>

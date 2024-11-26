@@ -1,10 +1,7 @@
-from flask import (
-    Blueprint, render_template, redirect,
-    url_for, Response, flash
-)
+from flask import Blueprint, render_template, redirect, url_for, Response, flash
 from app import db
-from minimalapp.notice.forms import NoticeUploadForm
-from minimalapp.notice.models import Notice
+from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm
+from minimalapp.notice.models import Notice, NoticeReply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
 # Bulueprintでnoticeアプリを生成する
@@ -27,9 +24,7 @@ def top():
 def create_notice():
     # 投稿フォームをインスタンス化
     form = NoticeUploadForm()
-
     if form.validate_on_submit():
-        print("テスト")
         # ファイルデータをバイナリで取得
         image_data = None
         image_extension = None
@@ -37,16 +32,14 @@ def create_notice():
             image_file = form.image.data
             image_data = image_file.read()  # バイナリデータに変換
             # ファイルの拡張子を取得
-            image_extension = image_file.filename.rsplit('.', 1)[-1].lower()
-            # 拡張子を取得
+            image_extension = image_file.filename.rsplit('.', 1)[-1].lower()  # 拡張子を取得
 
         # 投稿を作成する 後でログインユーザーに直す
         notice = Notice(
             notice_title=form.title.data,
             notice_text=form.text.data,
             image=image_data,
-            image_extension=image_extension,
-            # 拡張子を保存
+            image_extension=image_extension,  # 拡張子を保存
             tag=form.tag.data,
             local_id="a10"
         )
@@ -55,7 +48,6 @@ def create_notice():
         db.session.add(notice)
         db.session.commit()
         return "投稿成功"
-
     return render_template("notice/create.html", form=form)
 
 
@@ -66,7 +58,6 @@ def get_image(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     if not notice.image:
         return "画像がありません", 404
-
     # print(f"画像データのサイズ: {len(post.image)} bytes")
 
     # 画像の拡張子を取得
@@ -79,9 +70,12 @@ def get_image(notice_id):
 @notice.route("/detail/<int:notice_id>")
 def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
-    tag = Tags.query.get_or_404(notice.tag)
-    tags = [tag]  # 単一のタグをリストに変換
-    return render_template("notice/detail.html", notice=notice, tags=tags)
+    tags = None
+    if not notice.tag == None:
+        tags = Tags.query.get_or_404(notice.tag)
+    replies = NoticeReply.query.filter_by(notice_id=notice_id).all()
+    return render_template("notice/detail.html", notice=notice, tag=tags,
+                           replies=replies)
 
 
 # お知らせ編集
@@ -99,17 +93,17 @@ def edit_notice(notice_id):
             image_file = form.image.data
             notice.image = image_file.read()  # バイナリデータに変換
             notice.image_extension = image_file.filename.rsplit(
-                '.', 1)[-1].lower()
-            # 拡張子を取得
+                '.', 1)[-1].lower()  # 拡張子を取得
 
         db.session.commit()  # 変更をコミット
-        return redirect(url_for(
-            'notice.edit_notice', notice_id=notice.notice_id))
-        # 更新後、編集ページを再読み込み
+        return redirect(url_for('notice.edit_notice',
+                                notice_id=notice.notice_id))  # 更新後、編集ページを再読み込み
 
     # フォームの初期値に投稿データをセット
     form.title.data = notice.notice_title
     form.text.data = notice.notice_text
+    if not notice.tag == None:
+        form.tag.data = str(notice.tag)
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
 
@@ -126,3 +120,23 @@ def delete(notice_id):
         db.session.commit()
     flash('お知らせを削除しました')
     return redirect(url_for('notice.top'))  # 削除が完了するとtopページに遷移
+
+
+# お知らせ返信
+@notice.route("/reply/<int:notice_id>", methods=["GET", "POST"])
+def reply(notice_id):
+    notice = Notice.query.get_or_404(notice_id)
+    form = NoticeReplyForm()
+
+    if form.validate_on_submit():
+        reply_text = form.text.data
+        # 返信をデータベースに保存
+        reply = NoticeReply(
+            notice_id=notice_id,
+            reply_text=reply_text,
+            name="大原"
+        )
+        db.session.add(reply)
+        db.session.commit()
+        return redirect(url_for('notice.detail', notice_id=notice_id))
+    return render_template("notice/reply.html", form=form, notice=notice)

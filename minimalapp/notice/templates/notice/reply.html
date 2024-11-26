@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<h1>{{ notice.notice_title }} への返信</h1>
+
+<form method="POST">
+
+    <div class="form-group">
+        {{ form.text.label }}
+        {{ form.text(class="form-control") }}
+        {% for error in form.text.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-success">送信</button>
+</form>
+
+<a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}" class="btn btn-secondary">戻る</a>
