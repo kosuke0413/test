@@ -24,8 +24,8 @@ def signup():
 
     if form.validate_on_submit():
         user = User(
-            local_id=form.local_id.date,
-            username=form.username.data,
+            local_id=form.local_id.data,
+            name=form.username.data,
             mailaddress=form.mailaddress.data,
             password_hash=form.password.data,
         )
@@ -33,6 +33,11 @@ def signup():
         # メールアドレス重複チェック
         if user.is_duplicate_mailaddress():
             flash("指定のメールアドレスは登録済みです")
+            return redirect(url_for("user.signup"))
+
+        # 地域IDの存在チェック
+        if user.local_id_existence_confirmation():
+            flash("指定の地域IDは存在しません")
             return redirect(url_for("user.signup"))
 
         # ユーザー情報を登録する

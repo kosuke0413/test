@@ -14,14 +14,14 @@
             <nav>
                 <ul>
                     <h1><a href="{{ url_for('notice.top') }}">〇〇町</a></li></h1>
-                    {% if user.is_authenticated %}
-                        <li><a href="#">{{ user.username }}</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="#">{{ current_user.name }}</a></li>
                     {% else %}
                         <li><a href="#">ログイン</a></li>
                     {% endif %}
                     <li><a href="#">メニューページ</a></li>
                     <li><a href="#">言語選択</a></li>
-                    {% if user.is_authenticated %}
+                    {% if current_user.is_authenticated %}
                         <li><a href="#">ログアウト</a></li>
                     {% endif %}
                 </ul>

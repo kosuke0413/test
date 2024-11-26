@@ -34,6 +34,10 @@ class User(db.Model, UserMixin):
     def local_id_existence_confirmation(self):
         return Local.query.filter_by(local_id=self.local_id).first() is not None
     
+    # get_id メソッドをオーバーライドして user_id を返す
+    def get_id(self):
+        return str(self.user_id)
+    
 # ログインしているユーザー情報を取得する関数を作成する
 @login_manager.user_loader
 def load_user(user_id):
