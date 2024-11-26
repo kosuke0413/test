@@ -1,0 +1,16 @@
+/* 縦書きスタイル */
+.vertical-text {
+    writing-mode: vertical-rl; /* 縦書き（右から左） */
+    text-orientation: upright; /* 文字を正しい向きに表示 */
+    line-height: 1.5;          /* 行間の調整 */
+    display: inline-block;     /* サイズ調整を適切に */
+}
+
+/* リンクのスタイル */
+a {
+    text-decoration: none; /* 下線を消す */
+    color: inherit;        /* 親要素の色を継承 */
+}
+a:hover {
+    text-decoration: underline; /* ホバー時に下線を追加 */
+}

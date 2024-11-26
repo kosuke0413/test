@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}サイト名{% endblock %}</title>
-    <link rel="stylesheet" href="#">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
         <aside class="sidebar">
             <nav>
                 <ul>
-                    <!-- <h1><a href="{{ url_for('notice.top') }}">〇〇町</a></li>
+                    <h1><a href="{{ url_for('notice.top') }}">〇〇町</a></li></h1>
                     {% if user.is_authenticated %}
                         <li><a href="#">{{ user.username }}</a></li>
                     {% else %}
@@ -23,8 +23,7 @@
                     <li><a href="#">言語選択</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="#">ログアウト</a></li>
-                    {% endif %} -->
-                    <li>継承チェック</li>
+                    {% endif %}
                 </ul>
             </nav>
         </aside>
