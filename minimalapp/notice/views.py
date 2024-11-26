@@ -124,7 +124,7 @@ def delete(notice_id):
 
 
 # お知らせ返信
-@notice.route("/reply/<int:notice_id>/delete", methods=["GET", "POST"])
+@notice.route("/reply/<int:notice_id>", methods=["GET", "POST"])
 def reply(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     form = NoticeReplyForm()
@@ -144,7 +144,7 @@ def reply(notice_id):
 
 
 # 返信削除処理
-@notice.route("/<int:reply_id>/delete", methods=["POST"])
+@notice.route('/reply/delete/<int:reply_id>', methods=['POST'])
 def reply_delete(reply_id):
     reply = NoticeReply.query.get_or_404(reply_id)
     notice_id = reply.notice_id
