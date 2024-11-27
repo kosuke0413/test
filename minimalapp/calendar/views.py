@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from datetime import datetime
+from datetime import datetime, date
 import calendar
 from minimalapp.calendar.forms import CalendarregistForm
 from minimalapp.calendar.models import Calendar
 from app import db
+from sqlalchemy import select
 
 # Blueprintでcalendarアプリを生成する
 Calen = Blueprint(
@@ -12,6 +13,21 @@ Calen = Blueprint(
     template_folder="templates",
     static_folder="../static"
 )
+
+# 月の開始日と終了日を取得する関数
+# def get_month_range(year, month):
+#     start_date = date(year, month, 1)
+#     last_day = calendar.monthrange(year, month)[1]  # 月の最終日
+#     end_date = date(year, month, last_day)
+#     return start_date, end_date
+
+# # 指定した月のすべてのデータを取得する
+# def fetch_events_for_month(connection, year, month):
+#     start_date, end_date = get_month_range(year, month)
+#     query = select(Calendar).where(Calendar.c.day.between(start_date, end_date))
+#     result = connection.execute(query)
+#     return result.fetchall()
+
 
 
 # 現在の年月のカレンダーを作成
@@ -25,6 +41,8 @@ def index():
     # カレンダーを作成
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
+
+    # date_string = f"{year}-{month}"
 
     return render_template('calendar/calendar.html',
                            year=year, month=month, month_days=month_days)

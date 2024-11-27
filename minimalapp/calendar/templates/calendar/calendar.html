@@ -53,7 +53,12 @@
                         {% if day == 0 %}
                             <td></td>
                         {% else %}
-                            <td>{{ day }}</td>
+                        <td>
+                            <form action="{{ url_for('calendar.setEvent') }}" method="get">
+                                <input type="hidden" name="date" value="{{ year }}-{{ month }}-{{ day }}">
+                                <button type="submit">{{ day }}</button>
+                            </form>
+                        </td>
                         {% endif %}
                     {% endfor %}
                 </tr>
