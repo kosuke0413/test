@@ -56,22 +56,23 @@ def signup():
     return render_template("user/signup.html",form=form)
 
 
-#  @auth.route("/login", methods=["GET","POST"])
-#  def login():
-#      form = LoginForm()
-#      if form.validate_on_submit():
-#          user = User.query.filter_by(mailadores=form.mailadores.data).first()
+# @user.route("/login", methods=["GET","POST"])
+# def login():
+#       form = LoginForm()
+#       if form.validate_on_submit():
+#           user = User.query.filter_by(mailaddsoress=form.mailaddoress.data).first()
 
-#          if user is not None and user.verify_password(form.password.data):
-#              login_user(user)
-#              return redirect(url_for("detector.index"))
+#           if user is not None and user.verify_password(form.password.data):
+#               login_user(user)
+#               return redirect(url_for("notice.top"))
 
-#          flash("メールアドレスかパスワードが不正です")
+#           flash("メールアドレスかパスワードが不正です")
     
-#      return render_template("auth/login.html",form=form)
+#       return render_template("user/login.html",form=form)
 
 
-#  @auth.route("/logout")
+#  @user.route("/logout")
 #  def logout():
 #      logout_user()    
-#      return redirect(url_for("auth.login"))
+#      return redirect(url_for("user.login"))
+
