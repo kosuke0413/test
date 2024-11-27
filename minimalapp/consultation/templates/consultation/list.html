@@ -27,12 +27,9 @@
                     {{ consul.content }}
                     <!-- DBのデータ内の title 要素を出力 -->
 
-                    <!-- <a>の中でURLで送って、「情報あげますよ～」の顔して、 -->
-                        <a href="{{ url_for('consultation.reply',
-                                            title=consul.title,
-                                            content=consul.content,
-                                            contact_mail=consul.mailadores) }}"
-                                            style="text-decoration: none;">
+                    <!-- -->
+                        <a href="{{ url_for('consultation.reply',consult_id=consul.consult_id)}}">
+
                             <!-- 相談に返信へ移動だよ～って顔つき -->
                             <button type="button">相談内容の詳細へ移動</button>
                         </a>

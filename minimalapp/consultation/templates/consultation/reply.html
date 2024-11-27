@@ -28,11 +28,11 @@
             <!-- それぞれDBから持ってくる -->
             <!-- タイトル持ってくる -->
             <label>相談のタイトル:</label>
-            <div>{{ title }}</div>
+            <div>{{ consult.title }}</div>
 
             <!-- 相談内容持ってくる -->
             <label>相談内容:</label>
-            <div>{{ content }}</div>
+            <div>{{ consult.content }}</div>
 
             <!-- 返信する内容打つ枠 -->
             <label for="reply">返信本文:</label>
@@ -40,10 +40,12 @@
                 <textarea id="reply" name="reply"></textarea>
             </div>
 
-            <!-- 一応メアドもあるよ～ん見えないけど -->
-            <td>メールアドレス</td>
-            <td><input type="text" name="contact_mail" value="{{ contact_mail }}" placeholder="メールアドレス"></td>
-
+            <!-- contact_mail としてメアドを持ってきて -->
+             <!-- consult.mailadores に入れる -->
+            <label>メールアドレス</label>
+            <td><p name="contact_mail">{{ consult.mailadores }}</p></td>
+            <!-- ユーザーIDを見えない属性で持ってきている -->
+            <td><input type="hidden" name="consult_id" value="{{ consult.consult_id }}" ></td>
             <!-- 送信ボタンポチ～～ -->
             <div class="submit-button">
                 <button type="submit">送信</button>
