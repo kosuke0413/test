@@ -70,6 +70,7 @@ def send():
     # フォームに送るやよ
 
 
+# 送信完了ページ
 @consultation.route("send/send_complate", methods=["GET", "POST"])
 def send_complate():
     if request.method == "POST":
@@ -113,6 +114,7 @@ def send_complate():
     return render_template("consultation/send_complate.html")
 
 
+# メールを送信する関数
 def send_email(to, subject, template, **kwargs):
     msg = Message(subject, recipients=[to])
     msg.body = render_template(template + ".txt", **kwargs)
