@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>検索結果</title>
+</head>
+
+<body>
+    <h1>検索結果</h1>
+
+    {% if results %}
+    <ul>
+        {% for result in results %}
+        <li>
+            <strong>タイトル:</strong>
+            <a href="{{ url_for('notice.detail', notice_id=result.notice_id) }}">{{ result.notice_title }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>該当するお知らせは見つかりませんでした。</p>
+    {% endif %}
+
+    <a href="{{ url_for('notice.search') }}">検索画面に戻る</a>
+</body>
+
+</html>

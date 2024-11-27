@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, Response, flash
 from app import db
-from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm
+from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm, SearchForm
 from minimalapp.notice.models import Notice, NoticeReply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
@@ -97,7 +97,7 @@ def edit_notice(notice_id):
                 '.', 1)[-1].lower()  # 拡張子を取得
 
         db.session.commit()  # 変更をコミット
-        return redirect(url_for('notice.edit_notice',
+        return redirect(url_for("notice.edit_notice",
                                 notice_id=notice.notice_id))  # 更新後、編集ページを再読み込み
 
     # フォームの初期値に投稿データをセット
@@ -112,14 +112,14 @@ def edit_notice(notice_id):
 
 
 # お知らせ削除
-@notice.route("/<int:notice_id>/delete", methods=['POST'])
+@notice.route("/<int:notice_id>/delete", methods=["POST"])
 def delete(notice_id):
     # 削除処理
     notice = Notice.query.get(notice_id)
     if notice:
         db.session.delete(notice)
         db.session.commit()
-    flash('お知らせを削除しました')
+    flash("お知らせを削除しました")
     return redirect(url_for('notice.top'))  # 削除が完了するとtopページに遷移
 
 
@@ -139,12 +139,12 @@ def reply(notice_id):
         )
         db.session.add(reply)
         db.session.commit()
-        return redirect(url_for('notice.detail', notice_id=notice_id))
+        return redirect(url_for("notice.detail", notice_id=notice_id))
     return render_template("notice/reply.html", form=form, notice=notice)
 
 
 # 返信削除処理
-@notice.route('/reply/delete/<int:reply_id>', methods=['POST'])
+@notice.route("/reply/delete/<int:reply_id>", methods=["POST"])
 def reply_delete(reply_id):
     reply = NoticeReply.query.get_or_404(reply_id)
     notice_id = reply.notice_id
@@ -153,6 +153,24 @@ def reply_delete(reply_id):
     db.session.delete(reply)
     db.session.commit()
 
-    flash('返信を削除しました')
-    return redirect(url_for('notice.detail', notice_id=notice_id))
+    flash("返信を削除しました")
+    return redirect(url_for("notice.detail", notice_id=notice_id))
 
+
+# お知らせ検索
+@notice.route("/search", methods=["GET", "POST"])
+def search():
+    form = SearchForm()
+    form.tag_name.choices = [(tag.tag_id, tag.tag_name) for tag in Tags.query
+                             .all()]
+
+    if form.validate_on_submit():
+        tag_id = form.tag_name.data
+        notice_title = form.notice_title.data
+        # 検索クエリの生成
+        results = (db.session.query(Notice)
+                   .filter(Notice.tag == tag_id)
+                   .filter(Notice.notice_title.like(f"%{notice_title}%"))
+                   .all())
+        return render_template("notice/result.html", results=results)
+    return render_template("notice/search.html", form=form)
