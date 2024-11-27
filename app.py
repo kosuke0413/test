@@ -7,6 +7,8 @@ from flask_mail import Mail
 
 # SQLAlchemyをインスタンス化
 db = SQLAlchemy()
+# Mailインスタンスを作成
+mail = Mail()
 
 # LoginManagerをインスタンス化
 login_manager = LoginManager()
@@ -14,6 +16,7 @@ login_manager = LoginManager()
 login_manager.login_view = "user.signup"
 # ログイン後に表示するメッセージを表示
 login_manager.login_message = "ログイン成功"
+
 
 # アプリを生成
 def createapp():
@@ -27,8 +30,8 @@ def createapp():
         SQLALCHEMY_ECHO=True,
         WTF_CSRF_SECRET_KEY="AuwzyszU5sugKN7KZs6f"
     )
-    
-    #login_managerをアプリと連携
+
+    # login_managerをアプリと連携
     login_manager.init_app(app)
     # SQLAlchemyをアプリと連携
     db.init_app(app)
@@ -69,6 +72,6 @@ def createapp():
     app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
 
     # flask-mail拡張を登録する
-    mail = Mail(app)
+    mail.init_app(app)
 
     return app

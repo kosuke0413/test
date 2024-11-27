@@ -1,8 +1,12 @@
-from flask import Blueprint, render_template, redirect, url_for, request, Response
+from flask import (Blueprint, render_template,
+                   redirect, url_for, request,
+                   flash)
 from app import db
 from minimalapp.consultation.forms import ConsultationForm
 from minimalapp.consultation.models import Consultation
-from mimetypes import guess_type
+from email_validator import EmailNotValidError, validate_email
+from flask_mail import Message
+from app import mail
 
 # Bulueprintでpostアプリを生成する
 consultation = Blueprint(
@@ -20,8 +24,8 @@ def index():
 
 @consultation.route("/list", methods=["GET"])
 def list():
-    form = Consultation.query.all()
-    return render_template("consultation/list.html", forms=form)
+    consul = Consultation.query.all()
+    return render_template("consultation/list.html", consuls=consul)
 
 
 @consultation.route("/reply", methods=['GET', 'POST'])
@@ -31,8 +35,10 @@ def reply():
     # GETパラメータから取得
     content = request.args.get('content', '相談内容の詳細')
     # title と content で情報を渡す
+    contact_mail = request.args.get('contact_mail')
+
     return render_template('consultation/reply.html', title=title,
-                           content=content)
+                           content=content, contact_mail=contact_mail)
 
 
 # ゲットとポスト必須
@@ -46,7 +52,7 @@ def send():
             # DBの名前つける
             title=form.title.data,
             content=form.content.data,
-            mailadores="test",
+            mailadores="kosuke.0413@icloud.com",
             # 後から直す
         )
 
@@ -58,6 +64,57 @@ def send():
     # フォームに送るやよ
 
 
-@consultation.route("send/send_complate")
+@consultation.route("send/send_complate", methods=["GET", "POST"])
 def send_complate():
+    if request.method == "POST":
+
+        # username = request.form["username"]
+        email = request.form["contact_mail"]
+        reply = request.form["reply"]
+
+
+        # is_valid = True
+
+        # if not username:
+        #     flash("ユーザ名は必須です")
+        #     is_valid = False
+
+        # if not email:
+        #     flash("メールアドレスは必須です")
+        #     is_valid = False
+
+        # try:
+        #     validate_email(email)
+        # except EmailNotValidError:
+        #     flash("メールアドレスの形式で入力してください")
+        #     is_valid = False
+
+        if not reply:
+            flash("問い合わせ内容は必須です")
+            is_valid = False
+
+        if not is_valid:
+            return redirect(url_for("list"))
+
+        # メールを送る
+        send_email(
+            email,
+            "問い合わせありがとうございました。",
+            "contact_mail",
+            # contact_mail=contact_mail,
+            # username=username,
+            reply=reply,
+        )
+
+        flash("問い合わせ内容はメールにて送信しました。問い合わせありがとうございます。")
+        return redirect(render_template("consultation/reply_complate.html"))
+
     return render_template("consultation/send_complate.html")
+
+
+def send_email(to, subject, template, **kwargs):
+    # メールを送信する関数
+    msg = Message(subject, recipients=[to])
+    msg.body = render_template(template + ".txt", **kwargs)
+    msg.html = render_template(template + ".html", **kwargs)
+    mail.send(msg)

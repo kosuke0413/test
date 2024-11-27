@@ -9,21 +9,42 @@
         <h2>相談に返信</h2>
 
         <form
-            action="{{ url_for('consultation.reply') }}"
+            action="{{ url_for('consultation.send_complate') }}"
             method="POST"
             novalidate="novalidate"
         >
+        <!-- viewsにある flash を持ってくる -->
+        {% with messages = get_flashed_messages() %}
+        <!-- ほんで with で回す -->
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li class="flash">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+            <!-- それぞれDBから持ってくる -->
+            <!-- タイトル持ってくる -->
             <label>相談のタイトル:</label>
             <div>{{ title }}</div>
 
+            <!-- 相談内容持ってくる -->
             <label>相談内容:</label>
             <div>{{ content }}</div>
 
+            <!-- 返信する内容打つ枠 -->
             <label for="reply">返信本文:</label>
             <div>
                 <textarea id="reply" name="reply"></textarea>
             </div>
 
+            <!-- 一応メアドもあるよ～ん見えないけど -->
+            <td>メールアドレス</td>
+            <td><input type="text" name="contact_mail" value="{{ contact_mail }}" placeholder="メールアドレス"></td>
+
+            <!-- 送信ボタンポチ～～ -->
             <div class="submit-button">
                 <button type="submit">送信</button>
             </div>

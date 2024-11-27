@@ -14,23 +14,24 @@
         >
 
         <!-- forms で情報を貰うので注意 -->
-        {{ forms.csrf_token }}
+        {{ consuls.csrf_token }}
 
-        {% if forms %}
+        {% if consuls %}
             <!-- forms でもらったものを form として動かす -->
-            {% for form in forms %}
+            {% for consul in consuls %}
                 <h2>
                     <!-- DBのデータ内の title 要素を出力 -->
-                    {{ form.title }}
+                    {{ consul.title }}
                 </h2>
                 <p>
-                    {{ form.content }}
+                    {{ consul.content }}
                     <!-- DBのデータ内の title 要素を出力 -->
 
                     <!-- <a>の中でURLで送って、「情報あげますよ～」の顔して、 -->
                         <a href="{{ url_for('consultation.reply',
-                                            title=form.title,
-                                            content=form.content) }}"
+                                            title=consul.title,
+                                            content=consul.content,
+                                            contact_mail=consul.mailadores) }}"
                                             style="text-decoration: none;">
                             <!-- 相談に返信へ移動だよ～って顔つき -->
                             <button type="button">相談内容の詳細へ移動</button>
