@@ -5,7 +5,7 @@ from flask import (
 from app import db
 from minimalapp.post.forms import PostUploadForm,PostReplyForm
 from minimalapp.post.models import Post,Postreply
-from minimalapp.tags.models import Tags
+from minimalapp.tags.models import Tags, Local
 from minimalapp.user.models import User
 from mimetypes import guess_type
 from flask_login import current_user,login_required
@@ -193,3 +193,11 @@ def reply_delete(reply_id):
 
     flash("返信を削除しました")
     return redirect(url_for("post.post_detail", post_id=post_id))
+
+
+@post.context_processor
+def inject_local():
+    local = Local.query.get(current_user.local_id)
+    return {
+        "local": {"local_name": local.local_name}
+    }
