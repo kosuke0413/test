@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %} お知らせ一覧 {% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>お知らせ一覧</title>
-</head>
+{% block content %}
+<h1>お知らせ一覧</h1>
 
 <body>
-    <h1>お知らせ一覧</h1>
+
     <ul>
         {% if notices %}
         {% for notice in notices %}
@@ -28,5 +26,6 @@
     </form>
 
 </body>
+{% endblock %}
 
 </html>

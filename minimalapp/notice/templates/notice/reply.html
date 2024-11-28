@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %}返信: {{ notice.notice_title }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>返信: {{ notice.notice_title }}</title>
-</head>
+{% block content %}
 <h1>{{ notice.notice_title }} への返信</h1>
 
 <form method="POST">
@@ -21,3 +18,4 @@
 </form>
 
 <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}" class="btn btn-secondary">戻る</a>
+{% endblock %}

@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %}お知らせ編集: {{ post.post_title }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>編集: {{ notice.notice_title }}</title>
-</head>
+{% block content %}
+<h1>{{ notice.notice_title }} の編集</h1>
 
 <body>
-    <h1>{{ notice.notice_title }} の編集</h1>
-
     <form method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
 

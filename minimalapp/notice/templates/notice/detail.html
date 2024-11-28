@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %}{{ notice.notice_title }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>{{ notice.notice_title }}</title>
-</head>
+{% block content %}
 
 <body>
     <h1>{{ notice.notice_title }}</h1>
@@ -42,6 +39,7 @@
 
     <br>
     <a href="{{ url_for('notice.top') }}">トップページに戻る</a>
+    {% endblock %}
 </body>
 
 </html>

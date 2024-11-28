@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %} お知らせ投稿 {% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>お知らせ投稿</title>
-</head>
+{% block content %}
 
 <body>
-    <h2>お知らせ投稿</h2>
+    <h1>お知らせ投稿</h1>
     <form action="{{ url_for('notice.create_notice') }}" method="post" novalidate="novalidate"
         enctype="multipart/form-data">
         {{ form.csrf_token }}
@@ -40,6 +37,7 @@
         {{ form.tag }}
         <!-- 送信ボタン -->
         {{ form.submit() }}
+        {% endblock %}
     </form>
     </form>
 </body>
