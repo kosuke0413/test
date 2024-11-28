@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -21,6 +21,17 @@ login_manager.login_message = "ログイン成功"
 # アプリを生成
 def createapp():
     app = Flask(__name__)
+
+    # エラーページ
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template("error.html"), 404
+
+    # テスト用のルート
+    @app.route("/test-error")
+    def test_404():
+        return page_not_found(404)
+
     # データベース設定
     app.config.from_mapping(
         SECRET_KEY="ASMss3p5QPbcY2hBsJ",
