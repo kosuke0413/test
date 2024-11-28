@@ -17,6 +17,21 @@
         th {
             background-color: #f2f2f2;
         }
+        .event-button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .event-button:hover {
+            background-color: #45a049;
+        }
+        .no-event {
+            color: #aaa;
+        }
         button {
             margin: 20px;
             padding: 10px 20px;
@@ -53,12 +68,17 @@
                         {% if day == 0 %}
                             <td></td>
                         {% else %}
-                        <td>
-                            <form action="{{ url_for('calendar.setEvent') }}" method="get">
-                                <input type="hidden" name="date" value="{{ year }}-{{ month }}-{{ day }}">
-                                <button type="submit">{{ day }}</button>
-                            </form>
-                        </td>
+                            <td>
+                                {% if day in event_days %}
+                                    <!-- イベントがある日 -->
+                                    <a href="{{ url_for('calendar.events', date='%04d-%02d-%02d' % (year, month, day)) }}" class="event-button">
+                                        {{ day }}
+                                    </a>
+                                {% else %}
+                                    <!-- イベントがない日 -->
+                                    <span class="no-event">{{ day }}</span>
+                                {% endif %}
+                            </td>
                         {% endif %}
                     {% endfor %}
                 </tr>
@@ -66,13 +86,13 @@
         </tbody>
     </table>
     <div>
-        <a href="{{ url_for('calendar.beforeindex',year=year,month=month)}}">前へ</a>
-        <a href="{{ url_for('calendar.nextindex',year=year,month=month)}}">次へ</a>
+        <a href="{{ url_for('calendar.beforeindex', year=year, month=month) }}">前へ</a>
+        <a href="{{ url_for('calendar.nextindex', year=year, month=month) }}">次へ</a>
     </div>
 
-     <!-- 登録ボタン -->
-     <form action="{{url_for('calendar.setEvent')}}" method="get">
-        <button type="submit">登録</button>
+    <!-- 登録ボタン -->
+    <form action="{{ url_for('calendar.setEvent') }}" method="get">
+        <button type="submit">イベント登録</button>
     </form>
 
 </body>

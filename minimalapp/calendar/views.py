@@ -5,6 +5,9 @@ from minimalapp.calendar.forms import CalendarregistForm
 from minimalapp.calendar.models import Calendar
 from app import db
 from sqlalchemy import select
+from collections import defaultdict
+from flask_login import login_required
+
 
 # Blueprintでcalendarアプリを生成する
 Calen = Blueprint(
@@ -14,24 +17,10 @@ Calen = Blueprint(
     static_folder="../static"
 )
 
-# 月の開始日と終了日を取得する関数
-# def get_month_range(year, month):
-#     start_date = date(year, month, 1)
-#     last_day = calendar.monthrange(year, month)[1]  # 月の最終日
-#     end_date = date(year, month, last_day)
-#     return start_date, end_date
-
-# # 指定した月のすべてのデータを取得する
-# def fetch_events_for_month(connection, year, month):
-#     start_date, end_date = get_month_range(year, month)
-#     query = select(Calendar).where(Calendar.c.day.between(start_date, end_date))
-#     result = connection.execute(query)
-#     return result.fetchall()
-
-
 
 # 現在の年月のカレンダーを作成
 @Calen.route('/')
+@login_required
 def index():
     # 現在の年と月を取得
     now = datetime.now()
@@ -42,11 +31,23 @@ def index():
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
-    # date_string = f"{year}-{month}"
+    # 月の開始日と終了日を取得
+    start_date = date(year, month, 1)
+    last_day = calendar.monthrange(year, month)[1]
+    end_date = date(year, month, last_day)
 
-    return render_template('calendar/calendar.html',
-                           year=year, month=month, month_days=month_days)
+    # 該当月のすべてのイベントを取得
+    events = Calendar.query.filter(
+        Calendar.day.between(start_date, end_date)).all()
+    event_days = defaultdict(list)
+    for event in events:
+        event_days[event.day.day].append(event)  # 日付のみに絞って保存
 
+    return render_template(
+        'calendar/calendar.html',
+        year=year, month=month, month_days=month_days, event_days=event_days
+    )
+   
 
 # 次の月のカレンダーを作成
 @Calen.route('/next<int:year>/<int:month>')
@@ -64,8 +65,20 @@ def nextindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
+    # 月の開始日と終了日を取得
+    start_date = date(year, month, 1)
+    last_day = calendar.monthrange(year, month)[1]
+    end_date = date(year, month, last_day)
+
+    # 該当月のすべてのイベントを取得
+    events = Calendar.query.filter(
+        Calendar.day.between(start_date, end_date)).all()
+    event_days = defaultdict(list)
+    for event in events:
+        event_days[event.day.day].append(event)  # 日付のみに絞って保存
+
     return render_template('calendar/calendar.html', year=year, month=month,
-                           month_days=month_days)
+                           month_days=month_days, event_days=event_days)
 
 
 # 先月のカレンダーを作成
@@ -83,8 +96,20 @@ def beforeindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
+    # 月の開始日と終了日を取得
+    start_date = date(year, month, 1)
+    last_day = calendar.monthrange(year, month)[1]
+    end_date = date(year, month, last_day)
+
+    # 該当月のすべてのイベントを取得
+    events = Calendar.query.filter(
+        Calendar.day.between(start_date, end_date)).all()
+    event_days = defaultdict(list)
+    for event in events:
+        event_days[event.day.day].append(event)  # 日付のみに絞って保存
+
     return render_template('calendar/calendar.html', year=year, month=month,
-                           month_days=month_days)
+                           month_days=month_days, event_days=event_days)
 
 
 # カレンダー登録のエンドポイント
@@ -162,8 +187,20 @@ def selectindex(year, month):
     cal = calendar.Calendar(firstweekday=6)
     month_days = cal.monthdayscalendar(year, month)
 
+    # 月の開始日と終了日を取得
+    start_date = date(year, month, 1)
+    last_day = calendar.monthrange(year, month)[1]
+    end_date = date(year, month, last_day)
+
+    # 該当月のすべてのイベントを取得
+    events = Calendar.query.filter(
+        Calendar.day.between(start_date, end_date)).all()
+    event_days = defaultdict(list)
+    for event in events:
+        event_days[event.day.day].append(event)  # 日付のみに絞って保存 
+
     return render_template('calendar/calendar.html', year=year, month=month,
-                           month_days=month_days)
+                           month_days=month_days, event_days=event_days)
 
 
 # カレンダー詳細のエンドポイント
