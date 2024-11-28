@@ -19,6 +19,24 @@
     </ul>
     {% endif %}
 
+    <!-- 返信一覧を表示 -->
+    <ul>
+        {% for reply in replies %}
+        <form method="POST" action="{{ url_for('post.reply_delete', reply_id=reply.reply_id) }}"
+            onsubmit="return confirm('本当に削除しますか？');">
+            <p> {{ reply.content }}<button type="submit" style="color: red;">削除</button></p>
+        </form>
+
+        {% endfor %}
+    </ul>
+    
+
+    <!-- 返信フォームへのリンク -->
+    <br>
+    <form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline;">
+        <button type="submit" class="btn btn-primary">返信する</button>
+    </form>
+
     <br>
     <a href="{{ url_for('post.post_list') }}">戻る</a>
 </body>

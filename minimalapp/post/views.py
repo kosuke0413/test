@@ -3,8 +3,8 @@ from flask import (
     redirect, url_for,
     Response, flash)
 from app import db
-from minimalapp.post.forms import PostUploadForm
-from minimalapp.post.models import Post
+from minimalapp.post.forms import PostUploadForm,PostReplyForm
+from minimalapp.post.models import Post,Postreply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
 
@@ -100,7 +100,9 @@ def post_detail(post_id):
     tags = None
     if not post.tag == None:
         tags = Tags.query.get_or_404(post.tag)
-    return render_template("post/detail.html", post=post,tag=tags)
+    # 対応する返信を取得
+    replies = Postreply.query.filter_by(post_id=post_id)
+    return render_template("post/detail.html", post=post,tag=tags,replies=replies)
 
 
 # 投稿編集のエンドポイント
@@ -146,3 +148,36 @@ def delete(post_id):
         db.session.commit()
     flash('お知らせを削除しました')
     return redirect(url_for('post.post_list'))  # 削除が完了するとtopページに遷移
+
+
+# お知らせ返信
+@post.route("/reply/<int:post_id>", methods=["GET", "POST"])
+def reply(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = PostReplyForm()
+
+    if form.validate_on_submit():
+        reply_text = form.text.data
+        # 返信をデータベースに保存
+        reply = Postreply(
+            post_id=post_id,
+            content=reply_text,
+            name="大原"
+        )
+        db.session.add(reply)
+        db.session.commit()
+        return redirect(url_for("post.post_detail", post_id=post_id))
+    return render_template("post/reply.html", form=form, post=post)
+
+# 返信削除処理
+@post.route("/reply/delete/<int:reply_id>", methods=["POST"])
+def reply_delete(reply_id):
+    reply = Postreply.query.get_or_404(reply_id)
+    post_id = reply.post_id
+
+    # 返信削除
+    db.session.delete(reply)
+    db.session.commit()
+
+    flash("返信を削除しました")
+    return redirect(url_for("post.post_detail", post_id=post_id))

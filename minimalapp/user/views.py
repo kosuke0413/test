@@ -27,18 +27,21 @@ def signup():
             local_id=form.local_id.data,
             name=form.username.data,
             mailaddress=form.mailaddress.data,
-            password_hash=form.password.data,
         )
+        user.password = form.password.data
 
+        # 地域IDの存在チェック
+        if not user.local_id_existence_confirmation():
+            flash("指定の地域IDは存在しません")
+            form.local_id.data = None
+            return render_template("user/signup.html",form=form)
+        
         # メールアドレス重複チェック
         if user.is_duplicate_mailaddress():
             flash("指定のメールアドレスは登録済みです")
-            return redirect(url_for("user.signup"))
+            form.mailaddress.data = None
+            return render_template("user/signup.html",form=form)
 
-        # 地域IDの存在チェック
-        if user.local_id_existence_confirmation():
-            flash("指定の地域IDは存在しません")
-            return redirect(url_for("user.signup"))
 
         # ユーザー情報を登録する
         db.session.add(user)
@@ -56,23 +59,23 @@ def signup():
     return render_template("user/signup.html",form=form)
 
 
-# @user.route("/login", methods=["GET","POST"])
-# def login():
-#       form = LoginForm()
-#       if form.validate_on_submit():
-#           user = User.query.filter_by(mailaddsoress=form.mailaddoress.data).first()
+# ログイン機能のエンドポイント
+@user.route("/login", methods=["GET","POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(mailaddress=form.mailaddress.data).first()
 
-#           if user is not None and user.verify_password(form.password.data):
-#               login_user(user)
-#               return redirect(url_for("notice.top"))
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user)
+            return redirect(url_for("notice.top"))
 
-#           flash("メールアドレスかパスワードが不正です")
+        flash("メールアドレスかパスワードが不正です")
     
-#       return render_template("user/login.html",form=form)
+    return render_template("user/login.html",form=form)
 
 
-#  @user.route("/logout")
-#  def logout():
-#      logout_user()    
-#      return redirect(url_for("user.login"))
-
+@user.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("user.login"))

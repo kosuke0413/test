@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>返信: {{ post.post_title }}</title>
+</head>
+<h1>{{ post.post_title }} への返信</h1>
+
+<form method="POST">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        <p>{{ form.text.label }}</p>
+        {{ form.text(class="form-control") }}
+        {% for error in form.text.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-success">送信</button>
+</form>
+
+<a href="{{ url_for('post.post_detail', post_id=post.post_id) }}" class="btn btn-secondary">戻る</a>

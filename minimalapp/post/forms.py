@@ -45,3 +45,14 @@ class PostUploadForm(FlaskForm):
     )
 
     submit = SubmitField("アップロード")
+
+# 投稿返信
+class PostReplyForm(FlaskForm):
+    text = TextAreaField(
+        "本文",
+        validators=[
+            DataRequired(message="本文は必須です。"),
+            length(max=200, message="200文字以内で入力してください。"),
+        ]     
+    )
+    submit = SubmitField("送信する")

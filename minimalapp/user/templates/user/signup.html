@@ -10,7 +10,7 @@
     <form method="post" action="{{ url_for('user.signup', next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
         {% for message in get_flashed_messages() %}
-        <div>{{ message }}</div>
+        <div class="error">{{ message }}</div>
         {% endfor %}
 
         <p>
@@ -47,6 +47,9 @@
         
         <!-- 送信ボタン -->
         <p>{{ form.submit() }}</p>
+
+        <p>ログインは<a href="{{ url_for('user.login') }}">こちら</a>から</p>
+
     </form>
 </body>
 

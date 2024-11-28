@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
 
-
+# 新規登録機能のフォーム
 class SignUpForm(FlaskForm):
     local_id =StringField(
         "地域ID",
@@ -39,7 +39,7 @@ class SignUpForm(FlaskForm):
 
     submit = SubmitField("登録  ")
 
-
+# ログイン機能のフォーム
 class LoginForm(FlaskForm):
     mailaddress = StringField(
         "メールアドレス",

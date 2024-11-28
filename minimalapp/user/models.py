@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
     def is_duplicate_mailaddress(self):
         return User.query.filter_by(mailaddress=self.mailaddress).first() is not None
     
-    # 入力された地域IDが存在するか確認
+    # 入力された地域IDが存在するか確認、存在するならTrue
     def local_id_existence_confirmation(self):
         return Local.query.filter_by(local_id=self.local_id).first() is not None
     
