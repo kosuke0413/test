@@ -74,7 +74,7 @@ def createapp():
     # 相談窓口アプリの登録とURLプレフィックス指定
     from minimalapp.consultation import views as consultation_views
     app.register_blueprint(consultation_views.consultation,
-                           url_prefix="/consultaiton")
+                           url_prefix="/consultation")
 
     # ユーザーアプリの登録とURLプレフィックス指定
     from minimalapp.user import views as user_views

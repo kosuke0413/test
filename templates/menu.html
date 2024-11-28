@@ -9,10 +9,10 @@
 <h1>メニュー</h1>
 
 <body>
-    <li><a href="#">相談窓口</a></li>
-    <li><a href="#">カレンダー</a></li>
+    <li><a href="{{ url_for('consultation.index') }}">相談窓口</a></li>
+    <li><a href="{{ url_for('calendar.index') }}">カレンダー</a></li>
     <li><a href="#">投稿の検索</a></li>
-    <li><a href="#">お知らせの検索</a></li>
+    <li><a href="{{ url_for('notice.search') }}">お知らせの検索</a></li>
     <li><a href="#">言語選択</a></li>
     <li><a href="#">AIに質問</a></li>
 </body>
