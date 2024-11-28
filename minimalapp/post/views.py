@@ -72,6 +72,7 @@ def create_post():
 
 # 画像表示確認のエンドポイント
 @post.route("/image/<int:post_id>")
+@login_required
 def get_image(post_id):
     # 取得出来たら画像の表示、出来なかったらエラーメッセージの表示
     post = Post.query.get_or_404(post_id)
@@ -88,6 +89,7 @@ def get_image(post_id):
 
 # 投稿一覧表示のエンドポイント
 @post.route("/list")
+@login_required
 def post_list():
     # 投稿の一覧を取得、後で地域IDを指定するように変更
     posts = Post.query.all()
@@ -96,6 +98,7 @@ def post_list():
 
 # 投稿詳細表示のエンドポイント
 @post.route("/detail/<int:post_id>")
+@login_required
 def post_detail(post_id):
     #投稿と投稿に対応するタグを取得
     post = Post.query.get_or_404(post_id)
@@ -109,6 +112,7 @@ def post_detail(post_id):
 
 # 投稿編集のエンドポイント
 @post.route("/edit/<int:post_id>", methods=["GET", "POST"])
+@login_required
 def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
     form = PostUploadForm()
@@ -142,6 +146,7 @@ def edit_post(post_id):
 
 # 投稿削除のエンドポイント
 @post.route('/<int:post_id>/delete', methods=['POST'])
+@login_required
 def delete(post_id):
     # 削除処理
     post = Post.query.get(post_id)
@@ -154,6 +159,7 @@ def delete(post_id):
 
 # お知らせ返信
 @post.route("/reply/<int:post_id>", methods=["GET", "POST"])
+@login_required
 def reply(post_id):
     post = Post.query.get_or_404(post_id)
     form = PostReplyForm()
@@ -173,6 +179,7 @@ def reply(post_id):
 
 # 返信削除処理
 @post.route("/reply/delete/<int:reply_id>", methods=["POST"])
+@login_required
 def reply_delete(reply_id):
     reply = Postreply.query.get_or_404(reply_id)
     post_id = reply.post_id

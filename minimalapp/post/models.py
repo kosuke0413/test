@@ -12,8 +12,8 @@ class Post(db.Model):
     image = db.Column(db.LargeBinary)
     image_extension = db.Column(db.String(10))  # 画像の拡張子を保存するフィールド
     tag = db.Column(db.Integer,)
-    name = db.Column(db.String(10), nullable=True)
-    local_id = db.Column(db.String(3), nullable=True)
+    user_id = db.Column(db.Integer)
+    local_id = db.Column(db.String(3))
     # 地域idを保存するフィールド
 
 

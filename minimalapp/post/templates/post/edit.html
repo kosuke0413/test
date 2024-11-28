@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %}投稿編集: {{ post.post_title }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>投稿編集: {{ post.post_title }}</title>
-</head>
-
-<body>
+{% block content %}
     <h1>{{ post.post_title }} の編集</h1>
 
     <form method="POST" enctype="multipart/form-data">
@@ -38,6 +33,4 @@
     </form>
 
     <a href="{{ url_for('post.post_detail', post_id=post.post_id) }}">戻る</a>
-</body>
-
-</html>
+{% endblock %}

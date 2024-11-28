@@ -10,7 +10,7 @@ class Notice(db.Model):
     image = db.Column(db.LargeBinary, nullable=True)
     image_extension = db.Column(db.String(10))  # 画像の拡張子を保存するフィールド
     tag = db.Column(db.Integer,)
-    local_id = db.Column(db.String(3), nullable=True)
+    local_id = db.Column(db.String(3))
 
 
 # お知らせ返信テーブル

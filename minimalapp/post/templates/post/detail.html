@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
+{% block title %}{{ post.post_title }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.post_title }}</title>
-</head>
-
-<body>
+{% block content %}
     <h1>{{ post.post_title }}</h1>
     <p>{{ post.post_text }}</p>
     {% if post.image %}
@@ -24,7 +19,7 @@
         {% for reply in replies %}
         <form method="POST" action="{{ url_for('post.reply_delete', reply_id=reply.reply_id) }}"
             onsubmit="return confirm('本当に削除しますか？');">
-            <p> {{ reply.content }}<button type="submit" style="color: red;">削除</button></p>
+            <p>{{ reply.name}}:{{ reply.content }}<button type="submit" style="color: red;">削除</button></p>
         </form>
 
         {% endfor %}
@@ -39,6 +34,4 @@
 
     <br>
     <a href="{{ url_for('post.post_list') }}">戻る</a>
-</body>
-
-</html>
+{% endblock %}
