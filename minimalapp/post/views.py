@@ -7,6 +7,7 @@ from minimalapp.post.forms import PostUploadForm,PostReplyForm
 from minimalapp.post.models import Post,Postreply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
+from flask_login import current_user
 
 # Bulueprintでpostアプリを生成する
 post = Blueprint(
@@ -46,8 +47,8 @@ def create_post():
                 image_extension=image_extension,
                 # 拡張子を保存
                 tag=form.tag.data,
-                name="テスト",
-                local_id="a01"
+                name=current_user.name,
+                local_id=current_user.local_id
             )
 
         else:
@@ -56,8 +57,8 @@ def create_post():
                 post_title=form.title.data,
                 post_text=form.text.data,
                 tag=form.tag.data,
-                name="テスト",
-                local_id="a01"
+                name=current_user.local_id,
+                local_id=current_user.local_id
             )
 
         # 住民投稿を追加してコミットする
@@ -162,7 +163,7 @@ def reply(post_id):
         reply = Postreply(
             post_id=post_id,
             content=reply_text,
-            name="大原"
+            name=current_user.name
         )
         db.session.add(reply)
         db.session.commit()
