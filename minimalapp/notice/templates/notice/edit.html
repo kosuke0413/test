@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}お知らせ編集: {{ post.post_title }}{% endblock %}
+{% block title %}お知らせ編集: {{ notice.notice_title }}{% endblock %}
 
 {% block content %}
 <h1>{{ notice.notice_title }} の編集</h1>
@@ -34,5 +34,6 @@
 
     <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}">戻る</a>
 </body>
+{% endblock %}
 
 </html>

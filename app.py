@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, current_user, login_required
 import os
 from flask_mail import Mail
 
@@ -22,9 +22,6 @@ login_manager.login_message = ""
 def createapp():
     app = Flask(__name__)
 
-
-
-
     # エラーページ
     @app.errorhandler(404)
     def page_not_found(e):
@@ -37,6 +34,7 @@ def createapp():
     
     # メニューページ
     @app.route("/menu")
+    @login_required
     def menu():
         # メニュー画面を表示
         return render_template("menu.html")
