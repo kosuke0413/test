@@ -8,14 +8,7 @@
 </head>
 
 <body>
-    <div>
-        {% if current_user.is_userenticated %}
-        <p>
-            <span>{{ current_user.name }}</span>
-            <span><a href="{{ url_for('user.logout') }}">ログアウト</a></span>
-        </p>
-        {% endif %}
-    </div>
+    <h2>userのbase.htmlの継承確認</h2>
     {% block content %}{% endblock %}
 </body>
 

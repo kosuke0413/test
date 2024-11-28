@@ -78,8 +78,8 @@ def login():
     
     return render_template("user/login.html",form=form)
 
-
+# ログアウト機能のエンドポイント
 @user.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("user.login"))
+    return render_template("user/logout.html")

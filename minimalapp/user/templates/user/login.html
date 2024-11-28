@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "user/base.html" %}
+{% block title %}ログイン{% endblock%}
 
-<head>
-    <meta charset="UTF-8">
-    <title>ログイン</title>
-</head>
-
-<body>
+{% block content %}
     <form method="post" action="{{ url_for('user.login',next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
         {% for message in get_flashed_messages() %}
@@ -33,5 +28,4 @@
 
         <p>新規登録は<a href="{{ url_for('user.signup') }}">こちら</a>から</p>
     </div>
-
-</body>
+{% endblock %}

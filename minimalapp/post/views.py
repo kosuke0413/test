@@ -6,6 +6,7 @@ from app import db
 from minimalapp.post.forms import PostUploadForm,PostReplyForm
 from minimalapp.post.models import Post,Postreply
 from minimalapp.tags.models import Tags
+from minimalapp.user.models import User
 from mimetypes import guess_type
 from flask_login import current_user,login_required
 
@@ -48,7 +49,7 @@ def create_post():
                 image_extension=image_extension,
                 # 拡張子を保存
                 tag=form.tag.data,
-                name=current_user.name,
+                user_id=current_user.user_id,
                 local_id=current_user.local_id
             )
 
@@ -58,7 +59,7 @@ def create_post():
                 post_title=form.title.data,
                 post_text=form.text.data,
                 tag=form.tag.data,
-                name=current_user.local_id,
+                user_id=current_user.user_id,
                 local_id=current_user.local_id
             )
 
@@ -107,7 +108,9 @@ def post_detail(post_id):
         tags = Tags.query.get_or_404(post.tag)
     # 対応する返信を取得
     replies = Postreply.query.filter_by(post_id=post_id)
-    return render_template("post/detail.html", post=post,tag=tags,replies=replies)
+    # # 投稿ユーザー情報を取得
+    user = User.query.get_or_404(post.user_id)
+    return render_template("post/detail.html", post=post,tag=tags,replies=replies,user=user)
 
 
 # 投稿編集のエンドポイント
@@ -153,11 +156,11 @@ def delete(post_id):
     if post:
         db.session.delete(post)
         db.session.commit()
-    flash('お知らせを削除しました')
+    flash('投稿一覧を削除しました')
     return redirect(url_for('post.post_list'))  # 削除が完了するとtopページに遷移
 
 
-# お知らせ返信
+# 投稿返信
 @post.route("/reply/<int:post_id>", methods=["GET", "POST"])
 @login_required
 def reply(post_id):
