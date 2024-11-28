@@ -5,6 +5,7 @@ from minimalapp.notice.models import Notice, NoticeReply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
 from sqlalchemy import or_
+from flask_login import current_user, login_required
 # Bulueprintでnoticeアプリを生成する
 notice = Blueprint(
     "notice",
@@ -15,6 +16,7 @@ notice = Blueprint(
 
 
 @notice.route("/")
+@login_required
 def top():
     notices = Notice.query.all()
     return render_template("notice/top.html", notices=notices)
@@ -22,6 +24,7 @@ def top():
 
 # お知らせ投稿のエンドポイント
 @notice.route("/create", methods=["GET", "POST"])
+@login_required
 def create_notice():
     # 投稿フォームをインスタンス化
     form = NoticeUploadForm()
@@ -42,7 +45,7 @@ def create_notice():
             image=image_data,
             image_extension=image_extension,  # 拡張子を保存
             tag=form.tag.data,
-            local_id="a10"
+            local_id=current_user.local_id
         )
 
         # お知らせ投稿を追加してコミットする
@@ -54,6 +57,7 @@ def create_notice():
 
 # 画像表示確認のエンドポイント
 @notice.route("/image/<int:notice_id>")
+@login_required
 def get_image(notice_id):
     # 取得出来たら画像の表示、出来なかったらエラーメッセージの表示
     notice = Notice.query.get_or_404(notice_id)
@@ -69,6 +73,7 @@ def get_image(notice_id):
 
 # お知らせ詳細
 @notice.route("/detail/<int:notice_id>")
+@login_required
 def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     tags = None
@@ -82,6 +87,7 @@ def detail(notice_id):
 
 # お知らせ編集
 @notice.route("/edit/<int:notice_id>", methods=["GET", "POST"])
+@login_required
 def edit_notice(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     form = NoticeUploadForm()
@@ -114,6 +120,7 @@ def edit_notice(notice_id):
 
 # お知らせ削除
 @notice.route("/<int:notice_id>/delete", methods=["POST"])
+@login_required
 def delete(notice_id):
     # 削除処理
     notice = Notice.query.get(notice_id)
@@ -126,6 +133,7 @@ def delete(notice_id):
 
 # お知らせ返信
 @notice.route("/reply/<int:notice_id>", methods=["GET", "POST"])
+@login_required
 def reply(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     form = NoticeReplyForm()
@@ -136,7 +144,7 @@ def reply(notice_id):
         reply = NoticeReply(
             notice_id=notice_id,
             reply_text=reply_text,
-            name="大原"
+            name=current_user.name
         )
         db.session.add(reply)
         db.session.commit()
@@ -146,6 +154,7 @@ def reply(notice_id):
 
 # 返信削除処理
 @notice.route("/reply/delete/<int:reply_id>", methods=["POST"])
+@login_required
 def reply_delete(reply_id):
     reply = NoticeReply.query.get_or_404(reply_id)
     notice_id = reply.notice_id
@@ -160,6 +169,7 @@ def reply_delete(reply_id):
 
 # お知らせ検索
 @notice.route("/search", methods=["GET", "POST"])
+@login_required
 def search():
     form = SearchForm()
     if form.validate_on_submit():
@@ -182,9 +192,9 @@ def search():
                 filters.append(Notice.tag == tag_id)
             if notice_title:
                 filters.append(Notice.notice_title.like(f"%{notice_title}%"))
-            
+
             # OR 条件で検索
-            query = query.filter(or_(*filters)) # https://www.sukerou.com/2019/04/sqlalchemyandor.html
+            query = query.filter(or_(*filters))  # https://www.sukerou.com/2019/04/sqlalchemyandor.html
 
         # 結果を取得
         results = query.all()
