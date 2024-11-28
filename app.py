@@ -14,6 +14,8 @@ mail = Mail()
 login_manager = LoginManager()
 # 未ログイン時にリダイレクトするエンドポイントを指定
 login_manager.login_view = "user.login"
+# ログイン後に表示するメッセージを表示
+login_manager.login_message = ""
 
 
 # アプリを生成
