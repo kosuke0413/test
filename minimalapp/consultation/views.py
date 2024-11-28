@@ -6,6 +6,7 @@ from minimalapp.consultation.forms import ConsultationForm
 from minimalapp.consultation.models import Consultation
 from flask_mail import Message
 from app import mail
+from flask_login import login_required
 
 # Bulueprintでpostアプリを生成する
 consultation = Blueprint(
@@ -24,6 +25,7 @@ def index():
 
 # 相談内容一覧
 @consultation.route("/list", methods=["GET"])
+@login_required
 def list():
     # local とconsult のIDを取得して今後組み替える
     # Consultation クラスからDBの内容を all で全部持ってくる
@@ -33,6 +35,7 @@ def list():
 
 # 相談に返信
 @consultation.route("/reply<int:consult_id>", methods=['GET', 'POST'])
+@login_required
 def reply(consult_id):
     # Consultation クラスから consult_id だけを持ってきて consult に入れる
     consult = Consultation.query.get_or_404(consult_id)
@@ -43,12 +46,14 @@ def reply(consult_id):
 
 # お問い合わせ完了
 @consultation.route("/reply/reply_complate")
+@login_required
 def reply_complate():
     return render_template("consultation/reply_complate.html")
 
 
 # 質問の送信
 @consultation.route("/send", methods=["GET", "POST"])
+@login_required
 def send():
     # 緑文字がクラス
     form = ConsultationForm()
@@ -72,6 +77,7 @@ def send():
 
 # 送信完了ページ
 @consultation.route("send/send_complate", methods=["GET", "POST"])
+@login_required
 def send_complate():
     if request.method == "POST":
 
