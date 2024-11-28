@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 import os
 from flask_mail import Mail
 
@@ -21,6 +21,9 @@ login_manager.login_message = ""
 # アプリを生成
 def createapp():
     app = Flask(__name__)
+
+
+
 
     # エラーページ
     @app.errorhandler(404)
@@ -54,6 +57,8 @@ def createapp():
     db.init_app(app)
     # flask_migrateをアプリと連携
     Migrate(app, db)
+
+    
 
     # noticeアプリの登録とURLプレフィックス指定
     from minimalapp.notice import views as notice_views
@@ -92,3 +97,4 @@ def createapp():
     mail.init_app(app)
 
     return app
+

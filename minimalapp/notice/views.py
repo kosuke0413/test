@@ -2,10 +2,12 @@ from flask import Blueprint, render_template, redirect, url_for, Response, flash
 from app import db
 from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm, SearchForm
 from minimalapp.notice.models import Notice, NoticeReply
-from minimalapp.tags.models import Tags
+from minimalapp.tags.models import Tags, Local
 from mimetypes import guess_type
 from sqlalchemy import or_
 from flask_login import current_user, login_required
+
+
 # Bulueprintでnoticeアプリを生成する
 notice = Blueprint(
     "notice",
@@ -201,3 +203,10 @@ def search():
 
         return render_template("notice/result.html", results=results)
     return render_template("notice/search.html", form=form)
+
+@notice.context_processor
+def inject_local():
+    local = Local.query.get(current_user.local_id)
+    return {
+        "local": {"local_name": local.local_name}
+    }

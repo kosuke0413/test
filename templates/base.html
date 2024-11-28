@@ -13,7 +13,7 @@
         <aside class="sidebar">
             <nav>
                 <ul>
-                    <li><h1><a href="{{ url_for('notice.top') }}">〇〇町</a></h1></li>
+                    <li><h1><a href="{{ url_for('notice.top') }}">{{ local.local_name }}</a></h1></li>
                     {% if current_user.is_authenticated %}
                         <li><a href="#">{{ current_user.name }}</a></li>
                     {% endif %}
