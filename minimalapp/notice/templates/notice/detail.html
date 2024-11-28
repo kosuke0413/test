@@ -23,10 +23,11 @@
     <!-- 返信一覧を表示 -->
     <ul>
         {% for reply in replies %}
+
         <form method="POST" action="{{ url_for('notice.reply_delete', reply_id=reply.reply_id) }}"
             onsubmit="return confirm('本当に削除しますか？');">
             {{ form.csrf_token }}
-            <button type="submit" style="color: red;">削除</button>
+            <p>{{ reply.reply_text }}<button type="submit" style="color: red;">削除</button></p>
         </form>
 
         {% endfor %}

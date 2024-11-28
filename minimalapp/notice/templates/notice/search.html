@@ -7,15 +7,15 @@
 
 <body>
     <h1>お知らせ検索</h1>
-    <form method="POST" action="{{ url_for('notice.search') }}">
+    <form method="POST" novalidate="novalidate" action="{{ url_for('notice.search') }}">
         {{ form.csrf_token }}
         <div>
             <label for="notice_title">タイトルキーワード:</label>
             {{ form.notice_title }}
         </div>
         <div>
-            <label for="tag_name">タグを選択:</label>
-            {{ form.tag_name }}
+            <label>タグを選択:</label>
+            {{ form.tag }}
         </div>
 
         <button type="submit">検索</button>

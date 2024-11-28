@@ -62,6 +62,18 @@ class NoticeReplyForm(FlaskForm):
 
 # お知らせ検索
 class SearchForm(FlaskForm):
-    tag_name = SelectField("タグ", coerce=int, validators=[DataRequired()])
-    notice_title = StringField("お知らせタイトル", validators=[DataRequired()])
-    submit = SubmitField("検索") 
+    notice_title = StringField("お知らせタイトル", validators=[Optional()])
+    tag = SelectField(
+        "タグ",
+        choices=[
+            ("", "-----"),
+            ("1", "イベント・行事"),
+            ("2", "子育て・教育"),
+            ("3", "医療・健康"),
+            ("4", "福祉・介護"),
+            ("5", "ボランティア"),
+            ("6", "注意喚起"),
+        ],
+        validators=[Optional()],
+    )
+    submit = SubmitField("検索")

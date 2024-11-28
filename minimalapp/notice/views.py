@@ -4,6 +4,7 @@ from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm, SearchFor
 from minimalapp.notice.models import Notice, NoticeReply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
+from sqlalchemy import or_
 # Bulueprintでnoticeアプリを生成する
 notice = Blueprint(
     "notice",
@@ -161,16 +162,32 @@ def reply_delete(reply_id):
 @notice.route("/search", methods=["GET", "POST"])
 def search():
     form = SearchForm()
-    form.tag_name.choices = [(tag.tag_id, tag.tag_name) for tag in Tags.query
-                             .all()]
-
     if form.validate_on_submit():
-        tag_id = form.tag_name.data
-        notice_title = form.notice_title.data
+        tag_id = form.tag.data
+        if not tag_id:
+            tag_id = None
+        # 空白を削除
+        notice_title = form.notice_title.data.strip()
+        if not notice_title:
+            notice_title = None
+
         # 検索クエリの生成
-        results = (db.session.query(Notice)
-                   .filter(Notice.tag == tag_id)
-                   .filter(Notice.notice_title.like(f"%{notice_title}%"))
-                   .all())
+        query = db.session.query(Notice)
+
+        # タグまたはタイトルが指定されている場合
+        if tag_id or notice_title:
+            filters = []
+            # .appendで末尾に追加
+            if tag_id:
+                filters.append(Notice.tag == tag_id)
+            if notice_title:
+                filters.append(Notice.notice_title.like(f"%{notice_title}%"))
+            
+            # OR 条件で検索
+            query = query.filter(or_(*filters)) # https://www.sukerou.com/2019/04/sqlalchemyandor.html
+
+        # 結果を取得
+        results = query.all()
+
         return render_template("notice/result.html", results=results)
     return render_template("notice/search.html", form=form)
