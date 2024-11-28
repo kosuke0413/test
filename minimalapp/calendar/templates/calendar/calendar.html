@@ -1,40 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>カレンダー</title>
+{% extends "base.html" %}
+{% block title %} お知らせ投稿 {% endblock %}
+{% block content %}
     <style>
         table {
             width: 100%;
             border-collapse: collapse;
+            background-color: rgb(255, 255, 255);
+            
         }
         th, td {
             width: 14.28%; /* 7列なので100%を7で割る */
-            border: 1px solid #ddd;
+            border: 3px solid black;
             padding: 8px;
             text-align: center;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #484646;
+            color: white;
         }
         .event-button {
             display: inline-block;
             padding: 5px 10px;
-            background-color: #4CAF50;
+            background-color: #75a4e6;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 10px;
             font-size: 14px;
         }
         .event-button:hover {
             background-color: #45a049;
         }
         .no-event {
-            color: #aaa;
+            color: #000000;
         }
         button {
-            margin: 20px;
-            padding: 10px 20px;
+            margin: 15px;
+            float: right;   
+            padding: 5px 10px;
             font-size: 16px;
             cursor: pointer;
             background-color: #4CAF50;
@@ -45,6 +47,30 @@
         button:hover {
             background-color: #45a049;
         }
+        th.sun{
+            background-color: rgb(225, 30, 30);
+        }
+        th.sat{
+            background-color: rgb(40, 40, 215);
+        }
+        a.front{
+            float: left;
+        }
+        a.next{
+            float: right;
+        }
+        .front,.next {
+            margin: 10px;
+            padding: 5px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #6eaaf4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        
     </style>
 </head>
 <body>
@@ -52,13 +78,13 @@
     <table>
         <thead>
             <tr>
-                <th>日</th>
+                <th class="sun">日</th>
                 <th>月</th>
                 <th>火</th>
                 <th>水</th>
                 <th>木</th>
                 <th>金</th>
-                <th>土</th>
+                <th class="sat">土</th>
             </tr>
         </thead>
         <tbody>
@@ -86,14 +112,12 @@
         </tbody>
     </table>
     <div>
-        <a href="{{ url_for('calendar.beforeindex', year=year, month=month) }}">前へ</a>
-        <a href="{{ url_for('calendar.nextindex', year=year, month=month) }}">次へ</a>
+        <a class="front" href="{{ url_for('calendar.beforeindex', year=year, month=month) }}">前へ</a>
+        <a class="next" href="{{ url_for('calendar.nextindex', year=year, month=month) }}">次へ</a>
     </div>
 
     <!-- 登録ボタン -->
     <form action="{{ url_for('calendar.setEvent') }}" method="get">
         <button type="submit">イベント登録</button>
     </form>
-
-</body>
-</html>
+    {% endblock %}
