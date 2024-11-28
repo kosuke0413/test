@@ -31,6 +31,12 @@ def createapp():
     @app.route("/test-error")
     def test_404():
         return page_not_found(404)
+    
+    # メニューページ
+    @app.route("/menu")
+    def menu():
+        # メニュー画面を表示
+        return render_template("menu.html")
 
     # データベース設定
     app.config.from_mapping(
