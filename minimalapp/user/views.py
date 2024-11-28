@@ -68,7 +68,11 @@ def login():
 
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            return redirect(url_for("notice.top"))
+            # GETパラメータにnextキーが存在しない場合はトップページに遷移する
+            next_ = request.args.get("next")
+            if next_ is None or not next_.startswith("/"):
+                next_ = url_for("notice.top")
+            return redirect(next_)
 
         flash("メールアドレスかパスワードが不正です")
     

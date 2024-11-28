@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form method="post" action="{{ url_for('user.login') }}">
+    <form method="post" action="{{ url_for('user.login',next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
         {% for message in get_flashed_messages() %}
         <span class="error">{{ message }}</span>

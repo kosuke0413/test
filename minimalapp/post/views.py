@@ -7,7 +7,7 @@ from minimalapp.post.forms import PostUploadForm,PostReplyForm
 from minimalapp.post.models import Post,Postreply
 from minimalapp.tags.models import Tags
 from mimetypes import guess_type
-from flask_login import current_user
+from flask_login import current_user,login_required
 
 # Bulueprintでpostアプリを生成する
 post = Blueprint(
@@ -25,6 +25,7 @@ def index():
 
 # 住民投稿のエンドポイント
 @post.route("/create", methods=["GET", "POST"])
+@login_required
 def create_post():
     # 投稿フォームをインスタンス化
     form = PostUploadForm()
