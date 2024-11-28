@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}サイト名{% endblock %}</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -13,16 +13,14 @@
         <aside class="sidebar">
             <nav>
                 <ul>
-                    <h1><a href="{{ url_for('notice.top') }}">〇〇町</a></li></h1>
+                    <li><h1><a href="{{ url_for('notice.top') }}">〇〇町</a></h1></li>
                     {% if current_user.is_authenticated %}
                         <li><a href="#">{{ current_user.name }}</a></li>
-                    {% else %}
-                        <li><a href="#">ログイン</a></li>
                     {% endif %}
-                    <li><a href="#">メニューページ</a></li>
-                    <li><a href="#">言語選択</a></li>
-                    {% if current_user.is_authenticated %}
-                        <li><a href="#">ログアウト</a></li>
+                    <li><a href="{{ url_for('menu')}}"><img src="../static/img/16_2_300.png" alt="メニュー画像"  width="50" height="50"><br>メニュー</br></a></li>
+                    <li><a href="#"><img src="../static/img/言語選択.png" alt="言語選択画像" width="90" height="50"><br>言語選択</br></a></li>
+                    <li><a href="#"><img src="../static/img/AI2.png" alt="AI画像" width="50" height="50"><br>AIに質問</br></a></li>                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('user.logout')}}">ログアウト</a></li>
                     {% endif %}
                 </ul>
             </nav>

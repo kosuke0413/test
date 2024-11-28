@@ -1,0 +1,80 @@
+/* 全体のスタイル */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* ラッパー全体のレイアウト */
+.wrapper {
+    display: flex;
+    height: 100vh; /* ウィンドウ全体の高さ */
+}
+
+/* サイドバー */
+.sidebar {
+    width: 250px;
+    background-color: #f4e060;
+    color: #fff;
+    display: flex; /* Flexboxを有効化 */
+    flex-direction: column; /* 垂直方向に配置 */
+    align-items: center; /* 横方向の中央揃え */
+    justify-content: center; /* 縦方向の中央揃え */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* サイドバー内のリンクリスト */
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center; /* リンクを中央揃え */
+}
+
+.menu-image {
+    width: 5;
+    height: 5;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 15px;
+}
+
+/* 縦書きスタイル（〇〇町リンク） */
+.sidebar nav ul h1 a {
+    writing-mode: vertical-rl; /* 縦書き */
+    text-orientation: upright; /* 縦書きで文字を正しい向きに */
+    line-height: 1.5; /* 行間の調整 */
+    display: inline-block;
+    color: #070707;
+    padding: 20px;
+    border-radius: 5px;
+    text-decoration: none; /* 下線を消す */
+    font-size: 50px;
+}
+
+.sidebar nav ul h1 a:hover {
+    color: #0e0e0e; /* ホバー時の文字色 */
+}
+
+
+
+/* 他のリンク */
+.sidebar nav ul li a {
+    color: #0b0b0b; /* リンクの文字色 */
+    text-decoration: none; /* 下線を消す */
+}
+
+.sidebar nav ul li a:hover {
+    text-decoration: underline; /* ホバー時に下線を表示 */
+}
+
+
+/* メインコンテンツ */
+.content {
+    flex: 1; /* サイドバー以外を埋める */
+    padding: 20px;
+    background-color: #f4e060;
+    box-sizing: border-box;
+}
