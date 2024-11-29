@@ -20,7 +20,7 @@ notice = Blueprint(
 @notice.route("/")
 @login_required
 def top():
-    notices = Notice.query.all()
+    notices = Notice.query.filter(Notice.local_id == current_user.local_id).all()
     return render_template("notice/top.html", notices=notices)
 
 
@@ -53,7 +53,7 @@ def create_notice():
         # お知らせ投稿を追加してコミットする
         db.session.add(notice)
         db.session.commit()
-        return "投稿成功"
+        return redirect(url_for("notice.top"))
     return render_template("notice/create.html", form=form)
 
 
