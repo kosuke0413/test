@@ -94,7 +94,7 @@ def get_image(post_id):
 @login_required
 def post_list():
     # 投稿の一覧を取得、後で地域IDを指定するように変更
-    posts = Post.query.all()
+    posts = Post.query.filter(Post.local_id == current_user.local_id).all()
     return render_template("post/list.html", posts=posts)
 
 
