@@ -1,12 +1,89 @@
 {% extends "base.html" %}
 {% block title %} イベント詳細 {% endblock %}
 {% block content %}
+
+<style>
+    /* 全体スタイル */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    .event-detail {
+        max-width: 800px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .event-date {
+        text-align: center;
+        font-size: 1.2em;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        color: #34495e;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #3498db;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    p {
+        line-height: 1.6;
+        font-size: 1.1em;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #aaa;
+    }
+</style>
+
+<div class="event-detail">
     <h1>{{ event.event_title }}</h1>
-    <p>日付: {{ event.day }}</p>
+    <p class="event-date">日付: {{ event.day }}</p>
 
     <h2>内容</h2>
     <p>{{ event.content }}</p>
 
-    <br>
-    <a href="{{ url_for('calendar.events', date=date) }}">戻る</a>
+    <a href="{{ url_for('calendar.events', date=date) }}" class="back-link">戻る</a>
+</div>
+
+
 {% endblock %}

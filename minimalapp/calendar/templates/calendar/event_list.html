@@ -1,22 +1,114 @@
 {% extends "base.html" %}
 {% block title %} イベント一覧 {% endblock %}
 {% block content %}
-    <title>{{ date }}のイベント一覧</title>
 
+<style>
+    /* 全体スタイル */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    .event-list {
+        max-width: 800px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li.event {
+        background: #f9f9f9;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    li.event:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    li a {
+        text-decoration: none;
+        font-size: 1.2em;
+        color: #3498db;
+        display: block;
+    }
+
+    li a:hover {
+        color: #1abc9c;
+    }
+
+    .no-events {
+        text-align: center;
+        font-style: italic;
+        color: #7f8c8d;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #aaa;
+    }
+</style>
+
+<div class="event-list">
     <h1>{{ date }}のイベント一覧</h1>
     
     {% if events %}
         <ul>
             {% for event in events %}
-                <li>
-                    <a href="{{ url_for('calendar.event_detail', calendar_id=event.calendar_id) }}">{{event.event_title}}</a>
+                <li class="event">
+                    <a href="{{ url_for('calendar.event_detail', calendar_id=event.calendar_id) }}">{{ event.event_title }}</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>この日にイベントはありません。</p>
+        <p class="no-events">この日にイベントはありません。</p>
     {% endif %}
 
-    <br>
-    <a href="{{ url_for('calendar.selectindex', year=date.year, month=date.month) }}">戻る</a>
+    <div style="text-align: center;">
+        <a href="{{ url_for('calendar.selectindex', year=date.year, month=date.month) }}" class="back-link">戻る</a>
+    </div>
+</div>
+
+<footer>© 2024 イベント管理システム</footer>
 {% endblock %}
