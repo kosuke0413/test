@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>相談に返信</title>
-    </head>
+{% extends "base.html" %}
+{% block title %} 相談に返信 {% endblock %}
 
-    <body>
+{% block content %}
         <h2>相談に返信</h2>
 
         <form
@@ -51,5 +47,4 @@
                 <button type="submit">送信</button>
             </div>
         </form>
-    </body>
-</html>
+{% endblock %}

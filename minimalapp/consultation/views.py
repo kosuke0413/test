@@ -6,7 +6,9 @@ from minimalapp.consultation.forms import ConsultationForm
 from minimalapp.consultation.models import Consultation
 from flask_mail import Message
 from app import mail
+from minimalapp.tags.models import Local
 from flask_login import login_required
+from flask_login import current_user
 
 # Bulueprintでpostアプリを生成する
 consultation = Blueprint(
@@ -126,3 +128,11 @@ def send_email(to, subject, template, **kwargs):
     msg.body = render_template(template + ".txt", **kwargs)
     msg.html = render_template(template + ".html", **kwargs)
     mail.send(msg)
+
+
+@consultation.context_processor
+def inject_local():
+    local = Local.query.get(current_user.local_id)
+    return {
+        "local": {"local_name": local.local_name}
+    }

@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8" />
-        <title>ユーザーの一覧</title>
-    </head>
+{% extends "base.html" %}
+{% block title %} ユーザーの一覧 {% endblock %}
 
-    <body>
+
+{% block content %}
         <h2>相談内容一覧</h2>
         <form
             action="{{ url_for('consultation.list') }}"
@@ -39,5 +36,4 @@
         {% else %}
             <p>現在表示する相談内容はありません</p>
         {% endif %}
-    </body>
-</html>
+{% endblock %}

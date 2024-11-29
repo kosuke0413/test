@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <mata charset="UTF-8">
-            <title>問い合わせ完了</title>
-        </mata>
-    </head>
+{% extends "base.html" %}
+{% block title %} 問い合わせ完了 {% endblock %}
 
-    <body>
+{% block content %}
         <p>問い合わせありがとうございました。問い合わせ内容はこちらになります</p>
         <p>問い合わせ内容</p>
         <p>{{ reply }}</p>
-    </body>
-</html>
+{% endblock %}
