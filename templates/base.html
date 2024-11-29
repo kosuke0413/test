@@ -17,9 +17,9 @@
                     {% if current_user.is_authenticated %}
                         <li><a href="#">{{ current_user.name }}</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('menu')}}"><img src="../static/img/16_2_300.png" alt="メニュー画像"  width="50" height="50"><br>メニュー</br></a></li>
-                    <li><a href="#"><img src="../static/img/言語選択.png" alt="言語選択画像" width="90" height="50"><br>言語選択</br></a></li>
-                    <li><a href="#"><img src="../static/img/AI2.png" alt="AI画像" width="50" height="50"><br>AIに質問</br></a></li>                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('menu')}}"><img src="{{ url_for('static', filename='img/16_2_300.png') }}" alt="メニュー画像"  width="50" height="50"><br>メニュー</br></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', filename='img/言語選択.png') }}" alt="言語選択画像" width="90" height="50"><br>言語選択</br></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', filename='img/AI2.png') }}" alt="AI画像" width="50" height="50"><br>AIに質問</br></a></li>                    {% if current_user.is_authenticated %}
                         <li><a href="{{ url_for('user.logout')}}">ログアウト</a></li>
                     {% endif %}
                 </ul>
