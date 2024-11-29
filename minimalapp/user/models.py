@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(10))
     mailaddress = db.Column(db.String(50))
     password_hash = db.Column(db.String)
+    manager_flag = db.Column(db.Boolean)
 
 
     # パスワードを読み取り不可に設定
