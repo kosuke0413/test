@@ -33,7 +33,7 @@ class SignUpForm(FlaskForm):
         "パスワード",
         validators=[
             DataRequired(message="パスワードは必須です。"),
-            Length(1,50, message="50文字以内で入力してください。")
+            Length(4,50, message="4文字以上、10文字以内で入力してください。")
         ]
     )
 
@@ -54,7 +54,7 @@ class LoginForm(FlaskForm):
         "パスワード",
         validators=[
             DataRequired("パスワードは必須です。"),
-            Length(1,50, message="50文字以内で入力してください。")
+            Length(4,10, message="4文字以上、10文字以内で入力してください。")
         ]
     )
 
