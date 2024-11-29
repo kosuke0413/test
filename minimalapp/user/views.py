@@ -74,7 +74,7 @@ def login():
                 next_ = url_for("notice.top")
             return redirect(next_)
 
-        flash("メールアドレスかパスワードが不正です")
+        flash("メールアドレスかパスワードが不正です", "login_error")
     
     return render_template("user/login.html",form=form)
 
