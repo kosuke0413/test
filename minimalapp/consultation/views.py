@@ -130,6 +130,7 @@ def send_email(to, subject, template, **kwargs):
     mail.send(msg)
 
 
+# ログインしたユーザーごとに町の名前の表示
 @consultation.context_processor
 def inject_local():
     local = Local.query.get(current_user.local_id)
