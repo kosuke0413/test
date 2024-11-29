@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8" />
+{% extends "base.html" %}
+{% block title %} イベント編集 {% endblock %}
+{% block content %}
         <title>ユーザー新規作成</title>
-    </head>
 
-    <body>
         <h2>カレンダー編集</h2>
         <form
           action="{{ url_for('calendar.edit_event', calendar_id=event.calendar_id) }}"
@@ -39,5 +36,4 @@
         <button type="submit" style="color: red;">削除</button>
     </form>
 
-    </body>
-</html>
+    {% endblock %}

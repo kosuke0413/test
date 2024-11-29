@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8" />
+{% extends "base.html" %}
+{% block title %} イベント登録 {% endblock %}
+{% block content %}
         <title>ユーザー新規作成</title>
-    </head>
-
-    <body>
-        <h2>カレンダー登録</h2>
+    
+        <h2>イベント登録</h2>
         <form
           action="{{ url_for('calendar.setEvent') }}"
           method="POST"
@@ -33,5 +30,4 @@
         {% endfor %}
         <p>{{ form.submit() }}</p>
     </form>
-    </body>
-</html>
+    {% endblock %}

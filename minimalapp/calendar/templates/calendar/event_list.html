@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
+{% block title %} イベント一覧 {% endblock %}
+{% block content %}
     <title>{{ date }}のイベント一覧</title>
-</head>
-<body>
+
     <h1>{{ date }}のイベント一覧</h1>
     
     {% if events %}
@@ -21,5 +19,4 @@
 
     <br>
     <a href="{{ url_for('calendar.selectindex', year=date.year, month=date.month) }}">戻る</a>
-</body>
-</html>
+{% endblock %}
