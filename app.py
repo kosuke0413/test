@@ -31,7 +31,7 @@ def createapp():
     @app.route("/test-error")
     def test_404():
         return page_not_found(404)
-    
+
     # メニューページ
     @app.route("/menu")
     @login_required
@@ -55,8 +55,6 @@ def createapp():
     db.init_app(app)
     # flask_migrateをアプリと連携
     Migrate(app, db)
-
-    
 
     # noticeアプリの登録とURLプレフィックス指定
     from minimalapp.notice import views as notice_views
@@ -95,4 +93,3 @@ def createapp():
     mail.init_app(app)
 
     return app
-
