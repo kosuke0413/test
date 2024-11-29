@@ -3,11 +3,12 @@ from flask import (
     redirect, url_for,
     Response, flash)
 from app import db
-from minimalapp.post.forms import PostUploadForm,PostReplyForm
+from minimalapp.post.forms import PostUploadForm,PostReplyForm,SearchPostForm
 from minimalapp.post.models import Post,Postreply
 from minimalapp.tags.models import Tags, Local
 from minimalapp.user.models import User
 from mimetypes import guess_type
+from sqlalchemy import or_
 from flask_login import current_user,login_required
 
 # Bulueprintでpostアプリを生成する
@@ -156,7 +157,7 @@ def delete(post_id):
     if post:
         db.session.delete(post)
         db.session.commit()
-    flash('投稿一覧を削除しました')
+    # flash('投稿一覧を削除しました')
     return redirect(url_for('post.post_list'))  # 削除が完了するとtopページに遷移
 
 
@@ -191,8 +192,44 @@ def reply_delete(reply_id):
     db.session.delete(reply)
     db.session.commit()
 
-    flash("返信を削除しました")
+    # flash("返信を削除しました")
     return redirect(url_for("post.post_detail", post_id=post_id))
+
+
+# 投稿検索
+@post.route("/search", methods=["GET", "POST"])
+@login_required
+def search():
+    form = SearchPostForm()
+    if form.validate_on_submit():
+        tag_id = form.tag.data
+        if not tag_id:
+            tag_id = None
+        # 空白を削除
+        post_title = form.post_title.data.strip()
+        if not post_title:
+            post_title = None
+
+        # 検索クエリの生成
+        query = db.session.query(Post)
+
+        # タグまたはタイトルが指定されている場合
+        if tag_id or post_title:
+            filters = []
+            # .appendで末尾に追加
+            if tag_id:
+                filters.append(Post.tag == tag_id)
+            if post_title:
+                filters.append(Post.post_title.like(f"%{post_title}%"))
+
+            # OR 条件で検索
+            query = query.filter(or_(*filters))  # https://www.sukerou.com/2019/04/sqlalchemyandor.html
+
+        # 結果を取得
+        results = query.all()
+
+        return render_template("post/result.html", results=results)
+    return render_template("post/search.html", form=form)
 
 
 @post.context_processor

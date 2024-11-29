@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %} 投稿検索 {% endblock %}
+
+{% block content %}
+
+    <h1>お知らせ検索</h1>
+    <form method="POST" novalidate="novalidate" action="{{ url_for('post.search') }}">
+        {{ form.csrf_token }}
+        <div>
+            <label for="post_title">タイトルキーワード:</label>
+            {{ form.post_title }}
+        </div>
+        <div>
+            <label>タグを選択:</label>
+            {{ form.tag }}
+        </div>
+
+        <button type="submit">検索</button>
+    </form>
+
+{% endblock %}

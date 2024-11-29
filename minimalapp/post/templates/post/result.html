@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} 投稿検索結果 {% endblock %}
+
+{% block content %}
+
+    <h1>検索結果</h1>
+
+    {% if results %}
+    <ul>
+        {% for result in results %}
+        <li>
+            <strong>タイトル:</strong>
+            <a href="{{ url_for('post.post_detail', post_id=result.post_id) }}">{{ result.post_title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>該当するお知らせは見つかりませんでした。</p>
+    {% endif %}
+
+    <a href="{{ url_for('post.search') }}">検索画面に戻る</a>
+
+    {% endblock %}

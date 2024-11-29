@@ -1,7 +1,7 @@
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField,TextAreaField,RadioField
+from wtforms import StringField,TextAreaField,RadioField,SelectField
 from wtforms.validators import DataRequired,length,Optional
 
 class PostUploadForm(FlaskForm):
@@ -56,3 +56,21 @@ class PostReplyForm(FlaskForm):
         ]     
     )
     submit = SubmitField("送信する")
+
+# 投稿検索
+class SearchPostForm(FlaskForm):
+    post_title = StringField("お知らせタイトル", validators=[Optional()])
+    tag = SelectField(
+        "タグ",
+        choices=[
+            ("", "-----"),
+            ("1", "イベント・行事"),
+            ("2", "子育て・教育"),
+            ("3", "医療・健康"),
+            ("4", "福祉・介護"),
+            ("5", "ボランティア"),
+            ("6", "注意喚起"),
+        ],
+        validators=[Optional()],
+    )
+    submit = SubmitField("検索")
