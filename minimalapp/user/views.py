@@ -1,7 +1,8 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_user, logout_user
-from minimalapp.user.forms import SignUpForm, LoginForm
+from flask_login import login_user, logout_user,login_required
+from minimalapp.user.forms import SignUpForm, LoginForm, LocalRegistForm
 from minimalapp.user.models import User
+from minimalapp.tags.models import Local
 from app import db
 from flask_login import login_required
 
@@ -17,7 +18,7 @@ user = Blueprint(
 def index():
     return "Hello User"
 
-# 新規登録のエンドポイント
+# 住民の新規登録のエンドポイント
 @user.route("/signup", methods=["GET","POST"])
 def signup():
     form = SignUpForm()
@@ -27,6 +28,7 @@ def signup():
             local_id=form.local_id.data,
             name=form.username.data,
             mailaddress=form.mailaddress.data,
+            manager_flag = False
         )
         user.password = form.password.data
 
@@ -94,3 +96,69 @@ def logout():
     #     db.session.delete(user)
     #     db.session.commit()
     #     return "削除成功"
+
+
+# 自治体の新規登録のエンドポイント
+@user.route("/signup_super", methods=["GET","POST"])
+@login_required
+def signup_super():
+    form = SignUpForm()
+
+    if form.validate_on_submit():
+        user = User(
+            local_id=form.local_id.data,
+            name=form.username.data,
+            mailaddress=form.mailaddress.data,
+            manager_flag = True
+        )
+        user.password = form.password.data
+
+        # 地域IDの存在チェック
+        if not user.local_id_existence_confirmation():
+            flash("指定の地域IDは存在しません")
+            form.local_id.data = None
+            return render_template("user/signup_super.html",form=form)
+        
+        # メールアドレス重複チェック
+        if user.is_duplicate_mailaddress():
+            flash("指定のメールアドレスは登録済みです")
+            form.mailaddress.data = None
+            return render_template("user/signup_super.html",form=form)
+
+
+        # ユーザー情報を登録する
+        db.session.add(user)
+        db.session.commit()
+
+        # ユーザー情報をセッションに登録する
+        login_user(user)
+
+        # GETパラメータにnextキーが存在しない場合はトップページに遷移する
+        next_ = request.args.get("next")
+        if next_ is None or not next_.startswith("/"):
+            next_ = url_for("notice.top")
+        return redirect(next_)
+    
+    return render_template("user/signup_super.html",form=form)
+
+
+# 地域の新規登録のエンドポイント
+@user.route("/local_regist", methods=["GET","POST"])
+@login_required
+def local_regist():
+    form = LocalRegistForm()
+
+    if form.validate_on_submit():
+        local = Local(
+            local_id = form.local_id.data,
+            local_name = form.local_name.data
+        )
+
+        
+        # 地域情報を登録する
+        db.session.add(local)
+        db.session.commit()
+
+        return "地域登録完了"
+
+    return render_template("user/local_regist.html",form=form)

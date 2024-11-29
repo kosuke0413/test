@@ -41,7 +41,7 @@ body {
 }
 
 /* 縦書きスタイル（〇〇町リンク） */
-.sidebar nav ul h1 a {
+.town-text {
     writing-mode: vertical-rl; /* 縦書き */
     text-orientation: upright; /* 縦書きで文字を正しい向きに */
     line-height: 1.5; /* 行間の調整 */
@@ -57,17 +57,17 @@ body {
 
 /* 「町」の文字部分に適用するスタイル */
 .town-text {
-    color: #ff4500; /* テキストの色をオレンジに変更 */
-    font-size: 40px; /* フォントサイズを変更 */
+    color: #080707; /* テキストの色をオレンジに変更 */
+    font-size: 60px; /* フォントサイズを変更 */
     font-family: 'Courier New', Courier, monospace; /* フォントを変更 */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 軽い文字の影を追加 */
     font-weight: bold; /* 太字に設定 */
-    transition: color 0.3s ease; /* カラー変更時のアニメーション */
+    transition: all 0.3s ease; /* アニメーション */
 }
 
 /* 「町」の文字部分ホバー時の効果 */
 .town-text:hover {
-    color: #ff6347; /* ホバー時に色を赤っぽく変える */
+    color: #623434; /* ホバー時に色を赤っぽく変える */
     transform: scale(1.1); /* ホバー時に少し拡大 */
 }
 

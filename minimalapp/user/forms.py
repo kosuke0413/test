@@ -59,3 +59,23 @@ class LoginForm(FlaskForm):
     )
 
     submit = SubmitField("ログイン")
+
+
+# 地域新規登録のフォーム
+class LocalRegistForm(FlaskForm):
+    local_id = StringField(
+        "地域ID",
+        validators=[
+            DataRequired(message="地域IDは必須です。"),
+            Length(min=3,max=3, message="3文字で入力してください。"),
+        ]
+    )
+
+    local_name = StringField(
+        "地域名",
+                validators=[
+            DataRequired(message="地域名は必須です。"),
+        ]
+    )
+
+    submit = SubmitField("地域新規登録")

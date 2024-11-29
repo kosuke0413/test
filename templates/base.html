@@ -10,15 +10,15 @@
     <div class="wrapper">
         <!-- サイドバー -->
         <aside class="sidebar">
-            <nav>
-                <ul>
+            
                     <!-- 縦書きで「町」のリンク -->
-                    <li class="town-item">
+
                         <h1>
                             <a href="{{ url_for('notice.top') }}" class="town-text">{{ local.local_name }}</a>
                         </h1>
-                    </li>
-
+                    
+            <nav>
+                <ul>
                     <!-- 現在ログイン中のユーザー名 -->
                     {% if current_user.is_authenticated %}
                         <li class="sidebar-item">
