@@ -3,12 +3,13 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    min-height: 100%; /* ページ全体を覆う */
 }
 
 /* ラッパー全体のレイアウト */
 .wrapper {
     display: flex;
-    height: 100vh; /* ウィンドウ全体の高さ */
+    min-height: 100vh; /* 最小高さを画面全体に設定（動的に伸びる） */
 }
 
 /* サイドバー */
@@ -19,7 +20,7 @@ body {
     display: flex; /* Flexboxを有効化 */
     flex-direction: column; /* 垂直方向に配置 */
     align-items: center; /* 横方向の中央揃え */
-    justify-content: center; /* 縦方向の中央揃え */
+    justify-content: flex-start; /* 上揃え（中央揃えの場合は center） */
     padding: 20px;
     box-sizing: border-box;
 }
@@ -58,8 +59,6 @@ body {
     color: #0e0e0e; /* ホバー時の文字色 */
 }
 
-
-
 /* 他のリンク */
 .sidebar nav ul li a {
     color: #0b0b0b; /* リンクの文字色 */
@@ -69,7 +68,6 @@ body {
 .sidebar nav ul li a:hover {
     text-decoration: underline; /* ホバー時に下線を表示 */
 }
-
 
 /* メインコンテンツ */
 .content {
