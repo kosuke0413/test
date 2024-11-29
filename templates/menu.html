@@ -28,29 +28,40 @@
         list-style: none;
         padding: 0;
         margin: 0 auto;
+        display: grid; /* グリッドレイアウトを使用 */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 自動調整 */
+        gap: 20px; /* 項目間のスペース */
     }
 
     .menu-list li {
-        margin: 15px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     /* メニューリンクのスタイル */
     .menu-list li a {
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         font-size: 20px;
         font-weight: bold;
         color: #fff;
         background-color: #333;
         text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 5px;
+        padding: 20px;
+        border-radius: 10px;
+        width: 100%;
+        height: 100px;
         transition: all 0.3s ease; /* ホバー時のアニメーション */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 軽い影 */
     }
 
     .menu-list li a:hover {
         background-color: #555;
         color: #f4e060;
-        transform: scale(1.1); /* 拡大アニメーション */
+        transform: scale(1.05); /* 拡大アニメーション */
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* ホバー時に影を追加 */
     }
 
@@ -76,7 +87,8 @@
 
         .menu-list li a {
             font-size: 18px;
-            padding: 8px 16px;
+            padding: 15px;
+            height: 80px; /* サイズを小さめに */
         }
 
         .menu-container {
@@ -91,7 +103,7 @@
         <li><a href="{{ url_for('calendar.index') }}">カレンダー</a></li>
         <li><a href="#">投稿の検索</a></li>
         <li><a href="{{ url_for('notice.search') }}">お知らせの検索</a></li>
-        <li><a href="{{ url_for('consultation.send')}}">相談窓口</a></li>
+        <li><a href="{{ url_for('consultation.send') }}">相談窓口</a></li>
         <li><a href="#">言語選択</a></li>
         <li><a href="#">AIに質問</a></li>
     </ul>
