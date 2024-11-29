@@ -10,7 +10,7 @@
     <form method="POST" novalidate="novalidate" action="{{ url_for('notice.search') }}">
         {{ form.csrf_token }}
         <div>
-            <label for="notice_title">タイトルキーワード:</label>
+            <label>タイトルキーワード:</label>
             {{ form.notice_title }}
         </div>
         <div>
