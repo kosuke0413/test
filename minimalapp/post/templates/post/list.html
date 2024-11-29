@@ -2,23 +2,24 @@
 {% block title %} 住民投稿一覧 {% endblock %}
 
 {% block content %}
-    <h1>住民投稿</h1>
+<h1>住民投稿</h1>
 
-    <!-- 住民投稿の一覧表示 -->
-    <ul>
-        {% if posts %}
-        {% for post in posts %}
-        <li>
-            <a href = "{{ url_for('post.post_detail',post_id=post.post_id) }}">
-                {{ post.post_title }}
-            </a>
-        </li>
-        {% endfor %}
-        {% else %}
-        <p>現在表示する投稿はありません</p>
-        {% endif %}
-    </ul>
-    <form action="{{ url_for('post.create_post') }}" method="get" style="display:inline;">
-        <button type="submit" class="btn btn-primary">投稿する</button>
-    </form>
+<!-- 住民投稿の一覧表示 -->
+<ul>
+    {% if posts %}
+    {% for post in posts %}
+    <li>
+        <a href="{{ url_for('post.post_detail',post_id=post.post_id) }}">
+            {{ post.post_title }}
+        </a>
+    </li>
+    {% endfor %}
+    {% else %}
+    <p>現在表示する投稿はありません</p>
+    {% endif %}
+</ul>
+<form action="{{ url_for('post.create_post') }}" method="get" style="display:inline;">
+    <button type="submit" class="btn btn-primary">投稿する</button>
+    <p><a href="{{ url_for('notice.top') }}">トップページに戻る</a></p>
+</form>
 {% endblock %}
