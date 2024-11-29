@@ -1,0 +1,30 @@
+{% extends "user/base.html" %}
+{% block title %}地域新規登録{% endblock%}
+
+{% block content %}
+    <form method="post" action="{{ url_for('user.local_regist') }}" novalidate="novalidate">
+        {{ form.csrf_token }}
+        <h2>地域新規登録</h2>
+        
+        <p>
+            {{ form.local_id.label }}
+            {{ form.local_id() }}
+        </p>
+        {% for error in form.local_id.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <p>
+            {{ form.local_name.label }}
+            {{ form.local_name() }}
+        </p>
+        {% for error in form.local_name.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <!-- 送信ボタン -->
+        <p>{{ form.submit() }}</p>
+
+    </form>
+
+{% endblock %}

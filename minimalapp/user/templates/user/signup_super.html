@@ -1,0 +1,48 @@
+{% extends "user/base.html" %}
+{% block title %}自治体ユーザー新規登録{% endblock%}
+
+{% block content %}
+    <form method="post" action="{{ url_for('user.signup_super', next=request.args.get('next')) }}" novalidate="novalidate">
+        {{ form.csrf_token }}
+        {% for message in get_flashed_messages() %}
+        <div class="error">{{ message }}</div>
+        {% endfor %}
+        <h2>自治体ユーザー新規登録</h2>
+        
+        <p>
+            {{ form.local_id.label }}
+            {{ form.local_id() }}
+        </p>
+        {% for error in form.local_id.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <p>
+            {{ form.username.label }}
+            {{ form.username() }}
+        </p>
+        {% for error in form.username.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <p>
+            {{ form.mailaddress.label }}
+            {{ form.mailaddress() }}
+        </p>
+        {% for error in form.mailaddress.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <p>
+            {{ form.password.label }}
+            {{ form.password }}
+        </p>
+        {% for error in form.password.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+        
+        <!-- 送信ボタン -->
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}
