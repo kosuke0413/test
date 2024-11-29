@@ -1,9 +1,10 @@
 /* 全体のスタイル */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    min-height: 100%; /* ページ全体を覆う */
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* ページ全体の背景色 */
+    color: #333; /* ベースの文字色 */
+    min-height: 100%;
 }
 
 /* ラッパー全体のレイアウト */
@@ -15,14 +16,15 @@ body {
 /* サイドバー */
 .sidebar {
     width: 250px;
-    background-color: #f4e060;
-    color: #fff;
+    background: linear-gradient(135deg, #f4e060, #f4d04f); /* グラデーション背景 */
+    color: #333; /* サイドバーの文字色 */
     display: flex; /* Flexboxを有効化 */
     flex-direction: column; /* 垂直方向に配置 */
     align-items: center; /* 横方向の中央揃え */
-    justify-content: flex-start; /* 上揃え（中央揃えの場合は center） */
+    justify-content: flex-start; /* 上揃え */
     padding: 20px;
     box-sizing: border-box;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1); /* サイドバーの軽い影 */
 }
 
 /* サイドバー内のリンクリスト */
@@ -33,13 +35,9 @@ body {
     text-align: center; /* リンクを中央揃え */
 }
 
-.menu-image {
-    width: 5;
-    height: 5;
-}
-
+/* サイドバーの各項目 */
 .sidebar nav ul li {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* 項目間の余白 */
 }
 
 /* 縦書きスタイル（〇〇町リンク） */
@@ -48,31 +46,57 @@ body {
     text-orientation: upright; /* 縦書きで文字を正しい向きに */
     line-height: 1.5; /* 行間の調整 */
     display: inline-block;
-    color: #070707;
-    padding: 20px;
+    background: transparent; /* 背景を透明（背景と同化） */
+    padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none; /* 下線を消す */
-    font-size: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease; /* アニメーション */
 }
 
-.sidebar nav ul h1 a:hover {
-    color: #0e0e0e; /* ホバー時の文字色 */
+/* 「町」の文字部分に適用するスタイル */
+.town-text {
+    color: #ff4500; /* テキストの色をオレンジに変更 */
+    font-size: 40px; /* フォントサイズを変更 */
+    font-family: 'Courier New', Courier, monospace; /* フォントを変更 */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 軽い文字の影を追加 */
+    font-weight: bold; /* 太字に設定 */
+    transition: color 0.3s ease; /* カラー変更時のアニメーション */
 }
 
-/* 他のリンク */
+/* 「町」の文字部分ホバー時の効果 */
+.town-text:hover {
+    color: #ff6347; /* ホバー時に色を赤っぽく変える */
+    transform: scale(1.1); /* ホバー時に少し拡大 */
+}
+
+/* サイドバー内の他のリンク */
 .sidebar nav ul li a {
-    color: #0b0b0b; /* リンクの文字色 */
+    color: #333; /* ベースの文字色 */
+    background: transparent; /* 背景を透明（背景と同化） */
     text-decoration: none; /* 下線を消す */
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease; /* ホバー時のアニメーション */
+    display: inline-block;
 }
 
 .sidebar nav ul li a:hover {
-    text-decoration: underline; /* ホバー時に下線を表示 */
+    background-color: rgba(255, 255, 255, 0.2); /* ホバー時、背景を少し明るく */
+    color: #000; /* ホバー時の文字色 */
+    transform: scale(1.05); /* 拡大アニメーション */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ホバー時の影 */
 }
 
 /* メインコンテンツ */
 .content {
     flex: 1; /* サイドバー以外を埋める */
     padding: 20px;
-    background-color: #f4e060;
+    background: linear-gradient(135deg, #f4e060, #f4d04f); /* メインコンテンツの背景とサイドバーを統一 */
+    color: #333; /* ベースの文字色 */
     box-sizing: border-box;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05); /* 内側の軽い影 */
 }

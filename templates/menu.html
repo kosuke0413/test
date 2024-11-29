@@ -1,14 +1,100 @@
 {% extends "base.html" %}
-{% block title %} メニュー {% endblock %}
+{% block title %}メニュー{% endblock %}
 
 {% block content %}
-<h1>メニュー</h1>
+<style>
+    /* メインコンテナのスタイル */
+    .menu-container {
+        max-width: 800px;
+        margin: 50px auto; /* 中央揃え */
+        padding: 20px;
+        background: linear-gradient(135deg, #f4e060, #f4d04f); /* モダンなグラデーション背景 */
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 軽い影 */
+        text-align: center; /* 中央寄せ */
+    }
 
-    <li><a href="{{ url_for('calendar.index') }}">カレンダー</a></li>
-    <li><a href="#">投稿の検索</a></li>
-    <li><a href="{{ url_for('notice.search') }}">お知らせの検索</a></li>
-    <li><a href="#">言語選択</a></li>
-    <li><a href="#">AIに質問</a></li>
-    <p><a href="/">トップページへ戻る</a></p>
+    /* タイトルのスタイル */
+    .menu-title {
+        font-size: 36px;
+        margin-bottom: 30px;
+        font-family: "Arial Black", sans-serif;
+        color: #333;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* タイトルに軽い影 */
+    }
 
+    /* メニューリストのスタイル */
+    .menu-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .menu-list li {
+        margin: 15px 0;
+    }
+
+    /* メニューリンクのスタイル */
+    .menu-list li a {
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #333;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: all 0.3s ease; /* ホバー時のアニメーション */
+    }
+
+    .menu-list li a:hover {
+        background-color: #555;
+        color: #f4e060;
+        transform: scale(1.1); /* 拡大アニメーション */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* ホバー時に影を追加 */
+    }
+
+    /* 戻るリンクのスタイル */
+    .back-link a {
+        font-size: 16px;
+        color: #333;
+        text-decoration: underline;
+        margin-top: 20px;
+        display: inline-block;
+        transition: color 0.3s ease;
+    }
+
+    .back-link a:hover {
+        color: #555;
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 600px) {
+        .menu-title {
+            font-size: 28px;
+        }
+
+        .menu-list li a {
+            font-size: 18px;
+            padding: 8px 16px;
+        }
+
+        .menu-container {
+            padding: 15px;
+        }
+    }
+</style>
+
+<div class="menu-container">
+    <h1 class="menu-title">メニュー</h1>
+    <ul class="menu-list">
+        <li><a href="{{ url_for('calendar.index') }}">カレンダー</a></li>
+        <li><a href="#">投稿の検索</a></li>
+        <li><a href="{{ url_for('notice.search') }}">お知らせの検索</a></li>
+        <li><a href="{{ url_for('consultation.send')}}">相談窓口</a></li>
+        <li><a href="#">言語選択</a></li>
+        <li><a href="#">AIに質問</a></li>
+    </ul>
+    <p class="back-link"><a href="/">トップページへ戻る</a></p>
+</div>
 {% endblock %}

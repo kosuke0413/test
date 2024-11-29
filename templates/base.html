@@ -7,20 +7,54 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
     <div class="wrapper">
         <!-- サイドバー -->
         <aside class="sidebar">
             <nav>
                 <ul>
-                    <li><h1><a href="{{ url_for('notice.top') }}">{{ local.local_name }}</a></h1></li>
+                    <!-- 縦書きで「町」のリンク -->
+                    <li class="town-item">
+                        <h1>
+                            <a href="{{ url_for('notice.top') }}" class="town-text">{{ local.local_name }}</a>
+                        </h1>
+                    </li>
+
+                    <!-- 現在ログイン中のユーザー名 -->
                     {% if current_user.is_authenticated %}
-                        <li><a href="#">{{ current_user.name }}</a></li>
+                        <li class="sidebar-item">
+                            <a href="#">{{ current_user.name }}</a>
+                        </li>
                     {% endif %}
-                    <li><a href="{{ url_for('menu')}}"><img src="{{ url_for('static', filename='img/16_2_300.png') }}" alt="メニュー画像"  width="50" height="50"><br>メニュー</br></a></li>
-                    <li><a href="#"><img src="{{ url_for('static', filename='img/言語選択.png') }}" alt="言語選択画像" width="90" height="50"><br>言語選択</br></a></li>
-                    <li><a href="#"><img src="{{ url_for('static', filename='img/AI2.png') }}" alt="AI画像" width="50" height="50"><br>AIに質問</br></a></li>                    {% if current_user.is_authenticated %}
-                        <li><a href="{{ url_for('user.logout')}}">ログアウト</a></li>
+
+                    <!-- メニュー -->
+                    <li class="sidebar-item">
+                        <a href="{{ url_for('menu') }}">
+                            <img src="{{ url_for('static', filename='img/16_2_300.png') }}" alt="メニュー画像" width="50" height="50">
+                            <br>メニュー</br>
+                        </a>
+                    </li>
+
+                    <!-- 言語選択 -->
+                    <li class="sidebar-item">
+                        <a href="#">
+                            <img src="{{ url_for('static', filename='img/言語選択.png') }}" alt="言語選択画像" width="90" height="50">
+                            <br>言語選択</br>
+                        </a>
+                    </li>
+
+                    <!-- AIに質問 -->
+                    <li class="sidebar-item">
+                        <a href="#">
+                            <img src="{{ url_for('static', filename='img/AI2.png') }}" alt="AI画像" width="50" height="50">
+                            <br>AIに質問</br>
+                        </a>
+                    </li>
+
+                    <!-- ログアウト -->
+                    {% if current_user.is_authenticated %}
+                        <li class="sidebar-item">
+                            <a href="{{ url_for('user.logout') }}">ログアウト</a>
+                        </li>
                     {% endif %}
                 </ul>
             </nav>
