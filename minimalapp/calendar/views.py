@@ -6,8 +6,8 @@ from minimalapp.calendar.models import Calendar
 from app import db
 from sqlalchemy import select
 from collections import defaultdict
-from flask_login import login_required
-
+from flask_login import login_required,current_user
+from minimalapp.tags.models import Local
 
 # Blueprintでcalendarアプリを生成する
 Calen = Blueprint(
@@ -123,7 +123,7 @@ def setEvent():
             event_title=form.title.data,
             content=form.text.data,
             day=form.date.data,
-            local_id="abc"
+            local_id=current_user.local_id
         )
 
         db.session.add(calen)
@@ -142,7 +142,6 @@ def edit_event(calendar_id):
         event.event_title = form.title.data,
         event.content = form.text.data,
         event.day = form.date.data,
-        event.local_id = "abc"
 
         db.session.commit()
         return redirect(url_for("calendar.index"))
@@ -211,3 +210,10 @@ def event_detail(calendar_id):
 
     return render_template("calendar/event_detail.html",
                            event=event, date=date)
+
+@Calen.context_processor
+def inject_local():
+    local = Local.query.get(current_user.local_id)
+    return {
+        "local": {"local_name": local.local_name}
+    }

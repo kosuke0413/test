@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <title>{{ event.event_title }}</title>
-</head>
-
-<body>
+{% extends "base.html" %}
+{% block title %} イベント詳細 {% endblock %}
+{% block content %}
     <h1>{{ event.event_title }}</h1>
     <p>日付: {{ event.day }}</p>
 
@@ -15,6 +9,5 @@
 
     <br>
     <a href="{{ url_for('calendar.events', date=date) }}">戻る</a>
-</body>
 
-</html>
+{% endblock %}
