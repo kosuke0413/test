@@ -1,39 +1,155 @@
 {% extends "base.html" %}
 {% block title %} イベント編集 {% endblock %}
 {% block content %}
-        <title>ユーザー新規作成</title>
 
-        <h2>カレンダー編集</h2>
-        <form
-          action="{{ url_for('calendar.edit_event', calendar_id=event.calendar_id) }}"
-          method="POST"
-          novalidate="novalidate"
-        >
-        {{ form.csrf_token }}
-        <p>
-            {{ form.title.label }} {{ form.title(placeholder="タイトル") }}
-        </p>
+<style>
+    /* 全体スタイル */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2.2em;
+        margin-top: 20px;
+    }
+
+    form {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-size: 1em;
+        color: #34495e;
+        margin-bottom: 8px;
+    }
+
+    input, textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition: border-color 0.3s;
+    }
+
+    input:focus, textarea:focus {
+        border-color: #3498db;
+        background: #fff;
+        outline: none;
+    }
+
+    textarea {
+        height: 120px;
+        resize: none;
+    }
+
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.9em;
+    }
+
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #3498db;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+        background: #1abc9c;
+        transform: scale(1.02);
+    }
+
+    .submit-button:active {
+        background: #16a085;
+    }
+
+    .delete-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #e74c3c;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        margin-top: 20px;
+    }
+
+    .delete-button:hover {
+        background: #c0392b;
+        transform: scale(1.02);
+    }
+
+    .delete-button:active {
+        background: #a93226;
+    }
+
+</style>
+
+<h2>イベント編集</h2>
+<form action="{{ url_for('calendar.edit_event', calendar_id=event.calendar_id) }}" method="POST" novalidate="novalidate">
+    {{ form.csrf_token }}
+
+    <p>
+        <label for="title">{{ form.title.label }}</label>
+        {{ form.title(placeholder="タイトル") }}
         {% for error in form.title.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error-message">{{ error }}</span>
         {% endfor %}
-        <p>
-            {{ form.date.label }} {{ form.date(placeholder="日付") }}
-        </p>
+    </p>
+
+    <p>
+        <label for="date">{{ form.date.label }}</label>
+        {{ form.date(placeholder="日付") }}
         {% for error in form.date.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error-message">{{ error }}</span>
         {% endfor %}
-        <p>
-            {{ form.text.label }} {{ form.text(placeholder="本文") }}
-        </p>
+    </p>
+
+    <p>
+        <label for="text">{{ form.text.label }}</label>
+        {{ form.text(placeholder="本文") }}
         {% for error in form.text.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error-message">{{ error }}</span>
         {% endfor %}
-        <p>{{ form.submit() }}</p>
-    </form>
+    </p>
 
-    <form method="POST" action="{{ url_for('calendar.delete', calendar_id=event.calendar_id) }}"
-        onsubmit="return confirm('本当に削除しますか？');">
-        <button type="submit" style="color: red;">削除</button>
-    </form>
+    <p>
+        <button type="submit" class="submit-button">保存</button>
+    </p>
+</form>
 
-    {% endblock %}
+<form method="POST" action="{{ url_for('calendar.delete', calendar_id=event.calendar_id) }}" onsubmit="return confirm('本当に削除しますか？');">
+    {{ form.csrf_token }}
+    <button type="submit" class="delete-button">削除</button>
+</form>
+
+{% endblock %}
