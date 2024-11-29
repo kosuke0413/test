@@ -66,7 +66,7 @@ def create_post():
         # 住民投稿を追加してコミットする
         db.session.add(post)
         db.session.commit()
-        return "投稿成功"
+        return redirect(url_for('post.post_list'))
 
     return render_template("post/create.html", form=form)
 
