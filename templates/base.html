@@ -56,6 +56,17 @@
                             <a href="{{ url_for('user.logout') }}">ログアウト</a>
                         </li>
                     {% endif %}
+                    
+                    <!-- 自治体ユーザー登録 後で直す -->
+                    <li class="sidebar-item">
+                        <a href="{{ url_for('user.signup_super') }}">自治体ユーザー登録</a>
+                    </li>
+
+                    <!-- 地域登録 後で直す -->
+                    <li class="sidebar-item">
+                        <a href="{{ url_for('user.local_regist') }}">地域新規登録</a>
+                    </li>
+
                 </ul>
             </nav>
         </aside>
