@@ -2,5 +2,43 @@
 {% block title %} 問い合わせ完了 {% endblock %}
 
 {% block content %}
-    <h2>問い合わせ完了</h2>
+<style>
+
+    /* 全体を中央寄せ */
+    /* main-container のcss */
+    .main-container {
+        display: flex;
+        justify-content: center; /* 横方向の中央寄せ */
+        align-items: center; /* 縦方向の中央寄せ */
+        min-height: 100vh; /* ビューポート全体の高さ */
+        background-color: #f4e060; /* 背景色を設定（任意） */
+    }
+
+    /* message-container のcss */
+    .message-container {
+        text-align: center; /* テキストを中央揃え */
+        background: #ffffff;
+        padding: 20px 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* h2 のcss */
+    .send_complate-h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+    }
+
+</style>
+<!-- サイドバー以外の枠 -->
+<div class="main-container">
+
+    <!-- お問い合わせ完了の枠 -->
+    <div class="message-container">
+
+        <h2 class="send_complate-h2">問い合わせ完了</h2>
+
+    </div>
+</div>
 {% endblock %}
