@@ -4,9 +4,8 @@ import calendar
 from minimalapp.calendar.forms import CalendarregistForm
 from minimalapp.calendar.models import Calendar
 from app import db
-from sqlalchemy import select
 from collections import defaultdict
-from flask_login import login_required,current_user
+from flask_login import login_required, current_user
 from minimalapp.tags.models import Local
 
 # Blueprintでcalendarアプリを生成する
@@ -38,16 +37,19 @@ def index():
 
     # 該当月のすべてのイベントを取得
     events = Calendar.query.filter(
-        Calendar.day.between(start_date, end_date)).all()
+        Calendar.day.between(start_date, end_date),  # 範囲フィルタ
+        Calendar.local_id == current_user.local_id  # ローカルIDフィルタ
+        ).all()
     event_days = defaultdict(list)
     for event in events:
         event_days[event.day.day].append(event)  # 日付のみに絞って保存
 
     return render_template(
         'calendar/calendar.html',
-        year=year, month=month, month_days=month_days, event_days=event_days
+        year=year, month=month, month_days=month_days, event_days=event_days,
+        events=events,
     )
-   
+
 
 # 次の月のカレンダーを作成
 @Calen.route('/next<int:year>/<int:month>')
@@ -72,13 +74,16 @@ def nextindex(year, month):
 
     # 該当月のすべてのイベントを取得
     events = Calendar.query.filter(
-        Calendar.day.between(start_date, end_date)).all()
+        Calendar.day.between(start_date, end_date),  # 範囲フィルタ
+        Calendar.local_id == current_user.local_id  # ローカルIDフィルタ
+        ).all()
     event_days = defaultdict(list)
     for event in events:
         event_days[event.day.day].append(event)  # 日付のみに絞って保存
 
     return render_template('calendar/calendar.html', year=year, month=month,
-                           month_days=month_days, event_days=event_days)
+                           month_days=month_days, event_days=event_days,
+                           events=events)
 
 
 # 先月のカレンダーを作成
@@ -103,13 +108,16 @@ def beforeindex(year, month):
 
     # 該当月のすべてのイベントを取得
     events = Calendar.query.filter(
-        Calendar.day.between(start_date, end_date)).all()
+        Calendar.day.between(start_date, end_date),  # 範囲フィルタ
+        Calendar.local_id == current_user.local_id  # ローカルIDフィルタ
+        ).all()
     event_days = defaultdict(list)
     for event in events:
         event_days[event.day.day].append(event)  # 日付のみに絞って保存
 
     return render_template('calendar/calendar.html', year=year, month=month,
-                           month_days=month_days, event_days=event_days)
+                           month_days=month_days, event_days=event_days,
+                           events=events)
 
 
 # カレンダー登録のエンドポイント
@@ -193,13 +201,16 @@ def selectindex(year, month):
 
     # 該当月のすべてのイベントを取得
     events = Calendar.query.filter(
-        Calendar.day.between(start_date, end_date)).all()
+        Calendar.day.between(start_date, end_date),  # 範囲フィルタ
+        Calendar.local_id == current_user.local_id  # ローカルIDフィルタ
+        ).all()
     event_days = defaultdict(list)
     for event in events:
-        event_days[event.day.day].append(event)  # 日付のみに絞って保存 
+        event_days[event.day.day].append(event)  # 日付のみに絞って保存
 
     return render_template('calendar/calendar.html', year=year, month=month,
-                           month_days=month_days, event_days=event_days)
+                           month_days=month_days, event_days=event_days,
+                           events=events)
 
 
 # カレンダー詳細のエンドポイント
@@ -210,6 +221,7 @@ def event_detail(calendar_id):
 
     return render_template("calendar/event_detail.html",
                            event=event, date=date)
+
 
 @Calen.context_processor
 def inject_local():
