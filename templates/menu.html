@@ -1,13 +1,14 @@
+{% extends "base.html" %}
+{% block title %} メニュー {% endblock %}
+
+{% block content %}
 <h1>メニュー</h1>
 
-<body>
     <li><a href="{{ url_for('calendar.index') }}">カレンダー</a></li>
     <li><a href="#">投稿の検索</a></li>
     <li><a href="{{ url_for('notice.search') }}">お知らせの検索</a></li>
     <li><a href="#">言語選択</a></li>
     <li><a href="#">AIに質問</a></li>
     <p><a href="/">トップページへ戻る</a></p>
-</body>
 
-
-</html>
+{% endblock %}

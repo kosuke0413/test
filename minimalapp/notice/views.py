@@ -204,6 +204,13 @@ def search():
         return render_template("notice/result.html", results=results)
     return render_template("notice/search.html", form=form)
 
+# メニューページのエンドポイント
+@notice.route("/menupage")
+@login_required
+def menu():
+    return render_template("menu.html")
+
+
 @notice.context_processor
 def inject_local():
     local = Local.query.get(current_user.local_id)

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, current_user, login_required
@@ -36,8 +36,8 @@ def createapp():
     @app.route("/menu")
     @login_required
     def menu():
-        # メニュー画面を表示
-        return render_template("menu.html")
+        # メニュー画面表示する関数に遷移
+        return redirect(url_for("notice.menu"))
 
     # データベース設定
     app.config.from_mapping(
