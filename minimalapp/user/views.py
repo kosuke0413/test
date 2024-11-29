@@ -1,10 +1,10 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_user, logout_user
-from minimalapp.user.forms import SignUpForm,LoginForm
+from minimalapp.user.forms import SignUpForm, LoginForm
 from minimalapp.user.models import User
 from app import db
+from flask_login import login_required
 
-# 
 user = Blueprint(
     "user",
     __name__,
@@ -78,8 +78,19 @@ def login():
     
     return render_template("user/login.html",form=form)
 
+
 # ログアウト機能のエンドポイント
 @user.route("/logout")
 def logout():
     logout_user()
     return render_template("user/logout.html")
+
+
+    # # ユーザー削除
+    # @user.route("/user/<int:user_id>/delete")
+    # @login_required
+    # def delete_user(user_id):
+    #     user = User.query.filter_by(id=user_id).first().first()
+    #     db.session.delete(user)
+    #     db.session.commit()
+    #     return "削除成功"
