@@ -65,18 +65,26 @@
         font-size: 0.9em;
     }
 
-    .submit-button {
-        display: block;
-        width: 100%;
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .submit-button, .delete-button {
+        width: 48%;
         padding: 10px 20px;
         font-size: 1.1em;
         color: #fff;
-        background: #3498db;
         border: none;
         border-radius: 5px;
         text-align: center;
         cursor: pointer;
         transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button {
+        background: #3498db;
     }
 
     .submit-button:hover {
@@ -89,18 +97,7 @@
     }
 
     .delete-button {
-        display: block;
-        width: 100%;
-        padding: 10px 20px;
-        font-size: 1.1em;
-        color: #fff;
         background: #e74c3c;
-        border: none;
-        border-radius: 5px;
-        text-align: center;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-        margin-top: 20px;
     }
 
     .delete-button:hover {
@@ -111,6 +108,7 @@
     .delete-button:active {
         background: #a93226;
     }
+
     .back-link {
         display: inline-block;
         margin-top: 30px;
@@ -159,14 +157,13 @@
         {% endfor %}
     </p>
 
-    <p>
+    <div class="button-group">
         <button type="submit" class="submit-button">保存</button>
-    </p>
-</form>
-
-<form method="POST" action="{{ url_for('calendar.delete', calendar_id=event.calendar_id) }}" onsubmit="return confirm('本当に削除しますか？');">
-    {{ form.csrf_token }}
-    <button type="submit" class="delete-button">削除</button>
+        <form method="POST" action="{{ url_for('calendar.delete', calendar_id=event.calendar_id) }}" onsubmit="return confirm('本当に削除しますか？');" style="margin: 0;">
+            {{ form.csrf_token }}
+            <button type="submit" class="delete-button">削除</button>
+        </form>
+    </div>
 </form>
 
 <a href="{{ url_for('calendar.index') }}" class="back-link">戻る</a>
