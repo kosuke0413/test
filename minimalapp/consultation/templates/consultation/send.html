@@ -2,98 +2,14 @@
 {% block title %} 質問の送信 {% endblock %}
 
 {% block content %}
-<style>
-
-    /* サイドバーに影響しない全体設定 */
-    .main-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background-color: #f4e060;
-        padding-left: 30px; /* サイドバーの幅を考慮 */
-        padding-right: 30px; /* 右側にも余白をつけて中央揃え */
-    }
-
-    /* 相談窓口の機能の枠 */
-    .form-container {
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 400px;
-        text-align: center;
-    }
-
-    /* h2 のcss */
-    .consultation-h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    /* p のcss */
-    .consultation-p {
-        margin-bottom: 15px;
-        text-align: left; /* ラベルとテキストエリアは左揃え */
-    }
-
-    /* label のcss */
-    .consultataion-label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    /* p の中の {} に対応したcss */
-    .consultation-input[type="text"], textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        font-size: 14px;
-    }
-
-    /* { content } のcss */
-    .consultation-textarea {
-        resize: vertical;
-        height: 100px;
-    }
-
-    /* span のcss */
-    .consultataion-span  {
-        font-size: 12px;
-    }
-
-    /* アップロードのボタン */
-    .consultataion-button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #007BFF;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    /* マウスカーソルが当てられたときの効果 */
-    .consultataion-button:hover {
-        background-color: #0056b3;
-    }
-
-</style>
 
 <!-- サイド以外の枠の指定 -->
-<div class="main-container">
+<div class="consultation-send-main-container">
 
     <!-- 中身の枠の指定 -->
-    <div class="form-container">
+    <div class="consultation-send-form-container">
 
-        <h2 class="consultation-h2">相談窓口</h2>
+        <h2 class="consultation-send-h2">相談窓口</h2>
 
         <form
             action="{{ url_for('consultation.send') }}"
@@ -104,11 +20,11 @@
             <!-- form で情報を貰っている -->
             {{ form.csrf_token }}
 
-            <p class="consultation-p">
+            <p class="consultation-send-p">
             <!-- pの終わりまで input が続く -->
 
                 <!-- タイトル持ってくるよん -->
-                 <label class="consultation-label">
+                 <label class="consultation-send-label">
                 {{ form.title.label }}
                 </label>
 
@@ -121,12 +37,12 @@
             <span  class="consultataion-span" , style="color: red;">{{ error }}</span>
             {% endfor %}
 
-            <p class="consultation-p">
+            <p class="consultation-send-p">
                 <!-- 内容持ってくるよん -->
                 {{ form.content.label }}
             </p>
 
-            <p class="consultation-p">
+            <p class="consultation-send-p">
                 <!-- 内容書き込むんだおよぉ -->
                 <!-- ここが textarea になる -->
                 {{ form.content }}

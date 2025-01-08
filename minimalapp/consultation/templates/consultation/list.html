@@ -3,12 +3,8 @@
 
 
 {% block content %}
-<style>
 
-
-
-</style>
-        <h2>相談内容一覧</h2>
+        <h2 class="consultation-list-h2">相談内容一覧</h2>
         <form
             action="{{ url_for('consultation.list') }}"
             method="GET"
@@ -21,24 +17,22 @@
         {% if consuls %}
             <!-- forms でもらったものを form として動かす -->
             {% for consul in consuls %}
-                <h2>
+                <h2 class="consultation-list-title-h2">
                     <!-- DBのデータ内の title 要素を出力 -->
                     {{ consul.title }}
                 </h2>
-                <p>
+                <p class="consultation-list-p">
                     {{ consul.content }}
-                    <!-- DBのデータ内の title 要素を出力 -->
-
-                    <!-- -->
-                        <a href="{{ url_for('consultation.reply',consult_id=consul.consult_id)}}">
+                        <a class="consultation-list-a"
+                           href="{{ url_for('consultation.reply',consult_id=consul.consult_id)}}">
 
                             <!-- 相談に返信へ移動だよ～って顔つき -->
-                            <button type="button">相談内容の詳細へ移動</button>
+                            <button type="button" class="consultation-list-button">相談内容の詳細へ移動</button>
                         </a>
                 </p>
             {% endfor %}
         <!-- 相談内容が無かったときの対処 -->
         {% else %}
-            <p>現在表示する相談内容はありません</p>
+            <p class="consultation-list-p">現在表示する相談内容はありません</p>
         {% endif %}
 {% endblock %}

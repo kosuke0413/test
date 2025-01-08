@@ -100,3 +100,165 @@ body {
     box-sizing: border-box;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05); /* 内側の軽い影 */
 }
+
+/* consultationのCSS */
+
+/* send.html */
+    /* サイドバーに影響しない全体設定 */
+    .consultation-send-main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4e060;
+        padding-left: 30px; /* サイドバーの幅を考慮 */
+        padding-right: 30px; /* 右側にも余白をつけて中央揃え */
+    }
+
+    /* 相談窓口の機能の枠 */
+    .consultation-send-form-container {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    /* h2 のcss */
+    .consultation-send-h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* p のcss */
+    .consultation-send-p {
+        margin-bottom: 15px;
+        text-align: left; /* ラベルとテキストエリアは左揃え */
+    }
+
+    /* label のcss */
+    .consultataion-send-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    /* p の中の {} に対応したcss */
+    .consultation-input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    /* { content } のcss */
+    .consultation-textarea {
+        resize: vertical;
+        height: 100px;
+    }
+
+    /* span のcss */
+    .consultataion-span  {
+        font-size: 12px;
+    }
+
+    /* アップロードのボタン */
+    .consultataion-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* マウスカーソルが当てられたときの効果 */
+    .consultataion-button:hover {
+        background-color: #0056b3;
+    }
+
+/* send_complate */
+    /* 全体を中央寄せ */
+    /* main-container のcss */
+    .consultation-send_comp-main-container {
+        display: flex;
+        justify-content: center; /* 横方向の中央寄せ */
+        align-items: center; /* 縦方向の中央寄せ */
+        min-height: 100vh; /* ビューポート全体の高さ */
+        background-color: #f4e060; /* 背景色を設定（任意） */
+    }
+
+    /* message-container のcss */
+    .consultation-send_comp-message-container {
+        text-align: center; /* テキストを中央揃え */
+        background: #ffffff;
+        padding: 20px 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* h2 のcss */
+    .consultation-send_comp-send_complate-h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+    }
+
+/* list */
+    /* 相談内容一覧タイトルを中央に配置 */
+    .consultation-list-h2 {
+        text-align: center;
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    /* 相談内容のタイトル下に線を引く */
+    .consultation-list-title-h2 {
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* 四角の枠のスタイル */
+    .consultation-list-p {
+        border: 2px solid #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin-bottom: 80px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    /* ボタンを枠の外の右下に配置 */
+    .consultation-list-a {
+        position: absolute;
+        right: 15px;
+        bottom: -40px;
+    }
+
+    /* ボタンのスタイル */
+    .consultation-list-button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    /* ホバー時のボタンスタイル */
+    .consultation-list-button:hover {
+        background-color: #0056b3;
+    }
