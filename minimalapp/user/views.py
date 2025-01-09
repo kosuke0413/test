@@ -115,6 +115,10 @@ def signup_super():
         )
         user.password = form.password.data
 
+        # # 管理人ユーザーがいない場合のみ、管理人フラグを付与
+        # if not User.query.filter_by(manager_flag=True).first():
+        #     user.manager_flag = True
+        
         # 地域IDの存在チェック
         if not user.local_id_existence_confirmation():
             flash("指定の地域IDは存在しません","signup_super_error")
@@ -142,6 +146,15 @@ def signup_super():
         return redirect(next_)
     
     return render_template("user/signup_super.html",form=form)
+
+
+# 自治体ユーザー一覧取得のエンドポイント
+@user.route("/super_list")
+@login_required
+def super_list():
+    # 
+    users = db.session.query(User,Local).join(User,Local.local_id == User.local_id)
+    return render_template("user/super_list.html", users=users)
 
 
 # 地域の新規登録のエンドポイント

@@ -63,9 +63,19 @@
                         <a href="{{ url_for('user.signup_super') }}">自治体ユーザー登録</a>
                     </li>
 
+                    <!-- 自治体ユーザー一覧 -->
+                    <li class="sidebar-item">
+                        <a href="{{ url_for('user.super_list') }}">自治体ユーザー一覧</a>
+                    </li>
+                    
                     <!-- 地域登録 -->
                     <li class="sidebar-item">
                         <a href="{{ url_for('user.local_regist') }}">地域新規登録</a>
+                    </li>
+
+                    <!-- 地域一覧 -->
+                    <li class="sidebar-item">
+                        <a href="/">地域一覧</a>
                     </li>
                     {% endif %}
 
