@@ -98,7 +98,7 @@ def logout():
     #     return "削除成功"
 
 
-# 自治体の新規登録のエンドポイント
+# 自治体ユーザーの新規登録のエンドポイント
 @user.route("/signup_super", methods=["GET","POST"])
 @login_required
 def signup_super():
@@ -153,6 +153,7 @@ def local_regist():
             local_id = form.local_id.data,
             local_name = form.local_name.data
         )
+        #地域id、地域名の重複チェック、後で書く
 
         
         # 地域情報を登録する
