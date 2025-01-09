@@ -156,8 +156,8 @@ def signup_super():
 @user.route("/super_list")
 @login_required
 def super_list():
-    # 
-    users = db.session.query(User,Local).join(User,Local.local_id == User.local_id)
+    # 自治体ユーザーをデータベースから取得
+    users = db.session.query(User,Local).join(User,Local.local_id == User.local_id).filter(User.manager_flag is True)
     return render_template("user/super_list.html", users=users)
 
 
@@ -193,9 +193,13 @@ def local_regist():
 
     return render_template("user/local_regist.html",form=form)
 
-# @user.context_processor
-# def inject_local():
-#     local = Local.query.get(current_user.local_id)
-#     return {
-#         "local": {"local_name": local.local_name}
-#     }
+@user.context_processor
+def inject_local():
+    # 未ログイン時は地域名を未定義にする
+    if current_user.is_anonymous:
+        return {"local": {"local_name": "未定義"}}
+    
+    local = Local.query.get(current_user.local_id)
+    return {
+        "local": {"local_name": local.local_name}
+    }
