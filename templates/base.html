@@ -57,7 +57,7 @@
                         </li>
                     {% endif %}
            
-                    {% if current_user.manager_flag == True %}
+                    {% if current_user.get_id() == "1" %}
                     <!-- 自治体ユーザー登録 -->
                     <li class="sidebar-item">
                         <a href="{{ url_for('user.signup_super') }}">自治体ユーザー登録</a>

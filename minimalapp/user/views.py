@@ -33,10 +33,6 @@ def signup():
         )
         user.password = form.password.data
 
-        #管理人ユーザーがいない場合のみ、管理人フラグを付与
-        if User.query.filter(User.manager_flag == True).all() == None:
-            user.manager_flag = True
-
         # 地域IDの存在チェック
         if not user.local_id_existence_confirmation():
             flash("指定の地域IDは存在しません","signup_error")
