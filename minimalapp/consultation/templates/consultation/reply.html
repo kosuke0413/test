@@ -41,9 +41,9 @@
             <!-- contact_mail としてメアドを持ってきて -->
             <!-- consult.mailadores に入れる -->
             <label>メールアドレス</label>
-            <td>
-                <p name="contact_mail" class="consultation-reply-p">{{ consult.mailadores }}</p>
-            </td>
+            <input type="hidden" name="contact_mail" value="{{ consult.mailadores }}">
+
+            <p class="consultation-reply-p">{{ consult.mailadores }}</p>
             <!-- ユーザーIDを見えない属性で持ってきている -->
             <td><input type="hidden" name="consult_id" value="{{ consult.consult_id }}" ></td>
             <!-- 送信ボタンポチ～～ -->
