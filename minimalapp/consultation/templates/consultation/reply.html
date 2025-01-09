@@ -2,17 +2,14 @@
 {% block title %} 相談に返信 {% endblock %}
 
 {% block content %}
-<style>
-
-
-
-</style>
-        <h2>相談に返信</h2>
+    <div class="consultation-reply-div">
+        <h2 class="consultation-reply-h2">相談に返信</h2>
 
         <form
             action="{{ url_for('consultation.send_complate') }}"
             method="POST"
             novalidate="novalidate"
+            class="consultation-reply-form"
         >
         <!-- viewsにある flash を持ってくる -->
         {% with messages = get_flashed_messages() %}
@@ -20,7 +17,7 @@
         {% if messages %}
         <ul>
             {% for message in messages %}
-            <li class="flash">{{ message }}</li>
+            <li class="consultation-reply-flash">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
@@ -28,28 +25,31 @@
 
             <!-- それぞれDBから持ってくる -->
             <!-- タイトル持ってくる -->
-            <label>相談のタイトル:</label>
-            <div>{{ consult.title }}</div>
+            <label class="consultation-reply-main">相談のタイトル</label>
+            <div   class="consultation-reply-sub">{{ consult.title }}</div>
 
             <!-- 相談内容持ってくる -->
-            <label>相談内容:</label>
-            <div>{{ consult.content }}</div>
+            <label class="consultation-reply-main">相談内容</label>
+            <div   class="consultation-reply-sub">{{ consult.content }}</div>
 
             <!-- 返信する内容打つ枠 -->
             <label for="reply">返信本文:</label>
             <div>
-                <textarea id="reply" name="reply"></textarea>
+                <textarea id="reply" name="reply" class="consultation-reply-textarea"></textarea>
             </div>
 
             <!-- contact_mail としてメアドを持ってきて -->
-             <!-- consult.mailadores に入れる -->
+            <!-- consult.mailadores に入れる -->
             <label>メールアドレス</label>
-            <td><p name="contact_mail">{{ consult.mailadores }}</p></td>
+            <td>
+                <p name="contact_mail" class="consultation-reply-p">{{ consult.mailadores }}</p>
+            </td>
             <!-- ユーザーIDを見えない属性で持ってきている -->
             <td><input type="hidden" name="consult_id" value="{{ consult.consult_id }}" ></td>
             <!-- 送信ボタンポチ～～ -->
-            <div class="submit-button">
-                <button type="submit">送信</button>
+            <div class="consultation-reply-button">
+                <button type="submit" class="consultation-reply-button">送信</button>
             </div>
         </form>
+    </div>
 {% endblock %}
