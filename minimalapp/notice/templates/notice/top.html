@@ -2,20 +2,18 @@
 {% block title %} お知らせ一覧 {% endblock %}
 
 {% block content %}
-<h1>お知らせ一覧</h1>
-<h1><a href="/post/list">住民投稿</a></h1>
+<div class="header-container">
+    <h1 class="notice-title">お知らせ一覧</h1>
+    <a href="/post/list" class="post-link">住民投稿</a>
+</div>
 
-
-<body>
-
+<div>
     <ul>
         {% if notices %}
         {% for notice in notices %}
         <li>
             <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}">
                 {{ notice.notice_title }}
-            </a>
-
             </a>
         </li>
         {% endfor %}
@@ -24,10 +22,58 @@
         {% endif %}
     </ul>
     <form action="{{ url_for('notice.create_notice') }}" method="get" style="display:inline;">
-        <button type="submit" class="btn btn-primary">投稿する</button>
+        <button type="submit" class="post-button">投稿する</button>
     </form>
+</div>
 
-</body>
+<!-- CSS -->
+<style>
+    /*ヘッダー*/
+    .header-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        /*お知らせ一覧と住民投稿の空白の大きさを決める*/
+        gap: 300px;
+        margin-bottom: 20px;
+    }
+
+    /* タイトルのスタイル */
+    .notice-title {
+        font-size: 2.0em;
+        margin: 0;
+
+    }
+
+    /* リンクのスタイル */
+    .post-link {
+        font-size: 2.0em;
+        text-decoration: none;
+        color: #007bff;
+        transition: color 0.3s;
+    }
+
+    /*リンクにカーソルを置いたときの色変更*/
+    .post-link:hover {
+        color: #0056b3;
+    }
+
+    /*投稿ボタン*/
+    .post-button {
+        display: block;
+        padding: 10px 20px;
+        font-size: 1em;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .post-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}
-
-</html>

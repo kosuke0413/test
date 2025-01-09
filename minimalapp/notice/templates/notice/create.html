@@ -34,13 +34,148 @@
         {% for error in form.image.errors %}
         <span style="color: red;">{{ error }}</span>
         {% endfor %}
-        {{ form.tag }}
+        <p>
+        <div class="radio-group">
+            {% for subfield in form.tag %}
+            <label class="radio-label">
+                {{ subfield() }} {{ subfield.label.text }}
+            </label>
+            {% endfor %}
+        </div>
+        </p>
+
         <!-- 送信ボタン -->
-        {{ form.submit() }}
-        <p><a href="{{ url_for('notice.top') }}">トップページに戻る</a></p>
-        {% endblock %}
+        <p>
+            {{ form.submit(class="submit-button") }}
+        </p>
+
+        <p><a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a></p>
     </form>
     </form>
 </body>
 
 </html>
+
+<style>
+    /* calendar.htmlから持ってきた */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2.2em;
+        margin-top: 20px;
+    }
+
+    form {
+        max-width: 600px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-size: 1em;
+        color: #34495e;
+        margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition: border-color 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #3498db;
+        background: #fff;
+        outline: none;
+    }
+
+    textarea {
+        height: 120px;
+        resize: none;
+    }
+
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.9em;
+    }
+
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #3498db;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+        background: #1abc9c;
+        transform: scale(1.02);
+    }
+
+    .submit-button:active {
+        background: #16a085;
+    }
+
+    /*トップページリンク*/
+    .top-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .top-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    /*タグ*/
+    .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .radio-label {
+        display: inline-flex;
+        align-items: center;
+        width: 150px;
+        white-space: nowrap;
+    }
+</style>
+
+{% endblock %}
