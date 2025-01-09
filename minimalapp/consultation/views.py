@@ -83,10 +83,9 @@ def send():
 def send_complate():
     if request.method == "POST":
 
-        # username = request.form["username"]
         email = request.form.get("contact_mail")
-        reply = request.form["reply"]
-        consult_id = request.form["consult_id"]
+        reply = request.form.get("reply")
+        consult_id = request.form.get("consult_id")
 
         is_valid = True
 
