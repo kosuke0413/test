@@ -54,14 +54,20 @@ def index():
 # 次の月のカレンダーを作成
 @Calen.route('/next<int:year>/<int:month>')
 def nextindex(year, month):
+    # 100年後の年と月を計算
+    now = datetime.now()
+    max_year = now.year + 100
 
-    # 12月の次を1月にして、年に1を足す
+    # 次の月が制限を超えたら現在の月に戻す
     if month == 12:
-        year = year + 1
+        year += 1
         month = 1
     else:
-        year = year
-        month = month + 1
+        month += 1
+
+    if year > max_year or (year == max_year and month > now.month):
+        flash("これ以上進めません。")
+        return redirect(url_for('calendar.index'))
 
     # カレンダーを作成
     cal = calendar.Calendar(firstweekday=6)
@@ -76,7 +82,7 @@ def nextindex(year, month):
     events = Calendar.query.filter(
         Calendar.day.between(start_date, end_date),  # 範囲フィルタ
         Calendar.local_id == current_user.local_id  # ローカルIDフィルタ
-        ).all()
+    ).all()
     event_days = defaultdict(list)
     for event in events:
         event_days[event.day.day].append(event)  # 日付のみに絞って保存
@@ -89,13 +95,20 @@ def nextindex(year, month):
 # 先月のカレンダーを作成
 @Calen.route('/before/<int:year>/<int:month>')
 def beforeindex(year, month):
-    # 12月の次を1月にして、年に1を引く
+    # 現在の年と月
+    now = datetime.now()
+    min_year = now.year - 100
+
+    # 前の月が制限を下回ったら現在の月に戻す
     if month == 1:
-        year = year - 1
+        year -= 1
         month = 12
     else:
-        year = year
-        month = month - 1
+        month -= 1
+
+    if year < min_year or (year == min_year and month < now.month):
+        flash("これ以上戻れません。")
+        return redirect(url_for('calendar.index'))
 
     # カレンダーを作成
     cal = calendar.Calendar(firstweekday=6)
@@ -110,7 +123,7 @@ def beforeindex(year, month):
     events = Calendar.query.filter(
         Calendar.day.between(start_date, end_date),  # 範囲フィルタ
         Calendar.local_id == current_user.local_id  # ローカルIDフィルタ
-        ).all()
+    ).all()
     event_days = defaultdict(list)
     for event in events:
         event_days[event.day.day].append(event)  # 日付のみに絞って保存
