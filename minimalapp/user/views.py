@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for, session
 from flask_login import login_user, logout_user,login_required
 from minimalapp.user.forms import SignUpForm, LoginForm, LocalRegistForm
 from minimalapp.user.models import User
@@ -74,6 +74,7 @@ def login():
         user = User.query.filter_by(mailaddress=form.mailaddress.data).first()
 
         if user is not None and user.verify_password(form.password.data):
+            session["local_id"] = user.local_id
             login_user(user)
             # GETパラメータにnextキーが存在しない場合はトップページに遷移する
             next_ = request.args.get("next")

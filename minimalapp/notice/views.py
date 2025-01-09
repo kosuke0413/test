@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, Response, flash
+from flask import Blueprint, render_template, redirect, url_for, Response, flash, session
 from app import db
 from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm, SearchForm
 from minimalapp.notice.models import Notice, NoticeReply
@@ -185,7 +185,9 @@ def search():
 
         # 検索クエリの生成
         query = db.session.query(Notice)
-
+        local_id = session.get("local_id")  # ログイン時にセッションへ保存された地域コードを取得
+        if local_id:
+            query = query.filter(Notice.local_id == local_id)
         # タグまたはタイトルが指定されている場合
         if tag_id or notice_title:
             filters = []
