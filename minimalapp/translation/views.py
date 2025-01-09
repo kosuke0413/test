@@ -19,9 +19,7 @@ def select_language():
     supported_languages = {
         "en": "English",
         "ja": "日本語",
-        "es": "Español",
-        "fr": "Français"
-    }
+        }
 
     if request.method == "POST":
         # ユーザーが選択した言語を取得
