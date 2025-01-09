@@ -179,7 +179,9 @@ def delete(calendar_id):
 def events(date):
     from datetime import datetime
     selected_date = datetime.strptime(date, "%Y-%m-%d").date()
-    events = Calendar.query.filter_by(day=selected_date).all()
+    events = Calendar.query.filter(Calendar.day == selected_date,
+                                   Calendar.local_id == current_user.local_id
+                                   ).all()
     return render_template('calendar/event_list.html', date=selected_date,
                            events=events)
 
