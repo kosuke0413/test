@@ -4,7 +4,7 @@
 {% block content %}
     <h1>{{ post.post_title }} の編集</h1>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" action="{{ url_for('post.edit_post', post_id=post.post_id) }}" novalidate="novalidate" enctype="multipart/form-data">
     {{ form.csrf_token }}
         <div>
             <label for="title">タイトル</label>
@@ -32,5 +32,5 @@
         <button type="submit" style="color: red;">削除</button>
     </form>
 
-    <a href="{{ url_for('post.post_detail', post_id=post.post_id) }}">戻る</a>
+    <a href="{{ url_for('post.post_list') }}">戻る</a>
 {% endblock %}

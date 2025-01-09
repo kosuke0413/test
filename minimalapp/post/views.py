@@ -111,6 +111,11 @@ def post_detail(post_id):
     replies = Postreply.query.filter_by(post_id=post_id)
     # # 投稿ユーザー情報を取得
     user = User.query.get_or_404(post.user_id)
+    
+    # 投稿者の場合は編集画面を表示
+    if user.user_id == current_user.user_id:
+        return edit_post(post_id)
+    
     return render_template("post/detail.html", post=post,tag=tags,replies=replies,user=user)
 
 

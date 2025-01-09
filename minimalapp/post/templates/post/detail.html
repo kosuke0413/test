@@ -33,6 +33,14 @@
         <button type="submit" class="btn btn-primary">返信する</button>
     </form>
 
+    <!-- 自治体ユーザーの場合は削除ボタンを表示 -->
+    {% if current_user.manager_flag == True %}
+    <form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
+    onsubmit="return confirm('本当に削除しますか？');">
+    <button type="submit" style="color: red;">削除</button>
+    </form>
+    {% endif %}
+
     <br>
     <a href="{{ url_for('post.post_list') }}">戻る</a>
 {% endblock %}
