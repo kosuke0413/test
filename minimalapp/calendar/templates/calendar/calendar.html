@@ -204,8 +204,10 @@
     <a class="next" href="{{ url_for('calendar.nextindex', year=year, month=month) }}">次へ</a>
 </div>
 
+<!-- 自治体ユーザーの場合はイベント登録ボタンを表示 -->
+{% if current_user.manager_flag == True %}
 <a href="{{ url_for('calendar.setEvent') }}" class="register-button">イベント登録</a>
-
+{% endif %}
 <!-- メニューに戻るリンク -->
 <a href="{{ url_for('menu') }}" class="back-to-home">メニューページに戻る</a>
 
