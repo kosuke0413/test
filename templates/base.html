@@ -58,12 +58,12 @@
                     {% endif %}
            
                     {% if current_user.manager_flag == True %}
-                    <!-- 自治体ユーザー登録 後で直す -->
+                    <!-- 自治体ユーザー登録 -->
                     <li class="sidebar-item">
                         <a href="{{ url_for('user.signup_super') }}">自治体ユーザー登録</a>
                     </li>
 
-                    <!-- 地域登録 後で直す -->
+                    <!-- 地域登録 -->
                     <li class="sidebar-item">
                         <a href="{{ url_for('user.local_regist') }}">地域新規登録</a>
                     </li>

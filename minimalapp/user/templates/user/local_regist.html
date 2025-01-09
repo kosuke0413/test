@@ -4,6 +4,15 @@
 {% block content %}
     <form method="post" action="{{ url_for('user.local_regist') }}" novalidate="novalidate">
         {{ form.csrf_token }}
+        {% with messages = get_flashed_messages(category_filter=["local_error"]) %}
+        {% if messages %}
+        <div class="error-messages">
+            {% for message in messages %}
+            <span class="error">{{ message }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
         <h2>地域新規登録</h2>
         
         <p>

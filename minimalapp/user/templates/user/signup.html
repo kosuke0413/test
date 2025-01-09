@@ -4,7 +4,7 @@
 {% block content %}
     <form method="post" action="{{ url_for('user.signup', next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
-        {% for message in get_flashed_messages() %}
+        {% for message in get_flashed_messages(category_filter=["signup_error"]) %}
         <div class="error">{{ message }}</div>
         {% endfor %}
         <h2>新規登録</h2>

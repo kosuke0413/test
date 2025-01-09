@@ -4,7 +4,8 @@ from minimalapp.user.forms import SignUpForm, LoginForm, LocalRegistForm
 from minimalapp.user.models import User
 from minimalapp.tags.models import Local
 from app import db
-from flask_login import login_required
+from flask_login import login_required,current_user
+
 
 user = Blueprint(
     "user",
@@ -32,15 +33,19 @@ def signup():
         )
         user.password = form.password.data
 
+        #管理人ユーザーがいない場合のみ、管理人フラグを付与
+        if User.query.filter(User.manager_flag == True).all() == None:
+            user.manager_flag = True
+
         # 地域IDの存在チェック
         if not user.local_id_existence_confirmation():
-            flash("指定の地域IDは存在しません")
+            flash("指定の地域IDは存在しません","signup_error")
             form.local_id.data = None
             return render_template("user/signup.html",form=form)
         
         # メールアドレス重複チェック
         if user.is_duplicate_mailaddress():
-            flash("指定のメールアドレスは登録済みです")
+            flash("指定のメールアドレスは登録済みです","signup_error")
             form.mailaddress.data = None
             return render_template("user/signup.html",form=form)
 
@@ -115,13 +120,13 @@ def signup_super():
 
         # 地域IDの存在チェック
         if not user.local_id_existence_confirmation():
-            flash("指定の地域IDは存在しません")
+            flash("指定の地域IDは存在しません","signup_super_error")
             form.local_id.data = None
             return render_template("user/signup_super.html",form=form)
         
         # メールアドレス重複チェック
         if user.is_duplicate_mailaddress():
-            flash("指定のメールアドレスは登録済みです")
+            flash("指定のメールアドレスは登録済みです","signup_super_error")
             form.mailaddress.data = None
             return render_template("user/signup_super.html",form=form)
 
@@ -153,8 +158,18 @@ def local_regist():
             local_id = form.local_id.data,
             local_name = form.local_name.data
         )
-        #地域id、地域名の重複チェック、後で書く
 
+        # 地域idの重複チェック
+        if Local.query.filter_by(local_id=local.local_id).first() is not None:
+            flash("地域IDが重複しています","local_error")
+            form.local_id.data = None
+            return render_template("user/local_regist.html",form=form)
+        
+        # 地域名の重複チェック
+        if Local.query.filter_by(local_name=local.local_name).first() is not None:
+            flash("地域名が重複しています","local_error")
+            form.local_name.data = None
+            return render_template("user/local_regist.html",form=form)
         
         # 地域情報を登録する
         db.session.add(local)
@@ -163,3 +178,10 @@ def local_regist():
         return "地域登録完了"
 
     return render_template("user/local_regist.html",form=form)
+
+# @user.context_processor
+# def inject_local():
+#     local = Local.query.get(current_user.local_id)
+#     return {
+#         "local": {"local_name": local.local_name}
+#     }
