@@ -76,6 +76,11 @@ def createapp():
     from minimalapp.consultation import views as consultation_views
     app.register_blueprint(consultation_views.consultation,
                            url_prefix="/consultation")
+    
+    # 翻訳アプリの登録とURLプレフィックス指定
+    from minimalapp.translation import views as translation_views
+    app.register_blueprint(translation_views.language,
+                           url_prefix="/translation")
 
     # ユーザーアプリの登録とURLプレフィックス指定
     from minimalapp.user import views as user_views
