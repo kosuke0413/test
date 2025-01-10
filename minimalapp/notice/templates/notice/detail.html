@@ -34,12 +34,13 @@
     <!-- 返信フォームへのリンク -->
     <br>
     <form action="{{ url_for('notice.reply', notice_id=notice.notice_id) }}" method="get" style="display:inline;">
-        <button type="submit" class="btn btn-primary">返信する</button>
+        <button type="submit" class="reply-button">返信する</button>
     </form>
 
     <br>
-    <a href="{{ url_for('notice.top') }}">トップページに戻る</a>
-    {% endblock %}
+    <a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a>
+
 </body>
 
 </html>
+{% endblock %}
