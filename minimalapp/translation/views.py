@@ -1,4 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import (Blueprint,
+                   render_template,
+                   request,
+                   redirect,
+                   url_for,
+                   session, flash)
 from flask_login import login_required, current_user
 from minimalapp.tags.models import Local
 
@@ -33,7 +38,8 @@ def select_language():
             flash("選択した言語はサポートされていません。")
             return redirect(url_for("translation.select_language"))
 
-    return render_template("translation/trans.html", languages=supported_languages)
+    return render_template("translation/trans.html",
+                           languages=supported_languages)
 
 
 @language.context_processor
