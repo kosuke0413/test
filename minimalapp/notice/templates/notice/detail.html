@@ -3,13 +3,16 @@
 
 {% block content %}
 
+
+
 <body>
     <h1>{{ notice.notice_title }}</h1>
     <p>{{ notice.notice_text }}</p>
 
     {% if notice.image %}
-    <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像">
+    <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像" class="notice-image">
     {% endif %}
+
 
     {% if tag.tag_name %}
     <ul>
@@ -39,6 +42,20 @@
 
     <br>
     <a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a>
+
+    <style>
+        .notice-image {
+            width: 800px; /* 固定したい幅 */
+            height: 500px; /* 固定したい高さ */
+            object-fit: cover; /* アスペクト比を保ちながら枠に収める */
+            border: 1px solid #ddd; /* 枠線を追加 */
+            border-radius: 5px; /* 角を丸くする */
+            display: block; /* 画像を中央揃えする準備 */
+            margin: 20px auto; /* 上下20pxの余白を追加し、中央揃え */
+        }
+    </style>
+    
+    
 
 </body>
 
