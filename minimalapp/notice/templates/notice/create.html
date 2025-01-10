@@ -66,8 +66,9 @@
         color: #333;
     }
 
-    h1 {
+    h2 {
         text-align: center;
+        color: #2c3e50;
         font-size: 2.2em;
         margin-top: 20px;
     }
@@ -112,6 +113,7 @@
 
     textarea {
         height: 120px;
+        width: 600px;
         resize: none;
     }
 
@@ -120,7 +122,6 @@
         font-size: 0.9em;
     }
 
-    /* 送信ボタン */
     .submit-button {
         display: block;
         width: 100%;
@@ -163,19 +164,32 @@
         transform: scale(1.05);
     }
 
-    /*タグ*/
+    /* タグ */
     .radio-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 横3列 */
+    grid-template-rows: repeat(2, auto); /* 縦2行 */
+    grid-gap: 20px; /* 要素間のスペース */
+    justify-items: start; /* 左揃え */
+    align-items: center; /* ラベルとラジオボタンの中央揃え */
+}
 
-    .radio-label {
-        display: inline-flex;
-        align-items: center;
-        width: 150px;
-        white-space: nowrap;
-    }
+.radio-label {  
+    display: flex;
+    align-items: center; /* ラジオボタンとラベルを中央揃え */
+    gap: 10px; /* ラジオボタンとラベルの間隔 */
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap; /* ラベルが改行されないようにする */
+    cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+    margin: 0; /* 不要な余白を除去 */
+    padding: 0; /* 不要な余白を除去 */
+    vertical-align: middle; /* ラジオボタンの縦位置を中央に */
+}
+
 </style>
 
 {% endblock %}
