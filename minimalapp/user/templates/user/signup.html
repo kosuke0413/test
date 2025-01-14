@@ -2,19 +2,122 @@
 {% block title %}新規登録{% endblock %}
 
 {% block content %}
+
+<style>
+    /* 全体背景とフォント */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2.2em;
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-size: 1em;
+        color: #34495e;
+        margin-bottom: 8px;
+    }
+
+    input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #3498db;
+        background: #fff;
+        outline: none;
+    }
+
+    .error {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #3498db;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+        background: #1abc9c;
+        transform: scale(1.02);
+    }
+
+    .submit-button:active {
+        background: #16a085;
+    }
+
+    .login-link {
+        display: block;
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #3498db;
+        text-decoration: none;
+        text-align: center;
+        transition: color 0.3s ease;
+    }
+
+    .login-link:hover {
+        color: #1abc9c;
+    }
+</style>
+
+<div class="form-container">
+    <h2>新規登録</h2>
     <form method="post" action="{{ url_for('user.signup', next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
+
+        <!-- フラッシュメッセージ -->
         {% for message in get_flashed_messages(category_filter=["signup_error"]) %}
         <div class="error">{{ message }}</div>
         {% endfor %}
-        <h2>新規登録</h2>
-        
+
+        <!-- フォームフィールド -->
         <p>
             {{ form.local_id.label }}
             {{ form.local_id() }}
         </p>
         {% for error in form.local_id.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error">{{ error }}</span>
         {% endfor %}
 
         <p>
@@ -22,7 +125,7 @@
             {{ form.username() }}
         </p>
         {% for error in form.username.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error">{{ error }}</span>
         {% endfor %}
 
         <p>
@@ -30,22 +133,27 @@
             {{ form.mailaddress() }}
         </p>
         {% for error in form.mailaddress.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error">{{ error }}</span>
         {% endfor %}
 
         <p>
             {{ form.password.label }}
-            {{ form.password }}
+            {{ form.password() }}
         </p>
         {% for error in form.password.errors %}
-        <span style="color: red;">{{ error }}</span>
+        <span class="error">{{ error }}</span>
         {% endfor %}
-        
+
         <!-- 送信ボタン -->
-        <p>{{ form.submit() }}</p>
+        <p>
+            <button type="submit" class="submit-button">登録</button>
+        </p>
 
-        <p>ログインは<a href="{{ url_for('user.login') }}">こちら</a>から</p>
-
+        <!-- ログインリンク -->
+        <p>
+            <a href="{{ url_for('user.login') }}" class="login-link">ログインはこちら</a>
+        </p>
     </form>
+</div>
 
 {% endblock %}
