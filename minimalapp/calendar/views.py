@@ -235,7 +235,8 @@ def event_detail(calendar_id):
     date = event.day
 
     if current_user.manager_flag is True:
-        return edit_event(calendar_id)
+        return redirect(url_for("calendar.edit_event",
+                                calendar_id=calendar_id))
 
     return render_template("calendar/event_detail.html",
                            event=event, date=date)
