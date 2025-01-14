@@ -1,5 +1,5 @@
 {% extends "user/base.html" %}
-{% block title %}新規登録{% endblock%}
+{% block title %}新規登録{% endblock %}
 
 {% block content %}
     <form method="post" action="{{ url_for('user.signup', next=request.args.get('next')) }}" novalidate="novalidate">
