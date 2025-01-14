@@ -5,7 +5,7 @@
 <h1>{{ notice.notice_title }} の編集</h1>
 
 <body>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" novalidate="novalidate">
         {{ form.csrf_token }}
 
         <div>
@@ -107,13 +107,20 @@
 
     /* お知らせ画像 */
     .notice-image {
-        width: 600px; /* 固定幅 */
-        height: 350px; /* 固定高さ */
-        object-fit: cover; /* アスペクト比を維持 */
-        border: 1px solid #ddd; /* 枠線 */
-        border-radius: 5px; /* 角を丸く */
-        display: block; /* 中央揃え */
-        margin: 20px auto; /* 上下に余白を追加し中央揃え */
+        width: 600px;
+        /* 固定幅 */
+        height: 350px;
+        /* 固定高さ */
+        object-fit: cover;
+        /* アスペクト比を維持 */
+        border: 1px solid #ddd;
+        /* 枠線 */
+        border-radius: 5px;
+        /* 角を丸く */
+        display: block;
+        /* 中央揃え */
+        margin: 20px auto;
+        /* 上下に余白を追加し中央揃え */
     }
 
     /* 編集ボタン */

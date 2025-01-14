@@ -3,6 +3,7 @@ from app import db
 from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm, SearchForm
 from minimalapp.notice.models import Notice, NoticeReply
 from minimalapp.tags.models import Tags, Local
+from minimalapp.user.models import User
 from mimetypes import guess_type
 from sqlalchemy import or_
 from flask_login import current_user, login_required
@@ -83,6 +84,11 @@ def detail(notice_id):
     if not notice.tag == None:
         tags = Tags.query.get_or_404(notice.tag)
     replies = NoticeReply.query.filter_by(notice_id=notice_id).all()
+
+    # 投稿者の場合は編集画面にリダイレクト
+    if current_user.manager_flag:
+        return redirect(url_for("notice.edit_notice", notice_id=notice_id))
+
     return render_template("notice/detail.html", notice=notice, tag=tags,
                            replies=replies, form=form)
 
