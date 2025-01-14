@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, redirect, url_for, Response, flash, session
+from flask import (Blueprint, render_template, redirect, url_for,
+                   Response, flash, session)
 from app import db
-from minimalapp.notice.forms import NoticeUploadForm, NoticeReplyForm, SearchForm
+from minimalapp.notice.forms import (NoticeUploadForm, NoticeReplyForm,
+                                     SearchForm)
 from minimalapp.notice.models import Notice, NoticeReply
 from minimalapp.tags.models import Tags, Local
-from minimalapp.user.models import User
 from mimetypes import guess_type
 from sqlalchemy import or_
 from flask_login import current_user, login_required
@@ -21,7 +22,8 @@ notice = Blueprint(
 @notice.route("/")
 @login_required
 def top():
-    notices = Notice.query.filter(Notice.local_id == current_user.local_id).all()
+    notices = Notice.query.filter(
+        Notice.local_id == current_user.local_id).all()
     return render_template("notice/top.html", notices=notices)
 
 
@@ -39,7 +41,7 @@ def create_notice():
             image_file = form.image.data
             image_data = image_file.read()  # バイナリデータに変換
             # ファイルの拡張子を取得
-            image_extension = image_file.filename.rsplit('.', 1)[-1].lower()  # 拡張子を取得
+            image_extension = image_file.filename.rsplit('.', 1)[-1].lower()
 
         # 投稿を作成する 後でログインユーザーに直す
         notice = Notice(
@@ -81,7 +83,7 @@ def detail(notice_id):
     notice = Notice.query.get_or_404(notice_id)
     tags = None
     form = NoticeReplyForm()
-    if not notice.tag == None:
+    if notice.tag is not None:
         tags = Tags.query.get_or_404(notice.tag)
     replies = NoticeReply.query.filter_by(notice_id=notice_id).all()
 
@@ -118,7 +120,7 @@ def edit_notice(notice_id):
     # フォームの初期値に投稿データをセット
     form.title.data = notice.notice_title
     form.text.data = notice.notice_text
-    if not notice.tag == None:
+    if notice.tag is not None:
         form.tag.data = str(notice.tag)
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
@@ -204,13 +206,14 @@ def search():
                 filters.append(Notice.notice_title.like(f"%{notice_title}%"))
 
             # OR 条件で検索
-            query = query.filter(or_(*filters))  # https://www.sukerou.com/2019/04/sqlalchemyandor.html
-
+            # https://www.sukerou.com/2019/04/sqlalchemyandor.html
+            query = query.filter(or_(*filters))
         # 結果を取得
         results = query.all()
 
         return render_template("notice/result.html", results=results)
     return render_template("notice/search.html", form=form)
+
 
 # メニューページのエンドポイント
 @notice.route("/menupage")
@@ -222,6 +225,9 @@ def menu():
 @notice.context_processor
 def inject_local():
     local = Local.query.get(current_user.local_id)
-    return {
-        "local": {"local_name": local.local_name}
-    }
+    if local:
+        return {
+            "local": {"local_name": local.local_name}
+        }
+    else:
+        return {"local": {"local_name": "未定義"}}
