@@ -91,7 +91,7 @@
     <h2>自治体ユーザー新規登録</h2>
     <form method="post" action="{{ url_for('user.signup_super', next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
-        
+
         <!-- フラッシュメッセージ -->
         {% for message in get_flashed_messages(category_filter=["signup_super_error"]) %}
         <div class="error">{{ message }}</div>

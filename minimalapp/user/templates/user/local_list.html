@@ -8,8 +8,8 @@
 <ul>
     {% if local %}
     {% for local in local %}
-    <li>  
-        
+    <li>
+
         <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}"
     onsubmit="return confirm('本当に削除しますか？');">
     <a>
