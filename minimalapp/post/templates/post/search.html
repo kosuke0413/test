@@ -3,19 +3,86 @@
 
 {% block content %}
 
-    <h1>お知らせ検索</h1>
-    <form method="POST" novalidate="novalidate" action="{{ url_for('post.search') }}">
-        {{ form.csrf_token }}
-        <div>
-            <label for="post_title">タイトルキーワード:</label>
-            {{ form.post_title }}
-        </div>
-        <div>
-            <label>タグを選択:</label>
-            {{ form.tag }}
-        </div>
+<h1>お知らせ検索</h1>
+<form method="POST" novalidate="novalidate" action="{{ url_for('post.search') }}">
+    {{ form.csrf_token }}
+    <div>
+        <label for="post_title">タイトルキーワード:</label>
+        {{ form.post_title }}
+    </div>
+    <div>
+        <label>タグを選択:</label>
+        {{ form.tag }}
+    </div>
 
-        <button type="submit">検索</button>
-    </form>
+    <button type="submit">検索</button>
+</form>
 
+
+<style>
+    /*全体*/
+    body {
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    /* ヘッダー*/
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /*フォーム*/
+    form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 8px;
+    }
+
+    form div {
+        margin-bottom: 15px;
+    }
+
+    /*ラベル*/
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #444;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /*検索ボタン*/
+    button[type="submit"] {
+        display: block;
+        width: 100%;
+        background-color: #0056b3;
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #003d80;
+    }
+</style>
 {% endblock %}

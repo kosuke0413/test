@@ -42,22 +42,66 @@
 
     <br>
     <a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a>
-
-    <style>
-        .notice-image {
-            width: 600px; /* 固定したい幅 */
-            height: 350px; /* 固定したい高さ */
-            object-fit: cover; /* アスペクト比を保ちながら枠に収める */
-            border: 1px solid #ddd; /* 枠線を追加 */
-            border-radius: 5px; /* 角を丸くする */
-            display: block; /* 画像を中央揃えする準備 */
-            margin: 20px auto; /* 上下20pxの余白を追加し、中央揃え */
-        }
-    </style>
-    
-    
-
 </body>
 
 </html>
+
+<style>
+    .notice-image {
+        width: 600px;
+        /* 固定したい幅 */
+        height: 350px;
+        /* 固定したい高さ */
+        object-fit: cover;
+        /* アスペクト比を保ちながら枠に収める */
+        border: 1px solid #ddd;
+        /* 枠線を追加 */
+        border-radius: 5px;
+        /* 角を丸くする */
+        display: block;
+        /* 画像を中央揃えする準備 */
+        margin: 20px auto;
+        /* 上下20pxの余白を追加し、中央揃え */
+    }
+
+    /* 返信ボタン */
+    .reply-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #1abc9c;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .reply-button:hover {
+        background: #16a085;
+        transform: translateY(-2px);
+    }
+
+    /* トップページリンク */
+    .top-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .top-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+</style>
+
+
 {% endblock %}
