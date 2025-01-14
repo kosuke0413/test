@@ -8,10 +8,15 @@
 <ul>
     {% if local %}
     {% for local in local %}
-    <li>
-        <a>
-            {{ local.local_id }}:{{ local.local_name }}
-        </a>
+    <li>  
+        
+        <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}"
+    onsubmit="return confirm('本当に削除しますか？');">
+    <a>
+        {{ local.local_id }}:{{ local.local_name }}
+    </a>
+    <button type="submit" style="color: red;">削除</button>
+        </form>
     </li>
     {% endfor %}
     {% else %}

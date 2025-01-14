@@ -195,10 +195,16 @@ def local_list():
 
 
 # 地域削除のエンドポイント
-@user.route("/<int:local_id>/local_delete", methods=['POST'])
+@user.route("/<local_id>/local_delete", methods=['POST'])
 @login_required
 def local_delete(local_id):
-    pass
+    # 地域の削除処理
+    local = Local.query.get(local_id)
+    if local:
+        db.session.delete(local)
+        db.session.commit()
+
+        return redirect(url_for("user.local_list"))
 
 
 @user.context_processor
@@ -208,6 +214,10 @@ def inject_local():
         return {"local": {"local_name": "未定義"}}
     
     local = Local.query.get(current_user.local_id)
-    return {
-        "local": {"local_name": local.local_name}
-    }
+    if local:
+        return {
+            "local": {"local_name": local.local_name}
+        }
+    
+    else:
+        return {"local": {"local_name": "未定義"}}
