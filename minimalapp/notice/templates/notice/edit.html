@@ -29,6 +29,15 @@
             {% endif %}
             <p><input type="file" name="image" id="image"></p>
         </div>
+        <p>
+        <div class="radio-group">
+            {% for subfield in form.tag %}
+            <label class="radio-label">
+                {{ subfield() }} {{ subfield.label.text }}
+            </label>
+            {% endfor %}
+        </div>
+        </p>
 
         <button type="submit" class="edit-button">編集完了</button>
     </form>
@@ -38,7 +47,7 @@
         <button type="submit" class="delete-button">削除</button>
     </form>
 
-    <a href="{{ url_for('notice.detail', notice_id=notice.notice_id) }}" class="back-link">戻る</a>
+    <a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
 </body>
 
 </html>
@@ -189,6 +198,43 @@
     .back-link:hover {
         background: #1abc9c;
         transform: scale(1.05);
+    }
+
+    /* タグ */
+    .radio-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* 横3列 */
+        grid-template-rows: repeat(2, auto);
+        /* 縦2行 */
+        grid-gap: 20px;
+        /* 要素間のスペース */
+        justify-items: start;
+        /* 左揃え */
+        align-items: center;
+        /* ラベルとラジオボタンの中央揃え */
+    }
+
+    .radio-label {
+        display: flex;
+        align-items: center;
+        /* ラジオボタンとラベルを中央揃え */
+        gap: 10px;
+        /* ラジオボタンとラベルの間隔 */
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        /* ラベルが改行されないようにする */
+        cursor: pointer;
+    }
+
+    .radio-label input[type="radio"] {
+        margin: 0;
+        /* 不要な余白を除去 */
+        padding: 0;
+        /* 不要な余白を除去 */
+        vertical-align: middle;
+        /* ラジオボタンの縦位置を中央に */
     }
 </style>
 
