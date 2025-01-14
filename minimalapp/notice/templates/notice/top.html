@@ -21,9 +21,11 @@
         <p>現在表示するお知らせがありません</p>
         {% endif %}
     </ul>
+    {% if current_user.manager_flag == True %}
     <form action="{{ url_for('notice.create_notice') }}" method="get" style="display:inline;">
         <button type="submit" class="post-button">投稿する</button>
     </form>
+    {% endif %}
 </div>
 
 <!-- CSS -->
