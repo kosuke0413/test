@@ -1,4 +1,4 @@
-from flask import Flask, render_template,redirect,url_for
+from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, current_user, login_required
@@ -76,7 +76,7 @@ def createapp():
     from minimalapp.consultation import views as consultation_views
     app.register_blueprint(consultation_views.consultation,
                            url_prefix="/consultation")
-    
+
     # 翻訳アプリの登録とURLプレフィックス指定
     from minimalapp.translation import views as translation_views
     app.register_blueprint(translation_views.language,

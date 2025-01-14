@@ -55,7 +55,7 @@ class NoticeReplyForm(FlaskForm):
         validators=[
             DataRequired(message="本文は必須です。"),
             length(max=200, message="200文字以内で入力してください。"),
-        ]     
+        ]
     )
     submit = SubmitField("送信する")
 

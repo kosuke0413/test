@@ -1,15 +1,15 @@
 from flask import (
     Blueprint, render_template,
     redirect, url_for,
-    Response, flash)
+    Response, )
 from app import db
-from minimalapp.post.forms import PostUploadForm,PostReplyForm,SearchPostForm
-from minimalapp.post.models import Post,Postreply
+from minimalapp.post.forms import PostUploadForm, PostReplyForm, SearchPostForm
+from minimalapp.post.models import Post, Postreply
 from minimalapp.tags.models import Tags, Local
 from minimalapp.user.models import User
 from mimetypes import guess_type
 from sqlalchemy import or_
-from flask_login import current_user,login_required
+from flask_login import current_user, login_required
 
 # Bulueprintでpostアプリを生成する
 post = Blueprint(
@@ -80,7 +80,7 @@ def get_image(post_id):
     post = Post.query.get_or_404(post_id)
     if not post.image:
         return "画像がありません", 404
-    
+
     # print(f"画像データのサイズ: {len(post.image)} bytes")
 
     # 画像の拡張子を取得
@@ -102,23 +102,23 @@ def post_list():
 @post.route("/detail/<int:post_id>")
 @login_required
 def post_detail(post_id):
-    #投稿と投稿に対応するタグを取得
+    # 投稿と投稿に対応するタグを取得
     post = Post.query.get_or_404(post_id)
     tags = None
-    if not post.tag == None:
+    # if not post.tag == None: どちらか
+    if post.tag is not None:
         tags = Tags.query.get_or_404(post.tag)
     # 対応する返信を取得
     replies = Postreply.query.filter_by(post_id=post_id)
     # 投稿ユーザー情報を取得
     user = User.query.get_or_404(post.user_id)
-    
-    
+
     # 投稿者の場合は編集画面を表示
     if user.user_id == current_user.user_id:
         return edit_post(post_id)
-    
 
-    return render_template("post/detail.html", post=post,tag=tags,replies=replies,user=user)
+    return render_template("post/detail.html", post=post, tag=tags,
+                           replies=replies, user=user)
 
 
 # 投稿編集のエンドポイント
@@ -147,7 +147,8 @@ def edit_post(post_id):
     form.title.data = post.post_title
     form.text.data = post.post_text
     # タグが設定されている場合は初期値をセット
-    if not post.tag == None:
+    # if not post.tag == None: どちらか
+    if post.tag is not None:
         form.tag.data = str(post.tag)
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
@@ -187,6 +188,7 @@ def reply(post_id):
         db.session.commit()
         return redirect(url_for("post.post_detail", post_id=post_id))
     return render_template("post/reply.html", form=form, post=post)
+
 
 # 返信削除処理
 @post.route("/reply/delete/<int:reply_id>", methods=["POST"])
@@ -230,7 +232,8 @@ def search():
                 filters.append(Post.post_title.like(f"%{post_title}%"))
 
             # OR 条件で検索
-            query = query.filter(or_(*filters))  # https://www.sukerou.com/2019/04/sqlalchemyandor.html
+            query = query.filter(or_(*filters))
+            # https://www.sukerou.com/2019/04/sqlalchemyandor.html
 
         # 結果を取得
         results = query.all()

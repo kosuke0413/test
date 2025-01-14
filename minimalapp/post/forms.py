@@ -1,8 +1,9 @@
-from flask_wtf.file import FileAllowed, FileField, FileRequired
+from flask_wtf.file import FileAllowed, FileField
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField,TextAreaField,RadioField,SelectField
-from wtforms.validators import DataRequired,length,Optional
+from wtforms import StringField, TextAreaField, RadioField, SelectField
+from wtforms.validators import DataRequired, length, Optional
+
 
 class PostUploadForm(FlaskForm):
     # タイトルフィールドのバリデーションを設定
@@ -46,6 +47,7 @@ class PostUploadForm(FlaskForm):
 
     submit = SubmitField("アップロード")
 
+
 # 投稿返信
 class PostReplyForm(FlaskForm):
     text = TextAreaField(
@@ -53,9 +55,10 @@ class PostReplyForm(FlaskForm):
         validators=[
             DataRequired(message="本文は必須です。"),
             length(max=200, message="200文字以内で入力してください。"),
-        ]     
+        ]
     )
     submit = SubmitField("送信する")
+
 
 # 投稿検索
 class SearchPostForm(FlaskForm):

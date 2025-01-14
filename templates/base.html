@@ -10,13 +10,13 @@
     <div class="wrapper">
         <!-- サイドバー -->
         <aside class="sidebar">
-            
+
                     <!-- 縦書きで「町」のリンク -->
 
                         <h1>
                             <a href="{{ url_for('notice.top') }}" class="town-text">{{ local.local_name }}</a>
                         </h1>
-                    
+
             <nav>
                 <ul>
                     <!-- 現在ログイン中のユーザー名 -->
@@ -49,7 +49,7 @@
                             <br>AIに質問</br>
                         </a>
                     </li>
-           
+
                     {% if current_user.get_id() == "1" %}
                     <!-- 地域登録 -->
                     <li class="sidebar-item">
@@ -70,7 +70,7 @@
                     <li class="sidebar-item">
                         <a href="{{ url_for('user.super_list') }}">自治体ユーザー一覧</a>
                     </li>
-                    
+
                     {% endif %}
 
                     <!-- ログアウト -->
