@@ -135,20 +135,11 @@ def signup_super():
             form.mailaddress.data = None
             return render_template("user/signup_super.html",form=form)
 
-
         # ユーザー情報を登録する
         db.session.add(user)
         db.session.commit()
 
-        # ユーザー情報をセッションに登録する
-        login_user(user)
-
-        # GETパラメータにnextキーが存在しない場合はトップページに遷移する
-        next_ = request.args.get("next")
-        if next_ is None or not next_.startswith("/"):
-            next_ = url_for("notice.top")
-        return redirect(next_)
-    
+        return redirect(url_for("notice.top"))
     return render_template("user/signup_super.html",form=form)
 
 
@@ -157,7 +148,7 @@ def signup_super():
 @login_required
 def super_list():
     # 自治体ユーザーをデータベースから取得
-    users = db.session.query(User,Local).join(User,Local.local_id == User.local_id).filter(User.manager_flag is True)
+    users = db.session.query(User,Local).join(User,Local.local_id == User.local_id).filter(User.manager_flag == True)
     return render_template("user/super_list.html", users=users)
 
 
@@ -192,6 +183,23 @@ def local_regist():
         return "地域登録完了"
 
     return render_template("user/local_regist.html",form=form)
+
+
+# 地域一覧のエンドポイント
+@user.route("/local_list")
+@login_required
+def local_list():
+    # 自治体ユーザーをデータベースから取得
+    local = db.session.query(Local).all()
+    return render_template("user/local_list.html", local=local)
+
+
+# 地域削除のエンドポイント
+@user.route("/<int:local_id>/local_delete", methods=['POST'])
+@login_required
+def local_delete(local_id):
+    pass
+
 
 @user.context_processor
 def inject_local():
