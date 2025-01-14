@@ -2,23 +2,113 @@
 {% block title %} 自治体ユーザー一覧 {% endblock %}
 
 {% block content %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-top: 30px;
+    }
+
+    .user-list-container {
+        max-width: 800px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    ul {
+        list-style: none; /* 点を非表示に */
+        padding: 0;
+        margin: 0;
+    }
+
+    li.super {
+        background: #f9f9f9;
+        margin: 10px 0;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    li:hover.super {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    li a.super {
+        text-decoration: none;
+        font-size: 1.2em;
+        color: #3498db;
+        transition: color 0.3s;
+    }
+
+    li a:hover.super {
+        color: #1abc9c;
+    }
+
+    .no-users {
+        text-align: center;
+        font-size: 1.2em;
+        color: #7f8c8d;
+        margin-top: 20px;
+    }
+
+    .back-link {
+        display: block;
+        margin: 30px auto;
+        text-align: center;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: white;
+        background: #3498db;
+        text-decoration: none;
+        border-radius: 5px;
+        width: 200px;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+</style>
+
 <h1>自治体ユーザー一覧</h1>
 
-<!-- 自治体ユーザーの一覧表示 -->
-<ul>
-    {% if users %}
-    {% for user,local in users %}
-    <li>
-        <a>
-            {{ local.local_name }}:{{ user.name }}
-        </a>
-    </li>
-    {% endfor %}
-    {% else %}
-    <p>自治体ユーザーが存在しません</p>
-    {% endif %}
-</ul>
+<div class="user-list-container">
+    <!-- 自治体ユーザーの一覧表示 -->
+    <ul>
+        {% if users %}
+        {% for user, local in users %}
+        <li class="super">
+            <a class="super">
+                {{ local.local_name }}: {{ user.name }}
+            </a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p class="no-users">自治体ユーザーが存在しません</p>
+        {% endif %}
+    </ul>
+</div>
 
-<p><a href="{{ url_for('notice.top') }}">トップページに戻る</a></p>
+<a href="{{ url_for('notice.top') }}" class="back-link">トップページに戻る</a>
 
 {% endblock %}
