@@ -105,6 +105,7 @@ def edit_notice(notice_id):
     if form.validate_on_submit():
         notice.notice_title = form.title.data
         notice.notice_text = form.text.data
+        notice.tag = form.tag.data
 
         # 画像の更新処理
         if form.image.data:
