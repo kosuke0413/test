@@ -105,6 +105,9 @@ def logout():
     #     db.session.commit()
     #     return "削除成功"
 
+@user.route("/profile_edit")
+def profile_edit():
+    return render_template("user/profile_edit.html")
 
 # 自治体ユーザーの新規登録のエンドポイント
 @user.route("/signup_super", methods=["GET", "POST"])

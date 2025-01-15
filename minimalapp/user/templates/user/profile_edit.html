@@ -1,8 +1,10 @@
-{% extends "notice/base.html" %}
+{% extends "base.html" %}
 {% block title%}マイページ{% endblock %}
+
 {% block content %}
+
 <H2>マイページ</H2>
-<form action="{{ url_for('user.profile_edit_user', user_id=user.id) }}" method="POST" novalidate="novalidate">
+<form action="{{ url_for('user.profile_edit', user_id=user.id) }}" method="POST" novalidate="novalidate">
     {{ form.csrf_token }}
     <p>
         {{ form.name.label }}{{ form.name(placeholder="名前",value=user.name) }}
