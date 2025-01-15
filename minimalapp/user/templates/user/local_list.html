@@ -2,28 +2,111 @@
 {% block title %} 地域一覧 {% endblock %}
 
 {% block content %}
+
+<style>
+    /* 全体背景とフォント */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.2em;
+        color: #2c3e50;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .list-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    ul {
+        list-style: none; /* リストアイコンを非表示 */
+        padding: 0;
+        margin: 0;
+    }
+
+    li.loc {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    li:hover.loc {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+        font-size: 1em;
+        transition: color 0.3s ease;
+    }
+
+    a:hover {
+        color: #1abc9c;
+    }
+
+    .delete-button {
+        color: white;
+        background-color: #e74c3c;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .delete-button:hover {
+        background-color: #c0392b;
+        transform: scale(1.05);
+    }
+
+    p {
+        text-align: center;
+        font-size: 1em;
+        color: #7f8c8d;
+        margin-top: 20px;
+    }
+
+</style>
+
 <h1>地域一覧</h1>
 
-<!-- 地域の一覧表示 -->
-<ul>
-    {% if locals %}
-    {% for local in locals %}
-    <li>
-
-        <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}"
-    onsubmit="return confirm('本当に削除しますか？');">
-    <a>
-        {{ local.local_id }}:{{ local.local_name }}
-    </a>
-    <button type="submit" style="color: red;">削除</button>
-        </form>
-    </li>
-    {% endfor %}
-    {% else %}
-    <p>地域が存在しません</p>
-    {% endif %}
-</ul>
-
-<p><a href="{{ url_for('notice.top') }}">トップページに戻る</a></p>
+<div class="list-container">
+    <!-- 地域の一覧表示 -->
+    <ul>
+        {% if locals %}
+        {% for local in locals %}
+        <li class="loc">
+            <span>{{ local.local_id }}: {{ local.local_name }}</span>
+            <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}" onsubmit="return confirm('本当に削除しますか？');">
+                <button type="submit" class="delete-button">削除</button>
+            </form>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>地域が存在しません</p>
+        {% endif %}
+    </ul>
+</div>
 
 {% endblock %}

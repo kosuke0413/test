@@ -69,25 +69,6 @@
         margin-top: 20px;
     }
 
-    .back-link {
-        display: block;
-        margin: 30px auto;
-        text-align: center;
-        padding: 10px 20px;
-        font-size: 1.1em;
-        color: white;
-        background: #3498db;
-        text-decoration: none;
-        border-radius: 5px;
-        width: 200px;
-        transition: background 0.3s, transform 0.2s;
-    }
-
-    .back-link:hover {
-        background: #1abc9c;
-        transform: scale(1.05);
-    }
-
 </style>
 
 <h1>自治体ユーザー一覧</h1>
@@ -109,6 +90,5 @@
     </ul>
 </div>
 
-<a href="{{ url_for('notice.top') }}" class="back-link">トップページに戻る</a>
 
 {% endblock %}
