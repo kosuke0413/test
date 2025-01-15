@@ -152,7 +152,7 @@ def super_list():
     # 自治体ユーザーをデータベースから取得
     users = db.session.query(User, Local).join(
         User, Local.local_id == User.local_id).filter(
-            User.manager_flag is True)
+            User.manager_flag == True)
     return render_template("user/super_list.html", users=users)
 
 
