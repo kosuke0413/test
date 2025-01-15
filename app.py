@@ -86,6 +86,10 @@ def createapp():
     from minimalapp.user import views as user_views
     app.register_blueprint(user_views.user, url_prefix="/user")
 
+    # ユーザーアプリの登録とURLプレフィックス指定
+    from minimalapp.ai import views as ai_views
+    app.register_blueprint(ai_views.ai, url_prefix="/ai")
+
     # Mailクラスのコンフィグを追加する
     app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER")
     app.config["MAIL_POST"] = os.environ.get("MAIL_POST")
