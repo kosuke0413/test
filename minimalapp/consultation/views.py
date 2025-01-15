@@ -9,6 +9,8 @@ from app import mail
 from minimalapp.tags.models import Local
 from flask_login import login_required
 from flask_login import current_user
+from googletrans import Translator
+
 
 # Bulueprintでpostアプリを生成する
 consultation = Blueprint(
@@ -22,7 +24,13 @@ consultation = Blueprint(
 # 基礎
 @consultation.route("/")
 def index():
-    return "Hello consultation"
+    catchphrase = 'なんて日だ！'
+
+    translator = Translator()
+    translated = translator.translate(catchphrase)
+    print(translated.text)
+
+    return translated.text
 
 
 # 相談内容一覧
