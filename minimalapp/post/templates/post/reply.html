@@ -2,20 +2,97 @@
 {% block title %}返信: {{ post.post_title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ post.post_title }} への返信</h1>
+<h1>{{ post.post_title }} への返信</h1>
 
-    <form method="POST">
-        {{ form.csrf_token }}
-        <div class="form-group">
-            <p>{{ form.text.label }}</p>
-            {{ form.text(class="form-control") }}
-            {% for error in form.text.errors %}
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-        </div>
+<form method="POST">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        <p>{{ form.text.label }}</p>
+        {{ form.text(class="form-control") }}
+        {% for error in form.text.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
 
-        <button type="submit" class="btn btn-success">送信</button>
-    </form>
+    <button type="submit" class="send-button">送信</button>
+</form>
 
-    <a href="{{ url_for('post.post_detail', post_id=post.post_id) }}" class="btn btn-secondary">戻る</a>
+<a href="{{ url_for('post.post_detail', post_id=post.post_id) }}" class="back-link">戻る</a>
+<style>
+    /* タイトル */
+    h1 {
+        text-align: center;
+        font-size: 2.2em;
+        margin-top: 20px;
+    }
+
+    /* ラベル */
+    p {
+        display: block;
+        font-size: 1.2em;
+        color: #34495e;
+        margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition: border-color 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #3498db;
+        background: #fff;
+        outline: none;
+    }
+
+    textarea {
+        height: 120px;
+        resize: none;
+    }
+
+    /* 返信ボタン */
+    .send-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #1abc9c;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .send-button:hover {
+        background: #16a085;
+        transform: translateY(-2px);
+    }
+
+    /* 戻るリンク */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}
