@@ -2,45 +2,102 @@
 {% block title %}{{ post.post_title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ post.post_title }}</h1>
-    <h2>{{ user.name }}</h2>
-    <p>{{ post.post_text }}</p>
-    {% if post.image %}
-    <img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像">
+<h1>{{ post.post_title }}</h1>
+<h2>{{ user.name }}</h2>
+<p>{{ post.post_text }}</p>
+{% if post.image %}
+<img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像" class="post-image">
 
-    {% endif %}
-    {% if tag.tag_name %}
-    <ul>
-        <li>{{ tag.tag_name }}</li>
-    </ul>
-    {% endif %}
+{% endif %}
+{% if tag.tag_name %}
+<ul>
+    <li>{{ tag.tag_name }}</li>
+</ul>
+{% endif %}
 
-    <!-- 返信一覧を表示 -->
-    <ul>
-        {% for reply in replies %}
-        <form method="POST" action="{{ url_for('post.reply_delete', reply_id=reply.reply_id) }}"
-            onsubmit="return confirm('本当に削除しますか？');">
-            <p>{{ reply.name}}:{{ reply.content }}<button type="submit" style="color: red;">削除</button></p>
-        </form>
-
-        {% endfor %}
-    </ul>
-
-
-    <!-- 返信フォームへのリンク -->
-    <br>
-    <form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline;">
-        <button type="submit" class="btn btn-primary">返信する</button>
+<!-- 返信一覧を表示 -->
+<ul>
+    {% for reply in replies %}
+    <form method="POST" action="{{ url_for('post.reply_delete', reply_id=reply.reply_id) }}"
+        onsubmit="return confirm('本当に削除しますか？');">
+        <p>{{ reply.name}}:{{ reply.content }}<button type="submit" style="color: red;">削除</button></p>
     </form>
 
-    <!-- 自治体ユーザーの場合は削除ボタンを表示 -->
-    {% if current_user.manager_flag == True %}
-    <form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
+    {% endfor %}
+</ul>
+
+
+<!-- 返信フォームへのリンク -->
+<br>
+<form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline;">
+    <button type="submit" class="reply-button">返信する</button>
+</form>
+
+<!-- 自治体ユーザーの場合は削除ボタンを表示 -->
+{% if current_user.manager_flag == True %}
+<form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
     onsubmit="return confirm('本当に削除しますか？');">
     <button type="submit" style="color: red;">削除</button>
-    </form>
-    {% endif %}
+</form>
+{% endif %}
 
-    <br>
-    <a href="{{ url_for('post.post_list') }}">戻る</a>
+<br>
+<a href="{{ url_for('post.post_list') }}" class="back-link">戻る</a>
+
+<style>
+    .post-image {
+        width: 600px;
+        /* 固定したい幅 */
+        height: 350px;
+        /* 固定したい高さ */
+        object-fit: cover;
+        /* アスペクト比を保ちながら枠に収める */
+        border: 1px solid #ddd;
+        /* 枠線を追加 */
+        border-radius: 5px;
+        /* 角を丸くする */
+        display: block;
+        /* 画像を中央揃えする準備 */
+        margin: 20px auto;
+        /* 上下20pxの余白を追加し、中央揃え */
+    }
+
+    /* 返信ボタン */
+    .reply-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #1abc9c;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .reply-button:hover {
+        background: #16a085;
+        transform: translateY(-2px);
+    }
+
+    /* トップページリンク */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}

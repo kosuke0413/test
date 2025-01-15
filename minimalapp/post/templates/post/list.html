@@ -19,7 +19,45 @@
     {% endif %}
 </ul>
 <form action="{{ url_for('post.create_post') }}" method="get" style="display:inline;">
-    <button type="submit" class="btn btn-primary">投稿する</button>
-    <p><a href="{{ url_for('notice.top') }}">トップページに戻る</a></p>
+    <button type="submit" class="post-button">投稿する</button>
+    <p><a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a></p>
 </form>
+<style>
+    /*投稿ボタン*/
+    .post-button {
+        display: block;
+        margin-top: 50px;
+        padding: 10px 20px;
+        font-size: 1em;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .post-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .top-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .top-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}
