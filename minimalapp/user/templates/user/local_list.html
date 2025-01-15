@@ -6,8 +6,8 @@
 
 <!-- 地域の一覧表示 -->
 <ul>
-    {% if local %}
-    {% for local in local %}
+    {% if locals %}
+    {% for local in locals %}
     <li>
 
         <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}"

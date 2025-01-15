@@ -196,8 +196,8 @@ def local_regist():
 @login_required
 def local_list():
     # 自治体ユーザーをデータベースから取得
-    local = db.session.query(Local).all()
-    return render_template("user/local_list.html", local=local)
+    locals = db.session.query(Local).all()
+    return render_template("user/local_list.html", locals=locals)
 
 
 # 地域削除のエンドポイント
@@ -220,6 +220,7 @@ def inject_local():
         return {"local": {"local_name": "未定義"}}
 
     local = Local.query.get(current_user.local_id)
+    print(current_user.local_id)
     if local:
         return {
             "local": {"local_name": local.local_name}
@@ -227,3 +228,5 @@ def inject_local():
 
     else:
         return {"local": {"local_name": "未定義"}}
+    
+    
