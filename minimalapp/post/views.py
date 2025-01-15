@@ -131,6 +131,7 @@ def edit_post(post_id):
     if form.validate_on_submit():
         post.post_title = form.title.data
         post.post_text = form.text.data
+        post.tag = form.tag.data
 
         # 画像の更新処理
         if form.image.data:
