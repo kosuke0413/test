@@ -59,6 +59,10 @@ def reply_complate():
 def send():
     # 緑文字がクラス
     form = ConsultationForm()
+
+    if current_user.manager_flag is True:
+        return redirect(url_for("consultation.list"))
+
     if form.validate_on_submit():
         # 2は被らないため
         consultation2 = Consultation(
