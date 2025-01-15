@@ -1,4 +1,7 @@
 from flask import Flask,Blueprint, request, jsonify, render_template
+from flask_login import current_user
+from minimalapp.tags.models import Local
+from app import db
 from minimalapp.ai.forms import AiForm
 import json
 
@@ -20,11 +23,15 @@ model = AutoModelForCausalLM.from_pretrained("rinna/japanese-gpt-1b")
 if torch.cuda.is_available():
     model = model.to("cuda")
 
-@ai.route("/")
-def index():
-    question = "猫について教えて"
-    text = f"あなたは優れた質問応答AIです。\n以下の質問に対して、回答を一文で述べてください。\n質問: {question}\n回答:"
+@ai.route("/ai_question")
+def ai_question():
+    form = AiForm()
+    return render_template("ai/ai_question.html", form=form)
 
+@ai.route("/ai_answer",methods=["POST"])
+def ai_answer():
+    form = AiForm()
+    text = form.text.data + "について説明します"
     
     token_ids = tokenizer.encode(text, add_special_tokens=False, return_tensors="pt")
 
@@ -45,3 +52,20 @@ def index():
     output = tokenizer.decode(output_ids.tolist()[0])
     print(output)
     return output
+
+
+@ai.context_processor
+def inject_local():
+    # 未ログイン時は地域名を未定義にする
+    if current_user.is_anonymous:
+        return {"local": {"local_name": "未定義"}}
+
+    local = Local.query.get(current_user.local_id)
+    print(current_user.local_id)
+    if local:
+        return {
+            "local": {"local_name": local.local_name}
+        }
+
+    else:
+        return {"local": {"local_name": "未定義"}}
