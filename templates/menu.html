@@ -79,16 +79,21 @@
 
     /* 戻るリンクのスタイル */
     .back-link a {
-        font-size: 16px;
-        color: #333;
-        text-decoration: underline;
-        margin-top: 20px;
         display: inline-block;
-        transition: color 0.3s ease;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
     }
 
     .back-link a:hover {
-        color: #555;
+        background: #1abc9c;
+        transform: scale(1.05);
     }
 
     /* レスポンシブデザイン */
@@ -118,7 +123,7 @@
         <li><a href="{{ url_for('notice.search') }}">お知らせの検索</a></li>
         <li><a href="{{ url_for('consultation.send') }}">相談窓口</a></li>
         <li><a href="{{ url_for('language.select_language') }}">言語選択</a></li>
-        <li><a href="#">AIに質問</a></li>
+        <li><a href="{{ url_for('ai.ai_question') }}">AIに質問</a></li>
     </ul>
     <p class="back-link"><a href="/">トップページへ戻る</a></p>
 </div>

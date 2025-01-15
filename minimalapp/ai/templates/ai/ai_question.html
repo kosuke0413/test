@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}画像認識AI{% endblock %}
+
+{% block content %}
+
+    <h1>画像認識と質問応答</h1>
+    <form action="{{ url_for('ai.ai_answer') }}" method="post" novalidate="novalidate" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        
+            {{form.text.label}}
+            {{form.text()}}
+
+        <br>
+            {{form.image.label}}
+            {{form.image()}}
+        <br>
+        
+        {{form.submit()}}
+    </form>
+
+{% endblock %}
