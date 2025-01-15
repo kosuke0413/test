@@ -2,9 +2,7 @@ from flask import Flask,Blueprint, request, jsonify, render_template
 from minimalapp.ai.forms import AiForm
 import json
 
-from PIL import Image
 import torch
-from torchvision import transforms,models
 from transformers import pipeline,AutoTokenizer, AutoModelForCausalLM
 
 
@@ -24,7 +22,9 @@ if torch.cuda.is_available():
 
 @ai.route("/")
 def index():
-    text = "cssとは、"
+    question = "猫について教えて"
+    text = f"あなたは優れた質問応答AIです。\n以下の質問に対して、回答を一文で述べてください。\n質問: {question}\n回答:"
+
     
     token_ids = tokenizer.encode(text, add_special_tokens=False, return_tensors="pt")
 
