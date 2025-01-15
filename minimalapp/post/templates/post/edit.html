@@ -2,35 +2,229 @@
 {% block title %}投稿編集: {{ post.post_title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ post.post_title }} の編集</h1>
+<h1>{{ post.post_title }} の編集</h1>
 
-    <form method="POST" action="{{ url_for('post.edit_post', post_id=post.post_id) }}" novalidate="novalidate" enctype="multipart/form-data">
+<form method="POST" action="{{ url_for('post.edit_post', post_id=post.post_id) }}" novalidate="novalidate"
+    enctype="multipart/form-data">
     {{ form.csrf_token }}
-        <div>
-            <label for="title">タイトル</label>
-            <input type="text" name="title" id="title" value="{{ form.title.data }}" required>
-        </div>
+    <div>
+        <label for="title">タイトル</label>
+        <input type="text" name="title" id="title" value="{{ form.title.data }}" required>
+    </div>
 
-        <div>
-            <label for="text">本文</label>
-            <p><textarea name="text" id="text" required>{{ form.text.data }}</textarea></p>
-        </div>
+    <div>
+        <label for="text">本文</label>
+        <p><textarea name="text" id="text" required>{{ form.text.data }}</textarea></p>
+    </div>
 
-        <div>
-            <label for="image">画像</label>
-            <p><img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像"></p>
-            <p><input type="file" name="image" id="image"></p>
-        </div>
+    <div>
+        <label for="image">画像</label>
+        <p><img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像" class="post-image"></p>
+        <p><input type="file" name="image" id="image"></p>
+    </div>
 
-        {{ form.tag }}
+    <p>
+    <div class="radio-group">
+        {% for subfield in form.tag %}
+        <label class="radio-label">
+            {{ subfield() }} {{ subfield.label.text }}
+        </label>
+        {% endfor %}
+    </div>
+    </p>
+    <button type="submit" class="edit-button">編集完了</button>
+</form>
 
-        <button type="submit" style="color: blue;">編集完了</button>
-    </form>
+<form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
+    onsubmit="return confirm('本当に削除しますか？');">
+    <button type="submit" class="delete-button">削除</button>
+</form>
 
-    <form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
-        onsubmit="return confirm('本当に削除しますか？');">
-        <button type="submit" style="color: red;">削除</button>
-    </form>
+<a href="{{ url_for('post.post_list') }}" class="back-link">戻る</a>
 
-    <a href="{{ url_for('post.post_list') }}">戻る</a>
+<style>
+    /* 全体スタイル */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
+        color: #333;
+    }
+
+    /* タイトル */
+    h1 {
+        text-align: center;
+        font-size: 2.2em;
+        margin-top: 20px;
+    }
+
+    /* フォーム */
+    form {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    /* ラベル */
+    label {
+        display: block;
+        font-size: 1em;
+        color: #34495e;
+        margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition: border-color 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #3498db;
+        background: #fff;
+        outline: none;
+    }
+
+    textarea {
+        height: 120px;
+        resize: none;
+    }
+
+    /* お知らせ画像 */
+    .post-image {
+        width: 600px;
+        /* 固定幅 */
+        height: 350px;
+        /* 固定高さ */
+        object-fit: cover;
+        /* アスペクト比を維持 */
+        border: 1px solid #ddd;
+        /* 枠線 */
+        border-radius: 5px;
+        /* 角を丸く */
+        display: block;
+        /* 中央揃え */
+        margin: 20px auto;
+        /* 上下に余白を追加し中央揃え */
+    }
+
+    /* 編集ボタン */
+    .edit-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #3498db;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .edit-button:hover {
+        background: #1abc9c;
+        transform: scale(1.02);
+    }
+
+    .edit-button:active {
+        background: #16a085;
+    }
+
+    /* 削除ボタン */
+    .delete-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #e74c3c;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        margin-top: 20px;
+    }
+
+    .delete-button:hover {
+        background: #c0392b;
+        transform: scale(1.02);
+    }
+
+    .delete-button:active {
+        background: #a93226;
+    }
+
+    /* 戻るボタン */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    /* タグ */
+    .radio-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* 横3列 */
+        grid-template-rows: repeat(2, auto);
+        /* 縦2行 */
+        grid-gap: 20px;
+        /* 要素間のスペース */
+        justify-items: start;
+        /* 左揃え */
+        align-items: center;
+        /* ラベルとラジオボタンの中央揃え */
+    }
+
+    .radio-label {
+        display: flex;
+        align-items: center;
+        /* ラジオボタンとラベルを中央揃え */
+        gap: 10px;
+        /* ラジオボタンとラベルの間隔 */
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        /* ラベルが改行されないようにする */
+        cursor: pointer;
+    }
+
+    .radio-label input[type="radio"] {
+        margin: 0;
+        /* 不要な余白を除去 */
+        padding: 0;
+        /* 不要な余白を除去 */
+        vertical-align: middle;
+        /* ラジオボタンの縦位置を中央に */
+    }
+</style>
 {% endblock %}
