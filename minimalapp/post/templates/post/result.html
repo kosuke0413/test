@@ -3,21 +3,42 @@
 
 {% block content %}
 
-    <h1>検索結果</h1>
+<h1>検索結果</h1>
 
-    {% if results %}
-    <ul>
-        {% for result in results %}
-        <li>
-            <strong>タイトル:</strong>
-            <a href="{{ url_for('post.post_detail', post_id=result.post_id) }}">{{ result.post_title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>該当するお知らせは見つかりませんでした。</p>
-    {% endif %}
+{% if results %}
+<ul>
+    {% for result in results %}
+    <li>
+        <strong>タイトル:</strong>
+        <a href="{{ url_for('post.post_detail', post_id=result.post_id) }}">{{ result.post_title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>該当するお知らせは見つかりませんでした。</p>
+{% endif %}
 
-    <a href="{{ url_for('post.search') }}">検索画面に戻る</a>
+<a href="{{ url_for('post.search') }}" class="search-link">検索画面に戻る</a>
 
-    {% endblock %}
+<style>
+    /* 検索画面リンク */
+    .search-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .search-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+</style>
+
+{% endblock %}

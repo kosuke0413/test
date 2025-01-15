@@ -19,8 +19,29 @@
     <p>該当するお知らせは見つかりませんでした。</p>
     {% endif %}
 
-    <a href="{{ url_for('notice.search') }}">検索画面に戻る</a>
+    <a href="{{ url_for('notice.search') }}" class="search-link">検索画面に戻る</a>
 </body>
-{% endblock %}
 
 </html>
+
+<style>
+    /* 検索画面リンク */
+    .search-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .search-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}
