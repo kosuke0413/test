@@ -189,7 +189,7 @@ def local_regist():
         db.session.add(local)
         db.session.commit()
 
-        return "地域登録完了"
+        return redirect(url_for("user.local_list"))
 
     return render_template("user/local_regist.html", form=form)
 
