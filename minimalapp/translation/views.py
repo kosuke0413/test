@@ -1,22 +1,22 @@
 from flask import Blueprint, render_template
 from minimalapp.tags.models import Local
-from flask_login import login_required, current_user
+from flask_login import current_user
 
 # Blueprintで言語選択アプリを生成
-language = Blueprint(
-    "language",
+translation = Blueprint(
+    "translation",
     __name__,
     template_folder="templates",
     static_folder="../static"
 )
 
 
-@language.route("/translation")
+@translation.route("/translation")
 def index():
-    return render_template("translation/trans.html")
+    return render_template("translation/translation.html")
 
 
-@language.context_processor
+@translation.context_processor
 def inject_local():
     local = Local.query.get(current_user.local_id)
     return {

@@ -79,7 +79,7 @@ def createapp():
 
     # 翻訳アプリの登録とURLプレフィックス指定
     from minimalapp.translation import views as translation_views
-    app.register_blueprint(translation_views.language,
+    app.register_blueprint(translation_views.translation,
                            url_prefix="/translation")
 
     # ユーザーアプリの登録とURLプレフィックス指定
