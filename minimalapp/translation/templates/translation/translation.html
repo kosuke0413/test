@@ -1,9 +1,15 @@
 {% extends "base.html" %}
-{% block title %} 言語選択 {% endblock %}
+{% block title %}言語選択{% endblock %}
 {% block content %}
+<h1>翻訳ツール</h1>
+<form method="post">
+    <label for="text_to_translate">翻訳したいフレーズを入力してください:</label><br>
+    <input type="text" id="text_to_translate" name="text_to_translate" required>
+    <button type="submit">翻訳</button>
+</form>
 
-
-<h1>ぬ</h1>
-
-
+{% if translated_text %}
+    <h2>翻訳結果:</h2>
+    <p>{{ translated_text }}</p>
+{% endif %}
 {% endblock %}
