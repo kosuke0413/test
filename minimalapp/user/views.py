@@ -105,6 +105,8 @@ def logout():
     #     db.session.commit()
     #     return "削除成功"
 
+
+#　マイページのエンドポイント
 @user.route("/profile_edit")
 def profile_edit():
     return render_template("user/profile_edit.html")
