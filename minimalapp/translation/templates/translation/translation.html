@@ -5,6 +5,14 @@
 <form method="post">
     <label for="text_to_translate">翻訳したいフレーズを入力してください:</label><br>
     <input type="text" id="text_to_translate" name="text_to_translate" required>
+    <br><br>
+    <label for="target_language">翻訳先の言語を選択してください:</label><br>
+    <select id="target_language" name="target_language" required>
+        <option value="en">英語</option>
+        <option value="ja">日本語</option>
+        <!-- 必要に応じて他の言語も追加可能 -->
+    </select>
+    <br><br>
     <button type="submit">翻訳</button>
 </form>
 
