@@ -12,6 +12,7 @@ translation = Blueprint(
 )
 
 
+# 翻訳ページへ飛ぶ
 @translation.route("/translation", methods=["GET", "POST"])
 def index():
     translated_text = ""
@@ -22,12 +23,14 @@ def index():
         if text_to_translate and target_language:
             # 翻訳を実行
             translator = Translator()
-            translated = translator.translate(text_to_translate, dest=target_language)
+            translated = translator.translate(text_to_translate,
+                                              dest=target_language)
             translated_text = translated.text
     return render_template("translation/translation.html",
                            translated_text=translated_text)
 
 
+# ローカル関数の定義
 @translation.context_processor
 def inject_local():
     local = Local.query.get(current_user.local_id)
