@@ -370,6 +370,8 @@ body {
         left: 60%;  /* 右に移動 */
         transform: translate(-50%, -50%);
     }
+
+
 /* translation.html */
     /* サイドバーに影響しない全体設定 */
     .translation-main-container {
@@ -394,27 +396,29 @@ body {
     }
 
     /* h1 のスタイル */
-    .translation-h2{
+    .translation-h2 {
         text-align: center;
         margin-bottom: 20px;
         color: #333;
     }
 
     /* p のスタイル */
-    .translation-p{
+    .translation-p {
         margin-bottom: 15px;
         text-align: left; /* ラベルとテキストエリアは左揃え */
     }
 
     /* label のスタイル */
-    .translation-label{
+    .translation-label {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
     }
 
     /* テキスト入力フィールド */
-    input[type="text"]{
+    input[type="text"],
+    textarea,
+    select {
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
@@ -438,7 +442,7 @@ body {
     }
 
     /* ボタンのスタイル */
-    .translation-button[type="submit"] {
+    .translation-button {
         display: block;
         width: 100%;
         padding: 10px;
@@ -451,6 +455,6 @@ body {
     }
 
     /* マウスカーソルが当てられたときの効果 */
-    .translation-button:hover[type="submit"]:hover {
+    .translation-button:hover {
         background-color: #0056b3;
     }
