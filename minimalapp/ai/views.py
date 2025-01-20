@@ -1,15 +1,14 @@
 from flask import Flask,Blueprint, request, jsonify, render_template
 from flask_login import current_user
 from minimalapp.tags.models import Local
-from app import db
 from minimalapp.ai.forms import AiForm
 import json
 
 from PIL import Image
 import torch
-from torchvision import transforms, models
+from torchvision import transforms
 from torchvision.models import efficientnet_b7, EfficientNet_B7_Weights
-from transformers import pipeline,AutoTokenizer, AutoModelForCausalLM
+
 
 import wikipediaapi
 
@@ -22,12 +21,12 @@ ai = Blueprint(
     static_folder="../static"
 )
 
-# モデルとトークナイザーの読み込み
-tokenizer = AutoTokenizer.from_pretrained("rinna/japanese-gpt-1b", use_fast=False)
-model = AutoModelForCausalLM.from_pretrained("rinna/japanese-gpt-1b")
+# # モデルとトークナイザーの読み込み
+# tokenizer = AutoTokenizer.from_pretrained("rinna/japanese-gpt-1b", use_fast=False)
+# model = AutoModelForCausalLM.from_pretrained("rinna/japanese-gpt-1b")
 
-if torch.cuda.is_available():
-    model = model.to("cuda")
+# if torch.cuda.is_available():
+#     model = model.to("cuda")
 
 # 画像認識用のモデル
 image_model = efficientnet_b7(weights=EfficientNet_B7_Weights.DEFAULT)
