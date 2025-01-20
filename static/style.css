@@ -370,3 +370,94 @@ body {
         left: 60%;  /* 右に移動 */
         transform: translate(-50%, -50%);
     }
+/* translation.html */
+/* サイドバーに影響しない全体設定 */
+.translation-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4e060;
+    padding-left: 30px; /* サイドバーの幅を考慮 */
+    padding-right: 30px; /* 右側にも余白をつけて中央揃え */
+}
+
+/* 翻訳ツールのフォーム枠 */
+.translation-sub-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* h1 のスタイル */
+.translation-h2,
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* p のスタイル */
+.translation-p,
+p {
+    margin-bottom: 15px;
+    text-align: left; /* ラベルとテキストエリアは左揃え */
+}
+
+/* label のスタイル */
+.translation-label,
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* テキスト入力フィールド */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* テキストエリアのスタイル */
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+/* 翻訳結果表示用のスタイル */
+.translation-text {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+}
+
+/* ボタンのスタイル */
+.translation-button,
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* マウスカーソルが当てられたときの効果 */
+.translation-button:hover,
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
