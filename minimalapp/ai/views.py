@@ -8,6 +8,7 @@ import json
 from PIL import Image
 import torch
 from torchvision import transforms, models
+from torchvision.models import efficientnet_b7, EfficientNet_B7_Weights
 from transformers import pipeline,AutoTokenizer, AutoModelForCausalLM
 
 
@@ -26,9 +27,8 @@ model = AutoModelForCausalLM.from_pretrained("rinna/japanese-gpt-1b")
 if torch.cuda.is_available():
     model = model.to("cuda")
 
-
-# 画像認識用のモデル（ResNet50を使用）
-image_model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
+# 画像認識用のモデル
+image_model = efficientnet_b7(weights=EfficientNet_B7_Weights.DEFAULT)
 image_model.eval()
 
 # 画像処理のトランスフォーム
@@ -61,7 +61,8 @@ def ai_answer():
         outputs = image_model(input_tensor)
     _, predicted = outputs.max(1)
 
-    predicted_class_id = predicted.item()  # クラスID（予測されたクラスID）
+    predicted_class_id = predicted.item()  
+    # クラスID（予測されたクラスID）
     # print(f"予測されたクラスID: {predicted_class_id}")
 
     # JSONファイルの読み込み
@@ -70,8 +71,7 @@ def ai_answer():
     
     # クラスIDに基づいてクラス名を取得
     class_name = class_idx.get(str(predicted_class_id), "不明なクラス")
-    # print(f"予測されたクラス名: {class_name}")
-    # print("ID名" + class_name[0])
+
 
     # JSONファイルの読み込み
     with open('imagenet_class_index_ja.json', 'r', encoding='utf-8') as f:
@@ -84,31 +84,37 @@ def ai_answer():
         if entry['num'] == class_name[0]:  # 予測されたクラスIDで検索
             class_name_ja = entry['ja']  # 日本語名を取得
             break  # 見つかったらループを抜ける
+        
 
-    # print(f"日本語名:{class_name_ja}")
-    # text = form.text.data + "は、"
+    # 画像認識情報を基に質問を生成
+    prompt = f"{class_name_ja}について簡潔に説明してください。"
 
-    text = class_name_ja + "は、"
-    
-    token_ids = tokenizer.encode(text, add_special_tokens=False, return_tensors="pt")
+    # 入力トークンのエンコード
+    input_ids = tokenizer.encode(prompt, return_tensors="pt")
+    input_ids = input_ids.to(model.device)
+
 
     with torch.no_grad():
         output_ids = model.generate(
-            token_ids.to(model.device),
-            max_length=100,
+            input_ids,
+            max_length=200,
             min_length=100,
             do_sample=True,
             top_k=5,
             top_p=1.0,
+            repetition_penalty=1.2,
             pad_token_id=tokenizer.pad_token_id,
             bos_token_id=tokenizer.bos_token_id,
             eos_token_id=tokenizer.eos_token_id,
             bad_words_ids=[[tokenizer.unk_token_id]]
         )
 
-    output = tokenizer.decode(output_ids.tolist()[0])
-    print(output)
-    return output
+    output = tokenizer.decode(output_ids.tolist()[0], skip_special_tokens=True)
+    # print(output)
+
+    # 出力から「{class_name_ja}について簡潔に説明してください。」部分を削除
+    explanation = output.replace(f"{class_name_ja}について簡潔に説明してください。", "").strip()
+    return render_template("ai/ai_answer.html", class_name=class_name_ja,explanation=explanation)
 
 
 @ai.context_processor
