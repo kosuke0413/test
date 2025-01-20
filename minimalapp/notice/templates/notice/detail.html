@@ -27,7 +27,13 @@
         <form method="POST" action="{{ url_for('notice.reply_delete', reply_id=reply.reply_id) }}"
             onsubmit="return confirm('本当に削除しますか？');">
             {{ form.csrf_token }}
-            <p>{{ reply.name}}:{{ reply.reply_text }}<button type="submit" style="color: red;">削除</button></p>
+
+            <p>{{ reply.name}}:{{ reply.reply_text }}
+            {% if current_user.manager_flag == True %}
+                <button type="submit" style="color: red;">削除</button>
+            {% endif %}
+            </p>
+            
         </form>
 
         {% endfor %}
@@ -39,6 +45,13 @@
     <form action="{{ url_for('notice.reply', notice_id=notice.notice_id) }}" method="get" style="display:inline;">
         <button type="submit" class="reply-button">返信する</button>
     </form>
+
+    {% if current_user.manager_flag == True %}
+    <br>
+    <form action="{{ url_for('notice.edit_notice', notice_id=notice.notice_id) }}" method="get" style="display:inline;">
+        <button type="submit" class="reply-button">編集画面のリンク</button>
+    </form>
+    {% endif %}
 
     <br>
     <a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a>

@@ -20,7 +20,12 @@
     {% for reply in replies %}
     <form method="POST" action="{{ url_for('post.reply_delete', reply_id=reply.reply_id) }}"
         onsubmit="return confirm('本当に削除しますか？');">
-        <p>{{ reply.name}}:{{ reply.content }}<button type="submit" style="color: red;">削除</button></p>
+
+        <p>{{ reply.name}}:{{ reply.content }}
+        {% if current_user.manager_flag == True %}
+            <button type="submit" style="color: red;">削除</button>
+        {% endif %}
+        </p>
     </form>
 
     {% endfor %}
@@ -32,6 +37,14 @@
 <form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline;">
     <button type="submit" class="reply-button">返信する</button>
 </form>
+
+{% if post.user_id == current_user.user_id %}
+<br>
+<form action="{{ url_for('post.edit_post', post_id=post.post_id) }}" method="get" style="display:inline;">
+    <button type="submit" class="reply-button">編集画面のリンク</button>
+</form>
+{% endif %}
+
 
 <!-- 自治体ユーザーの場合は削除ボタンを表示 -->
 {% if current_user.manager_flag == True %}

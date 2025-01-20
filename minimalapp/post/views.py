@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, render_template,
     redirect, url_for,
-    Response, )
+    Response,session)
 from app import db
 from minimalapp.post.forms import PostUploadForm, PostReplyForm, SearchPostForm
 from minimalapp.post.models import Post, Postreply
@@ -113,9 +113,9 @@ def post_detail(post_id):
     # 投稿ユーザー情報を取得
     user = User.query.get_or_404(post.user_id)
 
-    # 投稿者の場合は編集画面を表示
-    if user.user_id == current_user.user_id:
-        return edit_post(post_id)
+    # # 投稿者の場合は編集画面を表示
+    # if user.user_id == current_user.user_id:
+    #     return edit_post(post_id)
 
     return render_template("post/detail.html", post=post, tag=tags,
                            replies=replies, user=user)
@@ -222,6 +222,9 @@ def search():
 
         # 検索クエリの生成
         query = db.session.query(Post)
+        local_id = session.get("local_id")  # ログイン時にセッションへ保存された地域コードを取得
+        if local_id:
+            query = query.filter(Post.local_id == local_id)
 
         # タグまたはタイトルが指定されている場合
         if tag_id or post_title:

@@ -87,9 +87,9 @@ def detail(notice_id):
         tags = Tags.query.get_or_404(notice.tag)
     replies = NoticeReply.query.filter_by(notice_id=notice_id).all()
 
-    # 投稿者の場合は編集画面にリダイレクト
-    if current_user.manager_flag:
-        return redirect(url_for("notice.edit_notice", notice_id=notice_id))
+    # # 投稿者の場合は編集画面にリダイレクト
+    # if current_user.manager_flag:
+    #     return redirect(url_for("notice.edit_notice", notice_id=notice_id))
 
     return render_template("notice/detail.html", notice=notice, tag=tags,
                            replies=replies, form=form)
