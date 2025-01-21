@@ -78,7 +78,8 @@ def send():
             title=form.title.data,
             content=form.content.data,
             # 届くメールアドレスの設定
-            mailadores="kosuke.0413@icloud.com",
+            mailadores="2024teama@gmail.com",
+            # mailadores=form,mailadores.data,
             # 後から直す
         )
 
