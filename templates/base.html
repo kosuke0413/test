@@ -10,15 +10,13 @@
     <div class="wrapper">
         <!-- サイドバー -->
         <aside class="sidebar">
-
-                    <!-- 縦書きで「町」のリンク -->
-
-                        <h1>
-                            <a  href="{{ url_for('notice.top') }}" class="town-text">{{ local.local_name }}</a>
-                        </h1>
-
+                <!-- 縦書きで「町」のリンク -->
+                <h1>
+                    <a  href="{{ url_for('notice.top') }}" class="town-text">{{ local.local_name }}</a>
+                </h1>
             <nav>
                 <ul>
+
                     <!-- 現在ログイン中のユーザー名 -->
                     {% if current_user.is_authenticated %}
                         <li class="sidebar-item">
@@ -36,9 +34,9 @@
 
                     <!-- 言語選択 -->
                     <li class="sidebar-item">
-                        <a href="#">
+                        <a href="{{ url_for('translation.index') }}">
                             <img src="{{ url_for('static', filename='img/言語選択.png') }}" alt="言語選択画像" width="90" height="50">
-                            <br>言語選択</br>
+                            <br>翻訳</br>
                         </a>
                     </li>
 
