@@ -107,9 +107,34 @@ def logout():
 
 
 #　マイページのエンドポイント
-@user.route("/profile_edit")
+@user.route("/profile_edit", methods=["GET", "POST"])
+@login_required
 def profile_edit():
-    return render_template("user/profile_edit.html")
+    form = SignUpForm()
+
+    # 現在のユーザー情報を取得
+    myuser = current_user
+
+    if form.validate_on_submit():
+        # フォームからデータを取得して更新
+        myuser.local_id = form.local_id.data
+        myuser.username = form.username.data
+        myuser.mailaddress = form.mailaddress.data
+
+        # データベースに変更を保存
+        db.session.commit()
+
+        # トップページまたはマイページにリダイレクト
+        return redirect(url_for("user.profile_edit"))
+
+    # 初期値をフォームに設定
+    form.local_id.data = myuser.local_id
+    form.username.data = myuser.name
+    form.mailaddress.data = myuser.mailaddress
+
+    # マイページのテンプレートをレンダリング
+    return render_template("user/profile_edit.html", form=form, myuser=myuser)
+
 
 # 自治体ユーザーの新規登録のエンドポイント
 @user.route("/signup_super", methods=["GET", "POST"])

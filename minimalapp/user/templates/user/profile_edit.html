@@ -1,30 +1,117 @@
 {% extends "base.html" %}
-{% block title%}マイページ{% endblock %}
+{% block title %}マイページ{% endblock %}
 
 {% block content %}
+<div class="profile-edit-container">
+    <h2>マイページ</h2>
+    <form method="POST" action="{{ url_for('user.profile_edit') }}" novalidate>
+        {{ form.csrf_token }}
+        <!-- 地域ID -->
+        <p>
+            {{ form.local_id.label }}
+            {{ form.local_id(placeholder="地域ID") }}
+        </p>
+        {% for error in form.local_id.errors %}
+        <span class="error-message">{{ error }}</span>
+        {% endfor %}
 
-<H2>マイページ</H2>
-<form action="{{ url_for('user.profile_edit', user_id=user.id) }}" method="POST" novalidate="novalidate">
-    {{ form.csrf_token }}
-    <p>
-        {{ form.name.label }}{{ form.name(placeholder="名前",value=user.name) }}
-    </p>
-    {% for error in form.name.errors %}
-    <span style="color: red;">{{ error }}</span>
-    {% endfor %}
-    <p>
-        {{ form.mailaddress.label }}{{ form.mailaddress(placeholder="メールアドレス",value=user.mailaddress) }}
-    </p>
-    {% for error in form.mailaddress.errors %}
-    <span style="color: red;">{{ error }}</span>
-    {% endfor %}
-    <p>
-        {{ form.password.label }}{{ form.password(placeholder="パスワード") }}
-    </p>
-    {% for error in form.password.errors %}
-    <span style="color: red;">{{ error }}</span>
-    {% endfor %}
-    <p><input type="submit" value="変更" /></p>
-</form>
-<a href="{{ url_for('notice.top') }}">戻る</a>
+        <!-- 名前 -->
+        <p>
+            {{ form.username.label }}
+            {{ form.username(placeholder="名前") }}
+        </p>
+        {% for error in form.username.errors %}
+        <span class="error-message">{{ error }}</span>
+        {% endfor %}
+
+        <!-- メールアドレス -->
+        <p>
+            {{ form.mailaddress.label }}
+            {{ form.mailaddress(placeholder="メールアドレス") }}
+        </p>
+        {% for error in form.mailaddress.errors %}
+        <span class="error-message">{{ error }}</span>
+        {% endfor %}
+
+        <!-- 送信ボタン -->
+        <p><button type="submit" class="submit-button">更新</button></p>
+    </form>
+
+    <a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
+</div>
+
+<style>
+    .profile-edit-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 2.0em;
+        color: #2c3e50;
+    }
+
+    p {
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #3498db;
+        background: #fff;
+        outline: none;
+    }
+
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #3498db;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1em;
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: #1abc9c;
+    }
+
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.9em;
+    }
+</style>
 {% endblock %}
