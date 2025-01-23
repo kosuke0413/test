@@ -4,16 +4,19 @@
 {% block content %}
 <div class="profile-edit-container">
     <h2>マイページ</h2>
-    <form method="POST" action="{{ url_for('user.profile_edit') }}" novalidate>
+    <form method="POST" action="{{ url_for('user.profile_edit') }}" novalidate="novalidate">
         {{ form.csrf_token }}
-        <!-- 地域ID -->
-        <p>
-            {{ form.local_id.label }}
-            {{ form.local_id(placeholder="地域ID") }}
-        </p>
-        {% for error in form.local_id.errors %}
-        <span class="error-message">{{ error }}</span>
-        {% endfor %}
+
+        <!-- フラッシュメッセージの表示 -->
+        {% with messages = get_flashed_messages(category_filter=["profile"]) %}
+        {% if messages %}
+        <div class="error-messages">
+            {% for message in messages %}
+            <span class="error">{{ message }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
 
         <!-- 名前 -->
         <p>
@@ -33,8 +36,17 @@
         <span class="error-message">{{ error }}</span>
         {% endfor %}
 
+        <!-- パスワード -->
+        <p>
+            {{ form.password.label }}
+            {{ form.password(placeholder="パスワード") }}
+        </p>
+        {% for error in form.password.errors %}
+        <span class="error-message">{{ error }}</span>
+        {% endfor %}
+
         <!-- 送信ボタン -->
-        <p><button type="submit" class="submit-button">更新</button></p>
+        {{ form.submit()}}
     </form>
 
     <a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>

@@ -2,7 +2,7 @@ from flask import (Blueprint,
                    flash, redirect, render_template,
                    request, url_for, session)
 from flask_login import login_user, logout_user, login_required
-from minimalapp.user.forms import SignUpForm, LoginForm, LocalRegistForm
+from minimalapp.user.forms import SignUpForm, LoginForm, ProfileForm,LocalRegistForm
 from minimalapp.user.models import User
 from minimalapp.tags.models import Local
 from app import db
@@ -106,34 +106,44 @@ def logout():
     #     return "削除成功"
 
 
-#　マイページのエンドポイント
+# マイページのエンドポイント
 @user.route("/profile_edit", methods=["GET", "POST"])
 @login_required
 def profile_edit():
-    form = SignUpForm()
-
-    # 現在のユーザー情報を取得
-    myuser = current_user
+    form = ProfileForm()
 
     if form.validate_on_submit():
-        # フォームからデータを取得して更新
-        myuser.local_id = form.local_id.data
-        myuser.username = form.username.data
-        myuser.mailaddress = form.mailaddress.data
+        # 自身を除いたメールアドレス重複チェック
+        if User.query.filter(
+            User.mailaddress == form.mailaddress.data,
+            User.user_id != current_user.user_id  # 自身の user_id を除外
+            ).first() is not None:
+            flash("指定のメールアドレスは登録済みです", "profile")
+            form.mailaddress.data = None
+            return render_template("user/profile_edit.html", form=form)
+        
+        # 現在のユーザー情報を更新
+        current_user.name = form.username.data
+        current_user.mailaddress = form.mailaddress.data
 
+        if form.password.data:
+            current_user.password = form.password.data  # ハッシュ化済み
+        
         # データベースに変更を保存
         db.session.commit()
 
-        # トップページまたはマイページにリダイレクト
+        flash("プロフィール編集に成功しました。", "profile")
+
+        # マイページにリダイレクト
         return redirect(url_for("user.profile_edit"))
 
     # 初期値をフォームに設定
-    form.local_id.data = myuser.local_id
-    form.username.data = myuser.name
-    form.mailaddress.data = myuser.mailaddress
+    # ※パスワードは初期値をセット出来ない
+    form.username.data = current_user.name
+    form.mailaddress.data = current_user.mailaddress
 
-    # マイページのテンプレートをレンダリング
-    return render_template("user/profile_edit.html", form=form, myuser=myuser)
+    # マイページを表示
+    return render_template("user/profile_edit.html", form=form)
 
 
 # 自治体ユーザーの新規登録のエンドポイント
@@ -250,7 +260,6 @@ def inject_local():
         return {"local": {"local_name": "未定義"}}
 
     local = Local.query.get(current_user.local_id)
-    print(current_user.local_id)
     if local:
         return {
             "local": {"local_name": local.local_name}

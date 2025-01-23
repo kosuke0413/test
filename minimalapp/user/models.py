@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # メッセージアドレス重複チェック
+    # メールアドレス重複チェック
     def is_duplicate_mailaddress(self):
         return User.query.filter_by(
             mailaddress=self.mailaddress).first() is not None

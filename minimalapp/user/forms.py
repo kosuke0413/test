@@ -3,7 +3,7 @@ from wtforms import PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
 
 
-# 新規登録機能のフォーム
+# ユーザー新規登録機能のフォーム
 class SignUpForm(FlaskForm):
     local_id = StringField(
         "地域ID",
@@ -34,11 +34,11 @@ class SignUpForm(FlaskForm):
         "パスワード",
         validators=[
             DataRequired(message="パスワードは必須です。"),
-            Length(4, 50, message="4文字以上、10文字以内で入力してください。")
+            Length(4, 50, message="4文字以上、50文字以内で入力してください。")
         ]
     )
 
-    submit = SubmitField("登録  ")
+    submit = SubmitField("登録")
 
 
 # ログイン機能のフォーム
@@ -56,11 +56,41 @@ class LoginForm(FlaskForm):
         "パスワード",
         validators=[
             DataRequired("パスワードは必須です。"),
-            Length(4, 10, message="4文字以上、10文字以内で入力してください。")
+            Length(4, 50, message="4文字以上、50文字以内で入力してください。")
         ]
     )
 
     submit = SubmitField("ログイン")
+
+
+# プロフィール編集機能のフォーム
+class ProfileForm(FlaskForm):
+    username = StringField(
+        "名前",
+        validators=[
+            DataRequired(message="名前は必須です。"),
+            Length(1, 10, message="10文字以内で入力してください。"),
+        ],
+    )
+
+    mailaddress = StringField(
+        "メールアドレス",
+        validators=[
+            DataRequired("メールアドレスは必須です。"),
+            Length(1, 50, message="50文字以内で入力してください。"),
+            Email("メールアドレスの形式で入力してください。"),
+        ],
+    )
+
+    password = PasswordField(
+        "パスワード",
+        validators=[
+            DataRequired("パスワードは必須です。"),
+            Length(4, 50, message="4文字以上、50文字以内で入力してください。")
+        ]
+    )
+
+    submit = SubmitField("プロフィール編集")
 
 
 # 地域新規登録のフォーム

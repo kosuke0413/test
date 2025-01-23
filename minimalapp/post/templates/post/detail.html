@@ -23,7 +23,7 @@
 
         <p>{{ reply.name}}:{{ reply.content }}
         {% if current_user.manager_flag == True %}
-            <button type="submit" style="color: red;">削除</button>
+            <button type="submit" class="delete-button">削除</button>
         {% endif %}
         </p>
     </form>
@@ -33,14 +33,13 @@
 
 
 <!-- 返信フォームへのリンク -->
-<br>
-<form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline;">
+<form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline-block; margin-right: 10px;">
     <button type="submit" class="reply-button">返信する</button>
 </form>
 
+<!-- 編集画面へのリンク -->
 {% if post.user_id == current_user.user_id %}
-<br>
-<form action="{{ url_for('post.edit_post', post_id=post.post_id) }}" method="get" style="display:inline;">
+<form action="{{ url_for('post.edit_post', post_id=post.post_id) }}" method="get" style="display:inline-block;">
     <button type="submit" class="reply-button">編集画面のリンク</button>
 </form>
 {% endif %}
@@ -50,7 +49,7 @@
 {% if current_user.manager_flag == True %}
 <form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
     onsubmit="return confirm('本当に削除しますか？');">
-    <button type="submit" style="color: red;">削除</button>
+    <button type="submit" class="delete-button">投稿削除</button>
 </form>
 {% endif %}
 
@@ -92,6 +91,24 @@
     .reply-button:hover {
         background: #16a085;
         transform: translateY(-2px);
+    }
+
+    /* 削除ボタンのスタイル指定 */
+    .delete-button {
+        display: inline-block;
+        margin-top: 0px;
+        padding: 5px 10px;
+        background: #e74c3c; /* 赤色 */
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .delete-button:hover {
+        background: #c0392b; /* 濃い赤色 */
     }
 
     /* トップページリンク */
