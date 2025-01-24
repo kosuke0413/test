@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, request, jsonify, render_template
+from flask import Flask,Blueprint, request, jsonify, render_template, redirect, url_for
 from flask_login import current_user
 from minimalapp.tags.models import Local
 from minimalapp.ai.forms import AiForm
@@ -64,6 +64,8 @@ def ai_question():
 @ai.route("/ai_answer",methods=["POST"])
 def ai_answer():
     form = AiForm()
+    if not form.image.data:
+        return redirect(url_for("ai.ai_question"))
 
     # 画像の取得
     file = form.image.data

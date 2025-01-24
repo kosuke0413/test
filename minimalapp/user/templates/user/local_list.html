@@ -31,7 +31,8 @@
     }
 
     ul {
-        list-style: none; /* リストアイコンを非表示 */
+        list-style: none;
+        /* リストアイコンを非表示 */
         padding: 0;
         margin: 0;
     }
@@ -86,7 +87,6 @@
         color: #7f8c8d;
         margin-top: 20px;
     }
-
 </style>
 
 <h1>地域一覧</h1>
@@ -98,9 +98,13 @@
         {% for local in locals %}
         <li class="loc">
             <span>{{ local.local_id }}: {{ local.local_name }}</span>
-            <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}" onsubmit="return confirm('本当に削除しますか？');">
+            <!-- 最初の地域には削除ボタンを表示しない -->
+            {% if loop.index > 1 %}
+            <form method="POST" action="{{ url_for('user.local_delete', local_id=local.local_id) }}"
+                onsubmit="return confirm('本当に削除しますか？');">
                 <button type="submit" class="delete-button">削除</button>
             </form>
+            {% endif %}
         </li>
         {% endfor %}
         {% else %}
@@ -108,5 +112,6 @@
         {% endif %}
     </ul>
 </div>
+
 
 {% endblock %}
