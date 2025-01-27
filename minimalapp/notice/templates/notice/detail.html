@@ -30,7 +30,7 @@
 
             <p>{{ reply.name}}:{{ reply.reply_text }}
             {% if current_user.manager_flag == True %}
-                <button type="submit" style="color: red;">削除</button>
+                <button type="submit" class="delete-button">削除</button>
             {% endif %}
             </p>
             
@@ -77,23 +77,38 @@
         /* 上下20pxの余白を追加し、中央揃え */
     }
 
-    /* 返信ボタン */
-    .reply-button {
+    /* 返信、削除ボタンのスタイル指定 */
+    .reply-button,.delete-button {
         display: inline-block;
-        margin-top: 30px;
-        padding: 10px 20px;
-        background: #1abc9c;
         color: white;
         text-decoration: none;
         font-size: 1.1em;
         border-radius: 5px;
         text-align: center;
         transition: background 0.3s, transform 0.2s;
+        border: none;
+    }
+
+    .reply-button {
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #1abc9c;
     }
 
     .reply-button:hover {
         background: #16a085;
         transform: translateY(-2px);
+    }
+
+    /* 削除ボタンのスタイル指定 */
+    .delete-button {
+        margin-top: 0px;
+        padding: 5px 10px;
+        background: #e74c3c; /* 赤色 */
+    }
+
+    .delete-button:hover {
+        background: #c0392b; /* 濃い赤色 */
     }
 
     /* トップページリンク */
