@@ -22,6 +22,10 @@ login_manager.login_message = ""
 def createapp():
     app = Flask(__name__)
 
+    @app.route('/health', methods=['GET'])
+    def health_check():
+        return "Healthy", 200
+
     # エラーページ
     @app.errorhandler(404)
     def page_not_found(e):
