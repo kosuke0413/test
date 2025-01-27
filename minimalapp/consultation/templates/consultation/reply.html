@@ -12,7 +12,7 @@
             class="consultation-reply-form"
         >
         <!-- viewsにある flash を持ってくる -->
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(category_filter=["consultation_error"]) %}
         <!-- ほんで with で回す -->
         {% if messages %}
         <ul>

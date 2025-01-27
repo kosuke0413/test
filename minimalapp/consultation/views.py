@@ -94,7 +94,7 @@ def send_complate():
         #     is_valid = False
 
         if not reply:
-            flash("問い合わせ内容は必須です")
+            flash("問い合わせ内容は必須です", "consultation_error")
             is_valid = False
 
         # reply に飛ばす
@@ -114,7 +114,7 @@ def send_complate():
         db.session.delete(consult)
         db.session.commit()
 
-        flash("問い合わせ内容はメールにて送信しました。問い合わせありがとうございます。")
+        flash("問い合わせ内容はメールにて送信しました。問い合わせありがとうございます。","consultation_error")
         return redirect(url_for("consultation.reply_complate"))
 
     return render_template("consultation/send_complate.html")
@@ -132,6 +132,9 @@ def send_email(to, subject, template, **kwargs):
 @consultation.context_processor
 def inject_local():
     local = Local.query.get(current_user.local_id)
-    return {
-        "local": {"local_name": local.local_name}
-    }
+    if local:
+        return {
+            "local": {"local_name": local.local_name}
+        }
+    else:
+        return {"local": {"local_name": "未定義"}}

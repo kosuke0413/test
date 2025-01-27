@@ -248,7 +248,12 @@ def search():
 
 @post.context_processor
 def inject_local():
+    # 地域がデータベースに存在しない場合は、地域名を未定義にする
     local = Local.query.get(current_user.local_id)
-    return {
-        "local": {"local_name": local.local_name}
-    }
+    if local:
+        return {
+            "local": {"local_name": local.local_name}
+        }
+
+    else:
+        return {"local": {"local_name": "未定義"}}

@@ -268,4 +268,3 @@ def inject_local():
     else:
         return {"local": {"local_name": "未定義"}}
     
-    
