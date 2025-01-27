@@ -22,10 +22,10 @@
             <select id="target_language"
                 name="target_language" required>
 
-                <option value="en">英語</option>
-                <option value="ja">日本語</option>
-                <option value="ko">韓国語</option>
-                <option value="zh-cn">中国語</option>
+                <option value="en" {% if target_language == 'en' %}selected{% endif %}>英語</option>
+                <option value="ja" {% if target_language == 'ja' %}selected{% endif %}>日本語</option>
+                <option value="ko" {% if target_language == 'ko' %}selected{% endif %}>韓国語</option>
+                <option value="zh-cn" {% if target_language == 'zh-cn' %}selected{% endif %}>中国語</option>
 
                 <!-- 必要に応じて他の言語も追加可能 -->
             </select>

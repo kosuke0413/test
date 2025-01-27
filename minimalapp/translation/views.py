@@ -15,7 +15,9 @@ translation = Blueprint(
 # 翻訳ページへ飛ぶ
 @translation.route("/translation", methods=["GET", "POST"])
 def index():
-    translated_text = ""
+    translated_text = ""  # 翻訳後のテキストを保持する変数
+    target_language = 'en'  # 初期値を英語に設定
+
     if request.method == "POST":
         # 入力されたテキストとターゲット言語を取得
         text_to_translate = request.form.get("text_to_translate")
@@ -27,7 +29,8 @@ def index():
                                               dest=target_language)
             translated_text = translated.text
     return render_template("translation/translation.html",
-                           translated_text=translated_text)
+                           translated_text=translated_text,
+                           target_language=target_language)
 
 
 # ローカル関数の定義
