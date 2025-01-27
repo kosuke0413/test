@@ -110,7 +110,7 @@ def beforeindex(year, month):
         month -= 1
 
     if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
-        flash("これ以上戻れません。")
+        # flash("これ以上戻れません。")
         return redirect(url_for('calendar.index'))
 
     # カレンダーを作成
@@ -207,6 +207,23 @@ def events(date):
 def selectindex(year, month):
     year = year
     month = month
+
+        # 現在、100年後の年、100年前の年を計算
+    now = datetime.now()
+    max_year = now.year + 100
+    min_year = now.year - 100
+
+    # 前の月が制限を下回ったら現在の月に戻す
+    if month == 1:
+        year -= 1
+        month = 12
+    else:
+        month -= 1
+
+    # 上限の100年を超えないように指定
+    if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
+        return redirect(url_for('calendar.index'))
+    
 
     # カレンダーを作成
     cal = calendar.Calendar(firstweekday=6)
