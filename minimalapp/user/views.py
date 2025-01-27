@@ -256,7 +256,7 @@ def local_delete(local_id):
         return redirect(url_for("user.local_list"))
 
 
-# パスワードリセット要求のメールアドレス
+# パスワードリセット要求のエンドポイント
 @user.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
     form = ForgotPasswordForm()
@@ -284,6 +284,7 @@ def forgot_password():
     return render_template("user/forgot_password.html", form=form)
 
 
+# パスワードリセット処理を実行するエンドポイント
 @user.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     # トークンを検証して、メールアドレスを取得
