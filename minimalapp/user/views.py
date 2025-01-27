@@ -294,6 +294,7 @@ def reset_password(token):
         flash("無効なまたは期限切れのリンクです。", "error")
         return redirect(url_for('user.forgot_password'))
 
+    # メールアドレスに対応するユーザーが存在しない場合
     user = User.query.filter_by(mailaddress=email).first()
     if not user:
         flash("このメールアドレスは登録されていません。", "error")

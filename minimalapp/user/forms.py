@@ -115,7 +115,12 @@ class LocalRegistForm(FlaskForm):
 
 # メールアドレスの入力フォーム
 class ForgotPasswordForm(FlaskForm):
-    email = StringField('メールアドレス', validators=[DataRequired(), Email()])
+    email = StringField('メールアドレス', validators=[
+            DataRequired("メールアドレスは必須です。"),
+            Length(1, 50, message="50文字以内で入力してください。"),
+            Email("メールアドレスの形式で入力してください。"),
+            ]
+        )
 
 
 # 新規パスワードの入力フォーム
