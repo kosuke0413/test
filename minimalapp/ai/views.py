@@ -44,7 +44,7 @@ preprocess = transforms.Compose([
 # Wikipedia要約の取得関数
 def get_wikipedia_summary(topic, lang="ja", max_chars=200):
     # 後で直す
-    user_agent = "LocalPortal/1.0 (kazu13961414@gmail.com)"
+    user_agent = "LocalPortal/1.0 (2024teama@gmail.com)"
     wiki_wiki = wikipediaapi.Wikipedia(language=lang, user_agent=user_agent)
     page = wiki_wiki.page(topic)
 

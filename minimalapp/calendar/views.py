@@ -54,9 +54,10 @@ def index():
 # 次の月のカレンダーを作成
 @Calen.route('/next<int:year>/<int:month>')
 def nextindex(year, month):
-    # 100年後の年と月を計算
+    # 現在、100年後の年、100年前の年を計算
     now = datetime.now()
     max_year = now.year + 100
+    min_year = now.year - 100
 
     # 次の月が制限を超えたら現在の月に戻す
     if month == 12:
@@ -65,8 +66,9 @@ def nextindex(year, month):
     else:
         month += 1
 
-    if year > max_year or (year == max_year and month > now.month):
-        flash("これ以上進めません。")
+    # 表示年月が前後に100年を超えた場合は、現在の年月に戻る
+    if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
+        # flash("これ以上進めません。")
         return redirect(url_for('calendar.index'))
 
     # カレンダーを作成
@@ -95,8 +97,9 @@ def nextindex(year, month):
 # 先月のカレンダーを作成
 @Calen.route('/before/<int:year>/<int:month>')
 def beforeindex(year, month):
-    # 現在の年と月
+    # 現在、100年後の年、100年前の年を計算
     now = datetime.now()
+    max_year = now.year + 100
     min_year = now.year - 100
 
     # 前の月が制限を下回ったら現在の月に戻す
@@ -106,7 +109,7 @@ def beforeindex(year, month):
     else:
         month -= 1
 
-    if year < min_year or (year == min_year and month < now.month):
+    if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
         flash("これ以上戻れません。")
         return redirect(url_for('calendar.index'))
 
