@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
 # ユーザー新規登録機能のフォーム
@@ -111,3 +111,26 @@ class LocalRegistForm(FlaskForm):
     )
 
     submit = SubmitField("地域新規登録")
+
+
+# メールアドレスの入力フォーム
+class ForgotPasswordForm(FlaskForm):
+    email = StringField('メールアドレス', validators=[DataRequired(), Email()])
+
+
+# 新規パスワードの入力フォーム
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('新しいパスワード',
+                             validators=[
+                                DataRequired(message="パスワードは必須です。"),
+                                Length(4, 50, message="4文字以上、50文字以内で入力してください。")
+                                ]
+                            )
+    
+    confirm_password = PasswordField('パスワード確認',
+                                     validators=[
+                                        DataRequired(message="パスワードは必須です。"),
+                                        Length(4, 50, message="4文字以上、50文字以内で入力してください。"),
+                                        EqualTo('password', message='パスワードが一致しません')
+                                        ]
+                                    )

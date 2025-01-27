@@ -122,6 +122,17 @@
         {% endif %}
         {% endwith %}
 
+        <!-- パスワード変更完了のメッセージ -->
+        {% with messages = get_flashed_messages(category_filter=["success"]) %}
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <span class="error">{{ message }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
         <!-- メールアドレスフィールド -->
         <p>
             {{ form.mailaddress.label }}
@@ -147,6 +158,8 @@
     </form>
 
     <a href="{{ url_for('user.signup') }}" class="register-link">新規登録はこちら</a>
+
+    <a href="{{ url_for('user.forgot_password') }}" class="register-link">パスワードリセットはこちら</a>
 </div>
 
 {% endblock %}

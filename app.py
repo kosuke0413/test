@@ -98,6 +98,9 @@ def createapp():
     app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
     app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
 
+    # パスワードリセットトークンに使うソルト
+    app.config["SECURITY_PASSWORD_SALT"] = 'salty_1414'
+
     # flask-mail拡張を登録する
     mail.init_app(app)
 

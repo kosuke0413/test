@@ -1,12 +1,15 @@
 from flask import (Blueprint,
                    flash, redirect, render_template,
-                   request, url_for, session)
+                   request, url_for, session,current_app)
 from flask_login import login_user, logout_user, login_required
 from minimalapp.user.forms import SignUpForm, LoginForm, ProfileForm,LocalRegistForm
 from minimalapp.user.models import User
 from minimalapp.tags.models import Local
-from app import db
+from app import db,mail
 from flask_login import current_user
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer
+from minimalapp.user.forms import ForgotPasswordForm,ResetPasswordForm
 
 
 user = Blueprint(
@@ -252,6 +255,62 @@ def local_delete(local_id):
 
         return redirect(url_for("user.local_list"))
 
+
+# パスワードリセット要求のメールアドレス
+@user.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+    form = ForgotPasswordForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(mailaddress=form.email.data).first()
+        if user:
+            # トークンを生成
+            serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+            token = serializer.dumps(user.mailaddress, salt=current_app.config['SECURITY_PASSWORD_SALT'])
+
+            # パスワードリセットリンクを生成
+            reset_url = url_for('user.reset_password', token=token, _external=True)
+
+            # メール送信（Flask-Mailを使用）
+            msg = Message("パスワードリセット", sender=current_app.config['MAIL_USERNAME'], recipients=[user.mailaddress])
+            msg.body = f"以下のリンクからパスワードをリセットしてください:\n{reset_url}"
+            mail.send(msg)
+
+            flash("パスワードリセット用のリンクをメールで送信しました。", "info")
+            return redirect(url_for('user.login'))
+
+        flash("登録されていないメールアドレスです。", "error")
+
+    return render_template("user/forgot_password.html", form=form)
+
+
+@user.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    # トークンを検証して、メールアドレスを取得
+    try:
+        serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        email = serializer.loads(token, salt=current_app.config['SECURITY_PASSWORD_SALT'], max_age=3600)  # 1時間で期限切れ
+    except Exception as e:
+        flash("無効なまたは期限切れのリンクです。", "error")
+        return redirect(url_for('user.forgot_password'))
+
+    user = User.query.filter_by(mailaddress=email).first()
+    if not user:
+        flash("このメールアドレスは登録されていません。", "error")
+        return redirect(url_for('user.forgot_password'))
+
+    # 新しいパスワードを設定するフォームを表示
+    form = ResetPasswordForm()
+
+    if form.validate_on_submit():
+        # 新しいパスワードを設定
+        user.password = form.password.data
+        db.session.commit()
+
+        flash("パスワードがリセットされました。ログインしてください。", "success")
+        return redirect(url_for('user.login'))
+
+    return render_template("user/reset_password.html", form=form)
 
 @user.context_processor
 def inject_local():
