@@ -64,80 +64,82 @@ def ai_question():
 @ai.route("/ai_answer",methods=["POST"])
 def ai_answer():
     form = AiForm()
-    if not form.image.data:
-        return redirect(url_for("ai.ai_question"))
+    if form.validate_on_submit():  # バリデーションが成功した場合
 
-    # 画像の取得
-    file = form.image.data
-    image = Image.open(file).convert("RGB")
+        # 画像の取得
+        file = form.image.data
+        image = Image.open(file).convert("RGB")
 
-    # 画像認識処理
-    input_tensor = preprocess(image).unsqueeze(0)
+        # 画像認識処理
+        input_tensor = preprocess(image).unsqueeze(0)
+
+        with torch.no_grad():
+            outputs = image_model(input_tensor)
+        _, predicted = outputs.max(1)
+
+        # 予想されたクラスIDの取得
+        predicted_class_id = predicted.item()  
+
+
+        # JSONファイルの読み込み
+        with open('imagenet_class_index.json', 'r', encoding='utf-8') as f:
+            class_idx = json.load(f)
+
+        # クラスIDに基づいてクラス名を取得
+        class_name = class_idx.get(str(predicted_class_id), "不明なクラス")
+
+
+        # JSONファイルの読み込み
+        with open('imagenet_class_index_ja.json', 'r', encoding='utf-8') as f:
+            class_idx_ja = json.load(f)
+
+        # クラスIDに基づいて日本語名を取得
+        class_name_ja = "不明なクラス"  # デフォルトのクラス名
+
+        for entry in class_idx_ja:
+            if entry['num'] == class_name[0]:  # 予測されたクラスIDで検索
+                class_name_ja = entry['ja']  # 日本語名を取得
+                break  # 見つかったらループを抜ける
+
+        # トピックの指定
+        topic = class_name_ja  # Wikipediaで検索するトピック
+        # 記事の要約を取得
+        summary = get_wikipedia_summary(topic)
+        summary = summary + "..."
+
+
+        # # 画像認識情報を基に質問を生成
+        # prompt = f"{summary}\n\nこれを基に、{topic}について詳しく説明してください。"
+
+        # # 入力トークンのエンコード
+        # input_ids = tokenizer.encode(prompt, return_tensors="pt")
+        # input_ids = input_ids.to(model.device)
+
+
+        # with torch.no_grad():
+        #     output_ids = model.generate(
+        #         input_ids,
+        #         max_length=150, # 最大長
+        #         min_length=100, # 最低長
+        #         do_sample=True,
+        #         top_k=5, # トークン選択の多様性を制限
+        #         top_p=1.0,  # 確率分布の上位を使用
+        #         repetition_penalty=1.2, # 繰り返しを抑制
+        #         pad_token_id=tokenizer.pad_token_id,
+        #         bos_token_id=tokenizer.bos_token_id,
+        #         eos_token_id=tokenizer.eos_token_id,
+        #         bad_words_ids=[[tokenizer.unk_token_id]]
+        #     )
+
+        # output = tokenizer.decode(output_ids.tolist()[0], skip_special_tokens=True)
+        # # print(output)
+
+        # # 出力から「{class_name_ja}について簡潔に説明してください。」部分を削除
+        # explanation = output.replace(f"{class_name_ja}とは何か、簡潔にかつ分かりやすく説明してください。", "").strip()
+        return render_template("ai/ai_answer.html", class_name=class_name_ja,summary=summary)
     
-    with torch.no_grad():
-        outputs = image_model(input_tensor)
-    _, predicted = outputs.max(1)
-
-    # 予想されたクラスIDの取得
-    predicted_class_id = predicted.item()  
-
-
-    # JSONファイルの読み込み
-    with open('imagenet_class_index.json', 'r', encoding='utf-8') as f:
-        class_idx = json.load(f)
-    
-    # クラスIDに基づいてクラス名を取得
-    class_name = class_idx.get(str(predicted_class_id), "不明なクラス")
-
-
-    # JSONファイルの読み込み
-    with open('imagenet_class_index_ja.json', 'r', encoding='utf-8') as f:
-        class_idx_ja = json.load(f)
-    
-    # クラスIDに基づいて日本語名を取得
-    class_name_ja = "不明なクラス"  # デフォルトのクラス名
-
-    for entry in class_idx_ja:
-        if entry['num'] == class_name[0]:  # 予測されたクラスIDで検索
-            class_name_ja = entry['ja']  # 日本語名を取得
-            break  # 見つかったらループを抜ける
-    
-    # トピックの指定
-    topic = class_name_ja  # Wikipediaで検索するトピック
-    # 記事の要約を取得
-    summary = get_wikipedia_summary(topic)
-    summary = summary + "..."
-
-
-    # # 画像認識情報を基に質問を生成
-    # prompt = f"{summary}\n\nこれを基に、{topic}について詳しく説明してください。"
-
-    # # 入力トークンのエンコード
-    # input_ids = tokenizer.encode(prompt, return_tensors="pt")
-    # input_ids = input_ids.to(model.device)
-
-
-    # with torch.no_grad():
-    #     output_ids = model.generate(
-    #         input_ids,
-    #         max_length=150, # 最大長
-    #         min_length=100, # 最低長
-    #         do_sample=True,
-    #         top_k=5, # トークン選択の多様性を制限
-    #         top_p=1.0,  # 確率分布の上位を使用
-    #         repetition_penalty=1.2, # 繰り返しを抑制
-    #         pad_token_id=tokenizer.pad_token_id,
-    #         bos_token_id=tokenizer.bos_token_id,
-    #         eos_token_id=tokenizer.eos_token_id,
-    #         bad_words_ids=[[tokenizer.unk_token_id]]
-    #     )
-
-    # output = tokenizer.decode(output_ids.tolist()[0], skip_special_tokens=True)
-    # # print(output)
-
-    # # 出力から「{class_name_ja}について簡潔に説明してください。」部分を削除
-    # explanation = output.replace(f"{class_name_ja}とは何か、簡潔にかつ分かりやすく説明してください。", "").strip()
-    return render_template("ai/ai_answer.html", class_name=class_name_ja,summary=summary)
+    # バリデーションエラー時
+    return render_template("ai/ai_question.html", form=form)  # 元のテンプレートを再表示
 
 
 @ai.context_processor

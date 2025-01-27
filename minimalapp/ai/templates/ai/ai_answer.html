@@ -5,6 +5,11 @@
 
     <h1>検出結果：{{ class_name }}</h1>
 
-    <p>説明：{{ summary }}</p>
+    {% if summary %}
+        <p>{{ summary }}</p>
+    {% else %}
+        <p>予期せぬエラーが発生しました。</p>
+    {% endif %}
+
 
 {% endblock %}

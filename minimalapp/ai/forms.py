@@ -17,9 +17,9 @@ class AiForm(FlaskForm):
     
     # 画像フィールドのバリデーションを設定
     image = FileField(
-        "画像",
+        "画像アップロード",
         validators=[
-            FileAllowed("画像ファイルを指定してください"),
+            DataRequired(message="画像ファイルを指定してください"),
             FileAllowed(["png", "jpg", "jpeg"],
                         "サポートされていない画像形式です")
         ]
