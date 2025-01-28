@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, request, jsonify, render_template, redirect, url_for
+from flask import (Blueprint, render_template)
 from flask_login import current_user
 from minimalapp.tags.models import Local
 from minimalapp.ai.forms import AiForm
@@ -22,7 +22,8 @@ ai = Blueprint(
 )
 
 # # モデルとトークナイザーの読み込み
-# tokenizer = AutoTokenizer.from_pretrained("rinna/japanese-gpt-1b", use_fast=False)
+# tokenizer = AutoTokenizer.from_pretrained("rinna/japanese-gpt-1b",
+#  use_fast=False)
 # model = AutoModelForCausalLM.from_pretrained("rinna/japanese-gpt-1b")
 
 # if torch.cuda.is_available():
@@ -37,7 +38,8 @@ preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225]),
 ])
 
 
@@ -61,7 +63,8 @@ def ai_question():
     form = AiForm()
     return render_template("ai/ai_question.html", form=form)
 
-@ai.route("/ai_answer",methods=["POST"])
+
+@ai.route("/ai_answer", methods=["POST"])
 def ai_answer():
     form = AiForm()
     if form.validate_on_submit():  # バリデーションが成功した場合
@@ -78,8 +81,7 @@ def ai_answer():
         _, predicted = outputs.max(1)
 
         # 予想されたクラスIDの取得
-        predicted_class_id = predicted.item()  
-
+        predicted_class_id = predicted.item()
 
         # JSONファイルの読み込み
         with open('imagenet_class_index.json', 'r', encoding='utf-8') as f:
@@ -87,7 +89,6 @@ def ai_answer():
 
         # クラスIDに基づいてクラス名を取得
         class_name = class_idx.get(str(predicted_class_id), "不明なクラス")
-
 
         # JSONファイルの読み込み
         with open('imagenet_class_index_ja.json', 'r', encoding='utf-8') as f:
@@ -107,14 +108,12 @@ def ai_answer():
         summary = get_wikipedia_summary(topic)
         summary = summary + "..."
 
-
         # # 画像認識情報を基に質問を生成
         # prompt = f"{summary}\n\nこれを基に、{topic}について詳しく説明してください。"
 
         # # 入力トークンのエンコード
         # input_ids = tokenizer.encode(prompt, return_tensors="pt")
         # input_ids = input_ids.to(model.device)
-
 
         # with torch.no_grad():
         #     output_ids = model.generate(
@@ -131,13 +130,16 @@ def ai_answer():
         #         bad_words_ids=[[tokenizer.unk_token_id]]
         #     )
 
-        # output = tokenizer.decode(output_ids.tolist()[0], skip_special_tokens=True)
+        # output = tokenizer.decode(output_ids.tolist()[0],
+        #  skip_special_tokens=True)
         # # print(output)
 
         # # 出力から「{class_name_ja}について簡潔に説明してください。」部分を削除
-        # explanation = output.replace(f"{class_name_ja}とは何か、簡潔にかつ分かりやすく説明してください。", "").strip()
-        return render_template("ai/ai_answer.html", class_name=class_name_ja,summary=summary)
-    
+        # explanation = output.replace(f"{class_name_ja}とは何か、
+        # 簡潔にかつ分かりやすく説明してください。", "").strip()
+        return render_template("ai/ai_answer.html",
+                               class_name=class_name_ja, summary=summary)
+
     # バリデーションエラー時
     return render_template("ai/ai_question.html", form=form)  # 元のテンプレートを再表示
 

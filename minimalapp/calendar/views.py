@@ -67,7 +67,9 @@ def nextindex(year, month):
         month += 1
 
     # 表示年月が前後に100年を超えた場合は、現在の年月に戻る
-    if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
+    if year > max_year or (
+        year == max_year and month > now.month) or year < min_year or (
+            year == min_year and month < now.month):
         # flash("これ以上進めません。")
         return redirect(url_for('calendar.index'))
 
@@ -109,7 +111,9 @@ def beforeindex(year, month):
     else:
         month -= 1
 
-    if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
+    if year > max_year or (
+        year == max_year and month > now.month) or year < min_year or (
+            year == min_year and month < now.month):
         # flash("これ以上戻れません。")
         return redirect(url_for('calendar.index'))
 
@@ -221,9 +225,10 @@ def selectindex(year, month):
         month -= 1
 
     # 上限の100年を超えないように指定
-    if year > max_year or (year == max_year and month > now.month) or year < min_year or (year == min_year and month < now.month):
+    if year > max_year or (
+        year == max_year and month > now.month) or year < min_year or (
+            year == min_year and month < now.month):
         return redirect(url_for('calendar.index'))
-    
 
     # カレンダーを作成
     cal = calendar.Calendar(firstweekday=6)
@@ -273,5 +278,3 @@ def inject_local():
 
     else:
         return {"local": {"local_name": "未定義"}}
-    
-    

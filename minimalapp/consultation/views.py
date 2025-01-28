@@ -114,7 +114,8 @@ def send_complate():
         db.session.delete(consult)
         db.session.commit()
 
-        flash("問い合わせ内容はメールにて送信しました。問い合わせありがとうございます。","consultation_error")
+        flash("問い合わせ内容はメールにて送信しました。問い合わせありがとうございます。",
+              "consultation_error")
         return redirect(url_for("consultation.reply_complate"))
 
     return render_template("consultation/send_complate.html")

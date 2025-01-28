@@ -1,15 +1,16 @@
 from flask import (Blueprint,
                    flash, redirect, render_template,
-                   request, url_for, session,current_app)
+                   request, url_for, session, current_app)
 from flask_login import login_user, logout_user, login_required
-from minimalapp.user.forms import SignUpForm, LoginForm, ProfileForm,LocalRegistForm
+from minimalapp.user.forms import (SignUpForm, LoginForm,
+                                   ProfileForm, LocalRegistForm)
 from minimalapp.user.models import User
 from minimalapp.tags.models import Local
-from app import db,mail
+from app import db, mail
 from flask_login import current_user
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
-from minimalapp.user.forms import ForgotPasswordForm,ResetPasswordForm
+from minimalapp.user.forms import ForgotPasswordForm, ResetPasswordForm
 
 
 user = Blueprint(
@@ -120,18 +121,18 @@ def profile_edit():
         if User.query.filter(
             User.mailaddress == form.mailaddress.data,
             User.user_id != current_user.user_id  # 自身の user_id を除外
-            ).first() is not None:
+                ).first() is not None:
             flash("指定のメールアドレスは登録済みです", "profile")
             form.mailaddress.data = None
             return render_template("user/profile_edit.html", form=form)
-        
+
         # 現在のユーザー情報を更新
         current_user.name = form.username.data
         current_user.mailaddress = form.mailaddress.data
 
         if form.password.data:
             current_user.password = form.password.data  # ハッシュ化済み
-        
+
         # データベースに変更を保存
         db.session.commit()
 
@@ -269,10 +270,13 @@ def forgot_password():
             token = serializer.dumps(user.mailaddress, salt=current_app.config['SECURITY_PASSWORD_SALT'])
 
             # パスワードリセットリンクを生成
-            reset_url = url_for('user.reset_password', token=token, _external=True)
+            reset_url = url_for('user.reset_password',
+                                token=token, _external=True)
 
             # メール送信（Flask-Mailを使用）
-            msg = Message("パスワードリセット", sender=current_app.config['MAIL_USERNAME'], recipients=[user.mailaddress])
+            msg = Message("パスワードリセット",
+                          sender=current_app.config['MAIL_USERNAME'],
+                          recipients=[user.mailaddress])
             msg.body = f"以下のリンクからパスワードをリセットしてください:\n{reset_url}"
             mail.send(msg)
 
@@ -314,6 +318,7 @@ def reset_password(token):
 
     return render_template("user/reset_password.html", form=form)
 
+
 @user.context_processor
 def inject_local():
     # 未ログイン時は地域名を未定義にする
@@ -328,4 +333,4 @@ def inject_local():
 
     else:
         return {"local": {"local_name": "未定義"}}
-    
+

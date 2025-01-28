@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, render_template,
     redirect, url_for,
-    Response,session)
+    Response, session)
 from app import db
 from minimalapp.post.forms import PostUploadForm, PostReplyForm, SearchPostForm
 from minimalapp.post.models import Post, Postreply
