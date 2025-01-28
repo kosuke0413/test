@@ -1,8 +1,7 @@
 from flask_wtf.file import FileAllowed, FileField
 from flask_wtf.form import FlaskForm
 from wtforms.fields.simple import SubmitField
-from wtforms import StringField
-from wtforms.validators import DataRequired, length
+from wtforms.validators import DataRequired
 
 
 class AiForm(FlaskForm):
@@ -14,7 +13,7 @@ class AiForm(FlaskForm):
     #         length(max=200, message="200文字以内で入力してください。"),
     #     ]
     # )
-    
+
     # 画像フィールドのバリデーションを設定
     image = FileField(
         "画像アップロード",

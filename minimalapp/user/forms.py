@@ -131,7 +131,7 @@ class ResetPasswordForm(FlaskForm):
                                 Length(4, 50, message="4文字以上、50文字以内で入力してください。")
                                 ]
                             )
-    
+
     confirm_password = PasswordField('パスワード確認',
                                      validators=[
                                         DataRequired(message="パスワードは必須です。"),

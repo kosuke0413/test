@@ -23,10 +23,10 @@ class CalendarregistForm(FlaskForm):
     )
 
     date = DateField(
-       "日付",
-       validators=[
-           DataRequired(message="日付は必須です。"),
-       ]
+        "日付",
+        validators=[
+            DataRequired(message="日付は必須です。"),
+        ]
     )
 
     submit = SubmitField("登録")
