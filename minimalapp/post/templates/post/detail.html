@@ -6,7 +6,8 @@
 <h2>{{ user.name }}</h2>
 <p>{{ post.post_text }}</p>
 {% if post.image %}
-<img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像" class="post-image">
+<img src="{{ url_for('post.get_image', post_id=post.post_id, _scheme='https', _external=True) }}" alt="投稿画像"
+    class="post-image">
 
 {% endif %}
 {% if tag.tag_name %}
@@ -18,13 +19,14 @@
 <!-- 返信一覧を表示 -->
 <ul>
     {% for reply in replies %}
-    <form method="POST" action="{{ url_for('post.reply_delete', reply_id=reply.reply_id) }}"
+    <form method="POST"
+        action="{{ url_for('post.reply_delete', reply_id=reply.reply_id, _scheme='https', _external=True) }}"
         onsubmit="return confirm('本当に削除しますか？');">
 
         <p>{{ reply.name}}:{{ reply.content }}
-        {% if current_user.manager_flag == True %}
+            {% if current_user.manager_flag == True %}
             <button type="submit" class="delete-button">削除</button>
-        {% endif %}
+            {% endif %}
         </p>
     </form>
 
@@ -33,13 +35,15 @@
 
 
 <!-- 返信フォームへのリンク -->
-<form action="{{ url_for('post.reply', post_id=post.post_id) }}" method="get" style="display:inline-block; margin-right: 10px;">
+<form action="{{ url_for('post.reply', post_id=post.post_id, _scheme='https', _external=True) }}" method="get"
+    style="display:inline-block; margin-right: 10px;">
     <button type="submit" class="reply-button">返信する</button>
 </form>
 
 <!-- 編集画面へのリンク -->
 {% if post.user_id == current_user.user_id %}
-<form action="{{ url_for('post.edit_post', post_id=post.post_id) }}" method="get" style="display:inline-block;">
+<form action="{{ url_for('post.edit_post', post_id=post.post_id, _scheme='https', _external=True) }}" method="get"
+    style="display:inline-block;">
     <button type="submit" class="reply-button">編集画面のリンク</button>
 </form>
 {% endif %}
@@ -47,14 +51,14 @@
 
 <!-- 自治体ユーザーの場合は削除ボタンを表示 -->
 {% if current_user.manager_flag == True %}
-<form method="POST" action="{{ url_for('post.delete', post_id=post.post_id) }}"
+<form method="POST" action="{{ url_for('post.delete', post_id=post.post_id, _scheme='https', _external=True) }}"
     onsubmit="return confirm('本当に削除しますか？');">
     <button type="submit" class="delete-button post-delete">投稿削除</button>
 </form>
 {% endif %}
 
 <br>
-<a href="{{ url_for('post.post_list') }}" class="back-link">戻る</a>
+<a href="{{ url_for('post.post_list', _scheme='https', _external=True) }}" class="back-link">戻る</a>
 
 <style>
     .post-image {
@@ -75,7 +79,8 @@
     }
 
     /* 返信、削除ボタンのスタイル指定 */
-    .reply-button,.delete-button {
+    .reply-button,
+    .delete-button {
         display: inline-block;
         color: white;
         text-decoration: none;
@@ -101,11 +106,13 @@
     .delete-button {
         margin-top: 0px;
         padding: 5px 10px;
-        background: #e74c3c; /* 赤色 */
+        background: #e74c3c;
+        /* 赤色 */
     }
 
     .delete-button:hover {
-        background: #c0392b; /* 濃い赤色 */
+        background: #c0392b;
+        /* 濃い赤色 */
     }
 
     /* 投稿削除ボタンのスタイル指定 */
