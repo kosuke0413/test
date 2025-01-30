@@ -10,9 +10,7 @@
     <p>{{ notice.notice_text }}</p>
 
     {% if notice.image %}
-    <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id, _scheme='https', _external=True) }}"
-        alt="お知らせ画像" class="notice-image">
-
+    <img src="{{ url_for('notice.get_image', notice_id=notice.notice_id) }}" alt="お知らせ画像" class="notice-image">
     {% endif %}
 
 
@@ -26,8 +24,7 @@
     <ul>
         {% for reply in replies %}
 
-        <form method="POST"
-            action="{{ url_for('notice.reply_delete', reply_id=reply.reply_id, _scheme='https', _external=True) }}"
+        <form method="POST" action="{{ url_for('notice.reply_delete', reply_id=reply.reply_id) }}"
             onsubmit="return confirm('本当に削除しますか？');">
             {{ form.csrf_token }}
 
@@ -45,21 +42,19 @@
 
     <!-- 返信フォームへのリンク -->
     <br>
-    <form action="{{ url_for('notice.reply', notice_id=notice.notice_id, _scheme='https', _external=True) }}"
-        method="get" style="display:inline;">
+    <form action="{{ url_for('notice.reply', notice_id=notice.notice_id) }}" method="get" style="display:inline;">
         <button type="submit" class="reply-button">返信する</button>
     </form>
 
     {% if current_user.manager_flag == True %}
     <br>
-    <form action="{{ url_for('notice.edit_notice', notice_id=notice.notice_id, _scheme='https', _external=True) }}"
-        method="get" style="display:inline;">
+    <form action="{{ url_for('notice.edit_notice', notice_id=notice.notice_id) }}" method="get" style="display:inline;">
         <button type="submit" class="reply-button">編集画面のリンク</button>
     </form>
     {% endif %}
 
     <br>
-    <a href="{{ url_for('notice.top', _scheme='https', _external=True) }}" class="top-link">トップページに戻る</a>
+    <a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a>
 </body>
 
 </html>

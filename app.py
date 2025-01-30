@@ -21,6 +21,9 @@ login_manager.login_message = ""
 # アプリを生成
 def createapp():
     app = Flask(__name__)
+    
+    app.config['SECURE_SSL_REDIRECT'] = False
+    app.config['SESSION_COOKIE_SECURE'] = False
 
     @app.route('/health', methods=['GET'])
     def health_check():
