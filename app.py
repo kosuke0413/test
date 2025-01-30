@@ -21,6 +21,8 @@ login_manager.login_message = ""
 # アプリを生成
 def createapp():
     app = Flask(__name__)
+    # HTTPSを強制する設定
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
 
     @app.route('/health', methods=['GET'])
     def health_check():
