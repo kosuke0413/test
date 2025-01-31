@@ -379,7 +379,6 @@ body {
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #f4e060;
         padding-left: 30px; /* サイドバーの幅を考慮 */
         padding-right: 30px; /* 右側にも余白をつけて中央揃え */
     }
