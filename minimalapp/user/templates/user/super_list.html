@@ -13,7 +13,6 @@
     }
 
     h1 {
-        /*  */
         text-align: center;
         color: #2c3e50;
         font-size: 2.5em;
@@ -31,7 +30,6 @@
 
     ul {
         list-style: none;
-        /* 点を非表示に */
         padding: 0;
         margin: 0;
     }
@@ -58,6 +56,8 @@
         font-size: 1.2em;
         color: #3498db;
         transition: color 0.3s;
+        flex-grow: 1;
+        /* 名前部分を広げてボタンを右に配置 */
     }
 
     li a:hover.super {
@@ -70,25 +70,45 @@
         color: #7f8c8d;
         margin-top: 20px;
     }
+
+    .delete-button {
+        color: white;
+        background-color: #e74c3c;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .delete-button:hover {
+        background-color: #c0392b;
+        transform: scale(1.05);
+    }
+
+    form {
+        margin-left: auto;
+        /* 削除ボタンを右に寄せる */
+    }
 </style>
 
 <h1>自治体ユーザー一覧</h1>
 
 <div class="user-list-container">
-    <!-- 自治体ユーザーの一覧表示 -->
     <ul>
         {% if users %}
         {% for user, local in users %}
         <li class="super">
             <a class="super">
                 {{ local.local_name }}: {{ user.name }}
-                {% if user.user_id != 1 %}
-                <form method="POST" action="{{ url_for('user.super_delete', user_id=user.user_id) }}"
-                    onsubmit="return confirm('本当に削除しますか？');">
-                    <button type="submit" class="delete-button">削除</button>
-                </form>
-                {% endif %}
             </a>
+            {% if user.user_id != 1 %}
+            <form method="POST" action="{{ url_for('user.super_delete', user_id=user.user_id) }}"
+                onsubmit="return confirm('本当に削除しますか？');">
+                <button type="submit" class="delete-button">削除</button>
+            </form>
+            {% endif %}
         </li>
         {% endfor %}
         {% else %}
@@ -96,6 +116,5 @@
         {% endif %}
     </ul>
 </div>
-
 
 {% endblock %}
