@@ -14,107 +14,142 @@
     <p class="ai-image-form">
         {{form.image(class="ai-image-upload")}}
     </p>
-    
+
     <!-- エラーメッセージ -->
     {% for error in form.image.errors %}
     <span style="color: red;">{{ error }}</span>
     {% endfor %}
-    
+
     <!-- 送信ボタン -->
     <p class="ai-submit">
         {{form.submit(class="ai-submit-button")}}
     </p>
 </form>
+<a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
 
 <style>
-/* 全体のスタイル */
-html, body {
-    margin: 0; /* 余白をリセット */
-    padding: 0; /* パディングをリセット */
-    height: 100%; /* 画面全体に対して高さを100%に設定 */
-}
+    /* 全体のスタイル */
+    html,
+    body {
+        margin: 0;
+        /* 余白をリセット */
+        padding: 0;
+        /* パディングをリセット */
+        height: 100%;
+        /* 画面全体に対して高さを100%に設定 */
+    }
 
-/* タイトルのスタイル */
-.title {
-    text-align: center; /* タイトルを中央揃え */
-    font-size: 2em; /* フォントサイズを設定 */
-    color: #333; /* 文字色 */
-    margin-bottom: 20px; /* 下の余白を追加 */
-}
+    /* タイトルのスタイル */
+    .title {
+        text-align: center;
+        /* タイトルを中央揃え */
+        font-size: 2em;
+        /* フォントサイズを設定 */
+        color: #333;
+        /* 文字色 */
+        margin-bottom: 20px;
+        /* 下の余白を追加 */
+    }
 
-/* フォーム全体のスタイル */
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    margin: 20px auto; /* 上下余白と中央揃え */
-    max-width: 600px; /* 最大幅を600pxに設定 */
-    width: 100%; /* 幅100%にしてレスポンシブ対応 */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; /* パディングとボーダーを含めたサイズ計算 */
-}
+    /* フォーム全体のスタイル */
+    form {
+        background-color: #ffffff;
+        padding: 20px;
+        margin: 20px auto;
+        /* 上下余白と中央揃え */
+        max-width: 600px;
+        /* 最大幅を600pxに設定 */
+        width: 100%;
+        /* 幅100%にしてレスポンシブ対応 */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        /* パディングとボーダーを含めたサイズ計算 */
+    }
 
-/* 入力フィールドとラベルのスタイル */
-form p {
-    margin-bottom: 15px; /* 各項目の下に余白を設定 */
-}
+    /* 入力フィールドとラベルのスタイル */
+    form p {
+        margin-bottom: 15px;
+        /* 各項目の下に余白を設定 */
+    }
 
-form label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
+    form label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
 
-/* 画像アップロードフィールド */
-.ai-image-upload {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box; /* 余白を含める */
-}
+    /* 画像アップロードフィールド */
+    .ai-image-upload {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+        /* 余白を含める */
+    }
 
-.ai-image-upload:focus {
-    border-color: #007bff;
-    outline: none;
-}
+    .ai-image-upload:focus {
+        border-color: #007bff;
+        outline: none;
+    }
 
-/* エラーメッセージのスタイル */
-span {
-    display: block;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: red;
-}
+    /* エラーメッセージのスタイル */
+    span {
+        display: block;
+        margin-top: -10px;
+        margin-bottom: 10px;
+        font-size: 0.9em;
+        color: red;
+    }
 
-/* 送信ボタンのスタイル */
-.ai-submit-button {
-    display: inline-block;
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 1em;
-    font-weight: bold;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-sizing: border-box; /* 余白を含める */
-}
+    /* 送信ボタンのスタイル */
+    .ai-submit-button {
+        display: inline-block;
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 1em;
+        font-weight: bold;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-sizing: border-box;
+        /* 余白を含める */
+    }
 
-.ai-submit-button:hover {
-    background-color: #0056b3;
-}
+    .ai-submit-button:hover {
+        background-color: #0056b3;
+    }
 
-.ai-submit-button:active {
-    transform: scale(0.98);
-}
+    .ai-submit-button:active {
+        transform: scale(0.98);
+    }
+
+    /* 戻るボタン */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
 </style>
 
 {% endblock %}
