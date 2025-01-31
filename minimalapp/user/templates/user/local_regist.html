@@ -89,6 +89,25 @@
     .submit-button:active {
         background: #16a085;
     }
+
+    /* 戻るボタン */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
 </style>
 
 <div class="form-container">
@@ -130,5 +149,6 @@
         </p>
     </form>
 </div>
+<a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
 
 {% endblock %}
