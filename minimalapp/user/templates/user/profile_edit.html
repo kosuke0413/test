@@ -48,9 +48,8 @@
         <!-- 送信ボタン -->
         {{ form.submit()}}
     </form>
-
-    <a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
 </div>
+<a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
 
 <style>
     .profile-edit-container {
@@ -124,6 +123,48 @@
     .error-message {
         color: #e74c3c;
         font-size: 0.9em;
+    }
+
+    /* 戻るボタン */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    /*編集ボタン*/
+    button,
+    input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: #fff;
+        background: #3498db;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    /* ホバー時 */
+    button:hover,
+    input[type="submit"]:hover {
+        background: #1abc9c;
+        transform: scale(1.02);
     }
 </style>
 {% endblock %}
