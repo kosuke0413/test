@@ -91,6 +91,25 @@
         margin-left: auto;
         /* 削除ボタンを右に寄せる */
     }
+
+    /* 戻るボタン */
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        border-radius: 5px;
+        text-align: center;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
 </style>
 
 <h1>自治体ユーザー一覧</h1>
@@ -116,5 +135,5 @@
         {% endif %}
     </ul>
 </div>
-
+<a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
 {% endblock %}
