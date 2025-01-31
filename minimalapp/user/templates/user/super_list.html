@@ -5,14 +5,15 @@
 
 <style>
     body {
-        font-family: 'Arial', sans-serif; 
+        font-family: 'Arial', sans-serif;
         background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
         color: #333;
         margin: 0;
         padding: 0;
     }
 
-    h1 {  /*  */
+    h1 {
+        /*  */
         text-align: center;
         color: #2c3e50;
         font-size: 2.5em;
@@ -29,7 +30,8 @@
     }
 
     ul {
-        list-style: none; /* 点を非表示に */
+        list-style: none;
+        /* 点を非表示に */
         padding: 0;
         margin: 0;
     }
@@ -68,7 +70,6 @@
         color: #7f8c8d;
         margin-top: 20px;
     }
-
 </style>
 
 <h1>自治体ユーザー一覧</h1>
@@ -81,10 +82,12 @@
         <li class="super">
             <a class="super">
                 {{ local.local_name }}: {{ user.name }}
+                {% if user.user_id != 1 %}
                 <form method="POST" action="{{ url_for('user.super_delete', user_id=user.user_id) }}"
-                onsubmit="return confirm('本当に削除しますか？');">
-                <button type="submit" class="delete-button">削除</button>
-            </form>
+                    onsubmit="return confirm('本当に削除しますか？');">
+                    <button type="submit" class="delete-button">削除</button>
+                </form>
+                {% endif %}
             </a>
         </li>
         {% endfor %}
