@@ -6,12 +6,13 @@
 <style>
     /* 全体背景とフォント */
     body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
-        color: #333;
-    }
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f4e060, #f4d04f); /* 黄色を追加 */
+    color: #333;
+}
 
     h2 {
         text-align: center;
@@ -21,7 +22,7 @@
     }
 
     .form-container {
-        max-width: 400px; /* 横幅を狭めて中央に配置 */
+        max-width: 500px; /* 横幅を狭めて中央に配置 */
         margin: 50px auto;
         background: #fff;
         padding: 20px 30px;
@@ -107,6 +108,7 @@
 </style>
 
 <div class="form-container">
+    <h2 class="site-title">ぽかぽか地域ポータル</h2>
     <h2>ログイン</h2>
     <form method="post" action="{{ url_for('user.login',next=request.args.get('next')) }}" novalidate="novalidate">
         {{ form.csrf_token }}
