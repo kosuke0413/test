@@ -81,6 +81,10 @@
         <li class="super">
             <a class="super">
                 {{ local.local_name }}: {{ user.name }}
+                <form method="POST" action="{{ url_for('user.super_delete', user_id=user.user_id) }}"
+                onsubmit="return confirm('本当に削除しますか？');">
+                <button type="submit" class="delete-button">削除</button>
+            </form>
             </a>
         </li>
         {% endfor %}

@@ -199,6 +199,18 @@ def super_list():
             User.manager_flag == True)
     return render_template("user/super_list.html", users=users)
 
+# 自治体ユーザー削除のエンドポイント
+@user.route("/<user_id>/super_delete", methods=['POST'])
+@login_required
+def super_delete(user_id):
+    # 地域の削除処理
+    user = User.query.get(user_id)
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+
+        return redirect(url_for("user.super_list"))
+
 
 # 地域の新規登録のエンドポイント
 @user.route("/local_regist", methods=["GET", "POST"])
