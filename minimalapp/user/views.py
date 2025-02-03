@@ -56,6 +56,11 @@ def signup():
             flash("指定のメールアドレスは登録済みです", "signup_error")
             form.mailaddress.data = None
             return render_template("user/signup.html", form=form)
+        
+        # 自治体ユーザーの存在チェック
+        if not user.has_admin_in_local():
+            flash("自治体ユーザーが存在しません", "signup_error")
+            return render_template("user/signup.html", form=form)
 
         # ユーザー情報を登録する
         db.session.add(user)

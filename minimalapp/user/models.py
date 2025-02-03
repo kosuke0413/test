@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # メールアドレス重複チェック
+    # メールアドレス重複チェック、存在するならTrue
     def is_duplicate_mailaddress(self):
         return User.query.filter_by(
             mailaddress=self.mailaddress).first() is not None
@@ -37,7 +37,7 @@ class User(db.Model, UserMixin):
         return Local.query.filter_by(
             local_id=self.local_id).first() is not None
     
-    # ユーザーの所属する地域に管理者がいるか確認
+    # ユーザーの所属する地域に管理者がいるか確認、存在するならTrue
     def has_admin_in_local(self):
         return User.query.filter_by(local_id=self.local_id, manager_flag=True).first() is not None
 
