@@ -200,10 +200,10 @@ def super_list():
     return render_template("user/super_list.html", users=users)
 
 # 自治体ユーザー削除のエンドポイント
-@user.route("/<user_id>/super_delete", methods=['POST'])
+@user.route("/super_delete/<int:user_id>", methods=['POST'])
 @login_required
 def super_delete(user_id):
-    # 地域の削除処理
+    # 自治体ユーザーの削除処理
     user = User.query.get(user_id)
     if user:
         db.session.delete(user)

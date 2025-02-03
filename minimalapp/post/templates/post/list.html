@@ -2,27 +2,64 @@
 {% block title %} 住民投稿一覧 {% endblock %}
 
 {% block content %}
-<h1>住民投稿</h1>
+<div class="header-container">
+    <a href="/" class="notice-title">お知らせ一覧</a>
+    <h1 class="post-link">住民投稿</h1>
+</div>
 
 <!-- 住民投稿の一覧表示 -->
-<ul>
-    {% if posts %}
-    {% for post in posts %}
-    <li>
-        <a href="{{ url_for('post.post_detail',post_id=post.post_id) }}">
-            {{ post.post_title }}
-        </a>
-    </li>
-    {% endfor %}
-    {% else %}
-    <p>現在表示する投稿はありません</p>
-    {% endif %}
-</ul>
-<form action="{{ url_for('post.create_post') }}" method="get" style="display:inline;">
-    <button type="submit" class="post-button">投稿する</button>
-    <p><a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a></p>
-</form>
+<div>
+    <ul>
+        {% if posts %}
+        {% for post in posts %}
+        <li>
+            <a href="{{ url_for('post.post_detail',post_id=post.post_id) }}">
+                {{ post.post_title }}
+            </a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>現在表示する投稿はありません</p>
+        {% endif %}
+    </ul>
+    <form action="{{ url_for('post.create_post') }}" method="get" style="display:inline;">
+        <button type="submit" class="post-button">投稿する</button>
+        <p><a href="{{ url_for('notice.top') }}" class="top-link">トップページに戻る</a></p>
+    </form>
+</div>
+
+<!-- CSS -->
 <style>
+    /*ヘッダー*/
+    .header-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        /*お知らせ一覧と住民投稿の空白の大きさを決める*/
+        gap: 300px;
+        margin-bottom: 20px;
+    }
+
+    /* タイトルのスタイル */
+    .post-link {
+        font-size: 2.0em;
+        margin: 0;
+
+    }
+
+    /* リンクのスタイル */
+    .notice-title {
+        font-size: 2.0em;
+        text-decoration: none;
+        color: #007bff;
+        transition: color 0.3s;
+    }
+
+    /*リンクにカーソルを置いたときの色変更*/
+    .notice-title:hover {
+        color: #0056b3;
+    }
+
     /*投稿ボタン*/
     .post-button {
         display: block;
