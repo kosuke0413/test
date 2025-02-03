@@ -80,16 +80,24 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(mailaddress=form.mailaddress.data).first()
 
+        # ユーザーの存在確認とパスワードの確認
         if user is not None and user.verify_password(form.password.data):
-            session["local_id"] = user.local_id
-            login_user(user)
-            # GETパラメータにnextキーが存在しない場合はトップページに遷移する
-            next_ = request.args.get("next")
-            if next_ is None or not next_.startswith("/"):
-                next_ = url_for("notice.top")
-            return redirect(next_)
 
-        flash("メールアドレスかパスワードが不正です", "login_error")
+            # ユーザーに対応する地域がDBに存在するか確認
+            if user.local_id_existence_confirmation():
+                session["local_id"] = user.local_id
+                login_user(user)
+                # GETパラメータにnextキーが存在しない場合はトップページに遷移する
+                next_ = request.args.get("next")
+                if next_ is None or not next_.startswith("/"):
+                    next_ = url_for("notice.top")
+                return redirect(next_)
+            
+            else:
+                flash("地域が存在しません","login_error")
+
+        else:
+            flash("メールアドレスかパスワードが不正です", "login_error")
 
     return render_template("user/login.html", form=form)
 
