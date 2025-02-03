@@ -106,7 +106,10 @@ def ai_answer():
         topic = class_name_ja  # Wikipediaで検索するトピック
         # 記事の要約を取得
         summary = get_wikipedia_summary(topic)
-        summary = summary + "..."
+
+        # 記事が存在しない場合はNoneで渡す
+        if not summary is None:
+            summary = summary + "..."
 
         # # 画像認識情報を基に質問を生成
         # prompt = f"{summary}\n\nこれを基に、{topic}について詳しく説明してください。"
