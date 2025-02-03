@@ -4,32 +4,39 @@
 {% block content %}
 
 <style>
-    /* 全体スタイル */
+    /* 🎨 背景デザイン（ソフトな光沢感を追加） */
     body {
         font-family: 'Arial', sans-serif;
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background: linear-gradient(to bottom, #f4e060, #f4d04f); /* 黄色を追加 */
+        background: linear-gradient(135deg, #f4e060, #f4d04f, #f4c040);
         color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
     }
 
+    /* 🏡 ログアウトフォーム全体（より高級感のある白背景） */
     .logout-container {
         max-width: 600px;
         margin: 100px auto;
-        background: #fff;
-        padding: 20px 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.95);
+        padding: 50px 60px;
+        border-radius: 30px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         text-align: center;
     }
 
+    /* 🌞 タイトル（より洗練された印象に） */
     .logout-container p {
         margin: 20px 0;
         font-size: 1.2em;
         color: #2c3e50;
     }
 
+    /* 📌 フォーム入力デザイン（シンプル＆洗練された印象） */
     .logout-container a {
         color: #3498db;
         text-decoration: none;

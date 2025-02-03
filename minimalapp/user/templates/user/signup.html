@@ -4,16 +4,21 @@
 {% block content %}
 
 <style>
-    /* 全体背景とフォント */
+    /* 🎨 背景デザイン（ソフトな光沢感を追加） */
     body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, #f4e060, #f4d04f); /* 黄色を追加 */
-    color: #333;
-}
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f4e060, #f4d04f, #f4c040);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
 
+    /* 🌞 タイトル（より洗練された印象に） */
     h2 {
         text-align: center;
         color: #2c3e50;
@@ -21,34 +26,41 @@
         margin-bottom: 20px;
     }
 
+    /* 🏡 フォーム全体（より高級感のある白背景） */
     .form-container {
-        max-width: 600px;
-        margin: 50px auto;
-        background: #fff;
-        padding: 20px 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 60px auto;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 50px 200px;
+        border-radius: 30px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
 
     form p {
         margin-bottom: 20px;
     }
 
+    /* 📌 フォーム入力デザイン（シンプル＆洗練された印象） */
     label {
         display: block;
         font-size: 1em;
-        color: #34495e;
-        margin-bottom: 8px;
+        color: #5a4e3a;
+        margin-bottom: 5px;
+        text-align: left;
     }
 
     input {
-        width: calc(100% - 20px);
+        width: 120%; /* 幅を120%に設定 */
+        max-width: 400px; /* 最大幅を設定 */
         padding: 10px;
         font-size: 1em;
         border: 1px solid #ddd;
         border-radius: 5px;
         background: #f9f9f9;
         transition: border-color 0.3s;
+        text-align: left; /* 文字を左詰めにする */
+        margin: 0 auto; /* 中央に配置 */
     }
 
     input:focus {
@@ -67,24 +79,20 @@
     .submit-button {
         display: block;
         width: 100%;
-        padding: 10px 20px;
+        padding: 12px;
         font-size: 1.1em;
-        color: #fff;
-        background: #3498db;
+        color: white;
+        background: linear-gradient(to right, #e96443, #f4a442);
         border: none;
-        border-radius: 5px;
-        text-align: center;
+        border-radius: 8px;
         cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        box-shadow: 0 3px 8px rgba(255, 150, 50, 0.4);
     }
 
     .submit-button:hover {
-        background: #1abc9c;
+        background: linear-gradient(to right, #d64530, #e78b36);
         transform: scale(1.02);
-    }
-
-    .submit-button:active {
-        background: #16a085;
     }
 
     .login-link {
@@ -101,6 +109,8 @@
         color: #1abc9c;
     }
 </style>
+
+
 
 <div class="form-container">
     <h2>新規登録</h2>
