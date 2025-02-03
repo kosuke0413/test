@@ -85,13 +85,19 @@ def login():
 
             # ユーザーに対応する地域がDBに存在するか確認
             if user.local_id_existence_confirmation():
-                session["local_id"] = user.local_id
-                login_user(user)
-                # GETパラメータにnextキーが存在しない場合はトップページに遷移する
-                next_ = request.args.get("next")
-                if next_ is None or not next_.startswith("/"):
-                    next_ = url_for("notice.top")
-                return redirect(next_)
+                
+                # 対応する地域に自治体ユーザーが存在するか確認
+                if user.has_admin_in_local():
+                    session["local_id"] = user.local_id
+                    login_user(user)
+                    # GETパラメータにnextキーが存在しない場合はトップページに遷移する
+                    next_ = request.args.get("next")
+                    if next_ is None or not next_.startswith("/"):
+                        next_ = url_for("notice.top")
+                    return redirect(next_)
+                
+                else:
+                    flash("対応する地域に管理人が存在しません","login_error")
             
             else:
                 flash("地域が存在しません","login_error")

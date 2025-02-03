@@ -36,6 +36,10 @@ class User(db.Model, UserMixin):
     def local_id_existence_confirmation(self):
         return Local.query.filter_by(
             local_id=self.local_id).first() is not None
+    
+    # ユーザーの所属する地域に管理者がいるか確認
+    def has_admin_in_local(self):
+        return User.query.filter_by(local_id=self.local_id, manager_flag=True).first() is not None
 
     # get_id メソッドをオーバーライドして user_id を返す
     def get_id(self):
