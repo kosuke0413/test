@@ -59,6 +59,7 @@
         border-radius: 8px;
         background: #f9f6f0;
         transition: border 0.3s, box-shadow 0.3s;
+        box-sizing: border-box; /* パディングやボーダーを含めたサイズにする */
     }
 
     input:focus {
@@ -81,6 +82,8 @@
         cursor: pointer;
         transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
         box-shadow: 0 3px 8px rgba(255, 150, 50, 0.4);
+        box-sizing: border-box; /* パディングやボーダーを含めたサイズにする */
+        margin-bottom: 15px;  /* ボタン下部間隔 */
     }
 
     .submit-button:hover {
