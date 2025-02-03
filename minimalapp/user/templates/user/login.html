@@ -4,108 +4,103 @@
 {% block content %}
 
 <style>
-    /* 全体背景とフォント */
+    /* 🎨 背景デザイン（ソフトな光沢感を追加） */
     body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, #f4e060, #f4d04f); /* 黄色を追加 */
-    color: #333;
-}
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f4e060, #f4d04f, #f4c040);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    /* 🏡 フォーム全体（より高級感のある白背景） */
+    .form-container {
+        max-width: 480px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 50px 60px;
+        border-radius: 30px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* 🌞 タイトル（より洗練された印象に） */
+    .site-title {
+        font-size: 2.8em;
+        font-weight: bold;
+        color: #5a4e3a;
+        margin-bottom: 15px;
+    }
 
     h2 {
-        text-align: center;
-        color: #2c3e50;
-        font-size: 2.2em;
+        font-size: 1.6em;
+        color: #333;
         margin-bottom: 20px;
     }
 
-    .form-container {
-        max-width: 500px; /* 横幅を狭めて中央に配置 */
-        margin: 50px auto;
-        background: #fff;
-        padding: 20px 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    form p {
-        margin-bottom: 20px;
-        text-align: left; /* ラベルとフィールドを左揃えに */
-    }
-
+    /* 📌 フォーム入力デザイン（シンプル＆洗練された印象） */
     label {
         display: block;
         font-size: 1em;
-        color: #34495e;
-        margin-bottom: 8px;
+        color: #5a4e3a;
+        margin-bottom: 5px;
+        text-align: left;
     }
 
     input {
-        width: calc(100% - 20px);
-        padding: 10px;
+        width: 100%;
+        padding: 12px;
         font-size: 1em;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background: #f9f9f9;
-        transition: border-color 0.3s;
+        border: 1px solid #d1c4a9;
+        border-radius: 8px;
+        background: #f9f6f0;
+        transition: border 0.3s, box-shadow 0.3s;
     }
 
     input:focus {
-        border-color: #3498db;
-        background: #fff;
+        border: 1px solid #b89e72;
+        box-shadow: 0 0 6px rgba(184, 158, 114, 0.5);
         outline: none;
     }
 
-    .error-messages {
-        margin-bottom: 20px;
-        color: #e74c3c;
-        font-size: 0.9em;
-        text-align: left; /* エラーも左揃えで自然に */
-    }
-
-    .error {
-        display: block;
-        margin-bottom: 5px;
-    }
-
+    /* ✨ 送信ボタン（柔らかな光沢感をプラス） */
     .submit-button {
         display: block;
         width: 100%;
-        padding: 10px 20px;
+        padding: 12px;
         font-size: 1.1em;
-        color: #fff;
-        background: #3498db;
+        color: white;
+        background: linear-gradient(to right, #e96443, #f4a442);
         border: none;
-        border-radius: 5px;
-        text-align: center;
+        border-radius: 8px;
         cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        box-shadow: 0 3px 8px rgba(255, 150, 50, 0.4);
     }
 
     .submit-button:hover {
-        background: #1abc9c;
-        transform: scale(1.02);
+        background: linear-gradient(to right, #d64530, #e78b36);
     }
 
-    .submit-button:active {
-        background: #16a085;
-    }
-
+    /* 🔗 リンク（新規登録・パスワードリセット） */
     .register-link {
         display: block;
-        margin-top: 20px;
+        margin-top: 15px;
         font-size: 0.9em;
-        color: #3498db;
+        color: #5a4e3a;
         text-decoration: none;
+        transition: color 0.3s ease-in-out;
     }
 
     .register-link:hover {
-        color: #1abc9c;
+        color: #b89e72;
     }
 </style>
+
 
 <div class="form-container">
     <h2 class="site-title">ぽかぽか地域ポータル</h2>
