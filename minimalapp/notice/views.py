@@ -113,6 +113,10 @@ def edit_notice(notice_id):
             notice.image = image_file.read()  # バイナリデータに変換
             notice.image_extension = image_file.filename.rsplit(
                 '.', 1)[-1].lower()  # 拡張子を取得
+        else:
+            # 画像が選択されていない場合、画像と拡張子をNoneに設定
+            notice.image = None
+            notice.image_extension = None
 
         db.session.commit()  # 変更をコミット
         return redirect(url_for("notice.edit_notice",
@@ -123,8 +127,6 @@ def edit_notice(notice_id):
     form.text.data = notice.notice_text
     if notice.tag is not None:
         form.tag.data = str(notice.tag)
-    # form.image.data = notice.image
-    # form.image_extension = notice.image_extension
 
     return render_template("notice/edit.html", form=form, notice=notice,
                            notice_id=notice_id)

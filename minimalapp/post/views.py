@@ -134,20 +134,19 @@ def edit_post(post_id):
             post.image = image_file.read()  # バイナリデータに変換
             post.image_extension = image_file.filename.rsplit(
                 '.', 1)[-1].lower()  # 拡張子を取得
+        else:
+            # 画像が選択されていない場合、画像と拡張子をNoneに設定
+            post.image = None
+            post.image_extension = None
 
         db.session.commit()  # 変更をコミット
         return redirect(url_for('post.edit_post', post_id=post.post_id))
-        # 更新後、編集ページを再読み込み
 
     # フォームの初期値に投稿データをセット
     form.title.data = post.post_title
     form.text.data = post.post_text
-    # タグが設定されている場合は初期値をセット
-    # if not post.tag == None: どちらか
     if post.tag is not None:
         form.tag.data = str(post.tag)
-    # form.image.data = notice.image
-    # form.image_extension = notice.image_extension
 
     return render_template("post/edit.html", form=form, post=post,
                            post_id=post_id)
@@ -159,7 +158,7 @@ def edit_post(post_id):
 def delete(post_id):
     # 削除したいpostを取得
     post = Post.query.get(post_id)
-    
+
     if post:
         # まず関連するpost_replyレコードを削除
         Postreply.query.filter_by(post_id=post_id).delete()
