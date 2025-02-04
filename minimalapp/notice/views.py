@@ -133,13 +133,18 @@ def edit_notice(notice_id):
 @notice.route("/<int:notice_id>/delete", methods=["POST"])
 @login_required
 def delete(notice_id):
-    # 削除処理
+    # 削除したいnoticeを取得
     notice = Notice.query.get(notice_id)
     if notice:
+        # まず関連するnotice_replyレコードを削除
+        NoticeReply.query.filter_by(notice_id=notice_id).delete()
+
+        # 次にnoticeレコードを削除
         db.session.delete(notice)
         db.session.commit()
-    flash("お知らせを削除しました")
-    return redirect(url_for('notice.top'))  # 削除が完了するとtopページに遷移
+
+    # お知らせトップページにリダイレクト
+    return redirect(url_for('notice.top'))
 
 
 # お知らせ返信
