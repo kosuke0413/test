@@ -20,11 +20,6 @@ post = Blueprint(
 )
 
 
-@post.route("/")
-def index():
-    return "Hello Posts"
-
-
 # 住民投稿のエンドポイント
 @post.route("/create", methods=["GET", "POST"])
 @login_required

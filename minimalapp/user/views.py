@@ -21,12 +21,6 @@ user = Blueprint(
 )
 
 
-# テスト
-@user.route("/")
-def index():
-    return "Hello User"
-
-
 # 住民の新規登録のエンドポイント
 @user.route("/signup", methods=["GET", "POST"])
 def signup():
