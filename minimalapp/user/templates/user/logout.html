@@ -20,8 +20,7 @@
 
     /* 🏡 ログアウトフォーム全体（より高級感のある白背景） */
     .logout-container {
-        max-width: 600px;
-        margin: 100px auto;
+        max-width: 480px;
         background: rgba(255, 255, 255, 0.95);
         padding: 50px 60px;
         border-radius: 30px;
@@ -30,14 +29,23 @@
     }
 
     /* 🌞 タイトル（より洗練された印象に） */
-    .logout-container p {
-        margin: 20px 0;
-        font-size: 1.2em;
+    .site-title {
+        font-size: 2.8em;
+        font-weight: bold;
+        color: #5a4e3a;
+        margin-bottom: 15px;
+    }
+
+    /* 🌞 タイトル（より洗練された印象に） */
+    h2 {
+        text-align: center;
         color: #2c3e50;
+        font-size: 2.2em;
+        margin-bottom: 20px;
     }
 
     /* 📌 フォーム入力デザイン（シンプル＆洗練された印象） */
-    .logout-container a {
+    /* .logout-container a {
         color: #3498db;
         text-decoration: none;
         font-size: 1.1em;
@@ -46,13 +54,30 @@
 
     .logout-container a:hover {
         color: #1abc9c;
+    } */
+
+    /* 🔗 リンク（新規登録・パスワードリセット） */
+    .register-link {
+        display: block;
+        margin-top: 15px;
+        font-size: 0.9em;
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .register-link:hover {
+        color: #b89e72;
     }
 </style>
 
 <div class="logout-container">
-    <p><a href="{{ url_for('user.login') }}">ログインはこちらから</a></p>
+    <h2 class="site-title">ぽかぽか地域ポータル</h2>
+    <h2>ログアウト完了</h2>
+    
+    <p><a href="{{ url_for('user.login') }}" class="register-link">ログインはこちら</a></p>
 
-    <p><a href="{{ url_for('user.signup') }}">新規登録はこちらから</a></p>
+    <p><a href="{{ url_for('user.signup') }}" class="register-link">新規登録はこちら</a></p>
 </div>
 
 {% endblock %}
