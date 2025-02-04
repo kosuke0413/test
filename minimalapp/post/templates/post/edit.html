@@ -40,7 +40,8 @@
     <button type="submit" class="delete-button">削除</button>
 </form>
 
-<a href="{{ url_for('post.post_list') }}" class="back-link">戻る</a>
+<a href="{{ url_for('post.post_detail', post_id=post_id) }}" class="back-link">戻る</a>
+
 
 <style>
     /* 全体スタイル */

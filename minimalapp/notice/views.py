@@ -126,7 +126,8 @@ def edit_notice(notice_id):
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
 
-    return render_template("notice/edit.html", form=form, notice=notice)
+    return render_template("notice/edit.html", form=form, notice=notice,
+                           notice_id=notice_id)
 
 
 # お知らせ削除

@@ -149,7 +149,8 @@ def edit_post(post_id):
     # form.image.data = notice.image
     # form.image_extension = notice.image_extension
 
-    return render_template("post/edit.html", form=form, post=post)
+    return render_template("post/edit.html", form=form, post=post,
+                           post_id=post_id)
 
 
 # 投稿削除のエンドポイント

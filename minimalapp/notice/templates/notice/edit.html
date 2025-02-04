@@ -47,7 +47,8 @@
         <button type="submit" class="delete-button">削除</button>
     </form>
 
-    <a href="{{ url_for('notice.top') }}" class="back-link">戻る</a>
+    <a href="{{ url_for('notice.detail', notice_id=notice_id) }}" class="back-link">戻る</a>
+
 </body>
 
 </html>
