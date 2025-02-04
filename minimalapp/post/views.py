@@ -156,13 +156,19 @@ def edit_post(post_id):
 @post.route('/<int:post_id>/delete', methods=['POST'])
 @login_required
 def delete(post_id):
-    # 削除処理
+    # 削除したいpostを取得
     post = Post.query.get(post_id)
+    
     if post:
+        # まず関連するpost_replyレコードを削除
+        Postreply.query.filter_by(post_id=post_id).delete()
+
+        # 次にpostレコードを削除
         db.session.delete(post)
         db.session.commit()
-    # flash('投稿一覧を削除しました')
-    return redirect(url_for('post.post_list'))  # 削除が完了するとtopページに遷移
+
+    # 投稿一覧ページにリダイレクト
+    return redirect(url_for('post.post_list'))
 
 
 # 投稿返信
