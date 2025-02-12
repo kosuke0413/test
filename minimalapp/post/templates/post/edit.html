@@ -10,17 +10,26 @@
     <div>
         <label for="title">タイトル</label>
         <input type="text" name="title" id="title" value="{{ form.title.data }}" required>
+        {% for error in form.title.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
     </div>
 
     <div>
         <label for="text">本文</label>
         <p><textarea name="text" id="text" required>{{ form.text.data }}</textarea></p>
+        {% for error in form.text.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}    
     </div>
 
     <div>
         <label for="image">画像</label>
         <p><img src="{{ url_for('post.get_image', post_id=post.post_id) }}" alt="投稿画像" class="post-image"></p>
         <p><input type="file" name="image" id="image"></p>
+        {% for error in form.image.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
     </div>
 
     <p>
