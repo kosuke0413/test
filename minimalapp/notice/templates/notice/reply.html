@@ -4,7 +4,7 @@
 {% block content %}
 <h1>{{ notice.notice_title }} への返信</h1>
 
-<form method="POST">
+<form method="POST" novalidate="novalidate">
     {{ form.csrf_token }}
     <div class="form-group">
         <p>{{ form.text.label }}</p>
